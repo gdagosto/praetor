@@ -1,0 +1,1 @@
+export { default as BackgroundPatternDecorative } from './BackgroundPatternDecorative.svelte';

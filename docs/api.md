@@ -1,0 +1,1 @@
+https://www.vekn.net/api/index.php?option=com_api&app=vekn&resource=ranking

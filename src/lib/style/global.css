@@ -1,0 +1,14 @@
+@import './theme.css';
+@import './teste.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+* {
+	transition:
+		color 0.15s,
+		background-color 0.15s,
+		border-color 0.15s;
+}
+
+main {
+	color: var(--color-text-primary);
+}

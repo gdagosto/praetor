@@ -1,0 +1,1 @@
+export { default as LogoPraetor } from './LogoPraetor.svelte';

@@ -1,0 +1,1 @@
+export { default as FeaturedIcon } from './FeaturedIcon.svelte';

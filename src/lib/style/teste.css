@@ -1,0 +1,1408 @@
+/* Figma Styles of your File */
+:root {
+	--gradient-gray-600-500-90-deg: linear-gradient(
+		90deg,
+		rgba(71, 84, 103, 1) 0%,
+		rgba(102, 112, 133, 1) 100%
+	);
+	--gradient-gray-700-600-45-deg: linear-gradient(
+		45deg,
+		rgba(52, 64, 84, 1) 0%,
+		rgba(71, 84, 103, 1) 100%
+	);
+	--gradient-gray-800-600-45-deg: linear-gradient(
+		45deg,
+		rgba(24, 34, 48, 1) 0%,
+		rgba(71, 84, 103, 1) 100%
+	);
+	--gradient-gray-800-600-90-deg: linear-gradient(
+		63.44deg,
+		rgba(24, 34, 48, 1) 0%,
+		rgba(71, 84, 103, 1) 100%
+	);
+	--gradient-gray-800-700-26-5-deg: linear-gradient(
+		26.57deg,
+		rgba(24, 34, 48, 1) 0%,
+		rgba(52, 64, 84, 1) 100%
+	);
+	--gradient-gray-900-600-45-deg: linear-gradient(
+		45deg,
+		rgba(16, 24, 40, 1) 0%,
+		rgba(71, 84, 103, 1) 100%
+	);
+	--gradient-brand-600-500-90-deg: linear-gradient(
+		90deg,
+		rgba(127, 86, 217, 1) 0%,
+		rgba(158, 119, 237, 1) 100%
+	);
+	--gradient-brand-700-600-45-deg: linear-gradient(
+		45deg,
+		rgba(105, 65, 198, 1) 0%,
+		rgba(127, 86, 217, 1) 100%
+	);
+	--gradient-brand-800-600-45-deg: linear-gradient(
+		45deg,
+		rgba(83, 56, 158, 1) 0%,
+		rgba(127, 86, 217, 1) 100%
+	);
+	--gradient-brand-800-600-90-deg: linear-gradient(
+		63.44deg,
+		rgba(83, 56, 158, 1) 0%,
+		rgba(127, 86, 217, 1) 100%
+	);
+	--gradient-brand-800-700-26-5-deg: linear-gradient(
+		26.57deg,
+		rgba(83, 56, 158, 1) 0%,
+		rgba(105, 65, 198, 1) 100%
+	);
+	--gradient-brand-900-600-45-deg: linear-gradient(
+		45deg,
+		rgba(66, 48, 125, 1) 0%,
+		rgba(127, 86, 217, 1) 100%
+	);
+	--gradient-linear-grayneutral-01: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 1) 0%,
+		rgba(243, 245, 247, 1) 100%
+	);
+	--gradient-linear-grayneutral-02: linear-gradient(
+		180deg,
+		rgba(249, 250, 251, 1) 0%,
+		rgba(237, 240, 243, 1) 100%
+	);
+	--gradient-linear-grayneutral-03: linear-gradient(
+		180deg,
+		rgba(249, 250, 251, 1) 0%,
+		rgba(231, 235, 239, 1) 100%
+	);
+	--gradient-linear-grayneutral-04: linear-gradient(
+		180deg,
+		rgba(243, 245, 247, 1) 0%,
+		rgba(224, 229, 235, 1) 100%
+	);
+	--gradient-linear-grayneutral-05: linear-gradient(
+		180deg,
+		rgba(237, 240, 243, 1) 0%,
+		rgba(212, 219, 226, 1) 100%
+	);
+	--gradient-linear-grayneutral-06: linear-gradient(
+		180deg,
+		rgba(231, 235, 239, 1) 0%,
+		rgba(200, 209, 218, 1) 100%
+	);
+	--gradient-linear-grayneutral-07: linear-gradient(
+		180deg,
+		rgba(224, 229, 235, 1) 0%,
+		rgba(182, 194, 206, 1) 100%
+	);
+	--gradient-linear-graytrue-01: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 1) 0%,
+		rgba(245, 245, 245, 1) 100%
+	);
+	--gradient-linear-graytrue-02: linear-gradient(
+		180deg,
+		rgba(250, 250, 250, 1) 0%,
+		rgba(240, 240, 240, 1) 100%
+	);
+	--gradient-linear-graytrue-03: linear-gradient(
+		180deg,
+		rgba(250, 250, 250, 1) 0%,
+		rgba(235, 235, 235, 1) 100%
+	);
+	--gradient-linear-graytrue-04: linear-gradient(
+		180deg,
+		rgba(245, 245, 245, 1) 0%,
+		rgba(229, 229, 229, 1) 100%
+	);
+	--gradient-linear-graytrue-05: linear-gradient(
+		180deg,
+		rgba(240, 240, 240, 1) 0%,
+		rgba(219, 219, 219, 1) 100%
+	);
+	--gradient-linear-graytrue-06: linear-gradient(
+		180deg,
+		rgba(235, 235, 235, 1) 0%,
+		rgba(209, 209, 209, 1) 100%
+	);
+	--gradient-linear-graytrue-07: linear-gradient(
+		180deg,
+		rgba(229, 229, 229, 1) 0%,
+		rgba(194, 194, 194, 1) 100%
+	);
+	--gradient-linear-color-01: linear-gradient(
+		180deg,
+		rgba(165, 192, 238, 1) 0%,
+		rgba(251, 197, 236, 1) 100%
+	);
+	--gradient-linear-color-02: linear-gradient(
+		180deg,
+		rgba(251, 194, 235, 1) 0%,
+		rgba(161, 140, 209, 1) 100%
+	);
+	--gradient-linear-color-03: linear-gradient(
+		180deg,
+		rgba(255, 209, 255, 1) 0%,
+		rgba(250, 208, 196, 1) 100%
+	);
+	--gradient-linear-color-04: linear-gradient(
+		225deg,
+		rgba(250, 208, 196, 1) 0%,
+		rgba(255, 154, 158, 1) 100%
+	);
+	--gradient-linear-color-05: linear-gradient(
+		270deg,
+		rgba(252, 182, 159, 1) 0%,
+		rgba(255, 236, 210, 1) 100%
+	);
+	--gradient-linear-color-06: linear-gradient(
+		180deg,
+		rgba(254, 207, 239, 1) 0%,
+		rgba(255, 152, 156, 1) 100%
+	);
+	--gradient-linear-color-07: linear-gradient(
+		45deg,
+		rgba(255, 157, 228, 1) 0%,
+		rgba(255, 234, 246, 1) 100%
+	);
+	--gradient-linear-color-08: linear-gradient(
+		180deg,
+		rgba(230, 222, 233, 1) 0%,
+		rgba(253, 202, 241, 1) 100%
+	);
+	--gradient-linear-color-09: linear-gradient(
+		45deg,
+		rgba(166, 192, 254, 1) 0%,
+		rgba(255, 234, 246, 1) 100%
+	);
+	--gradient-linear-color-10: linear-gradient(
+		0deg,
+		rgba(207, 199, 248, 1) 0%,
+		rgba(235, 187, 167, 1) 100%
+	);
+	--gradient-linear-color-11: linear-gradient(
+		135deg,
+		rgba(252, 203, 144, 1) 0%,
+		rgba(213, 126, 235, 1) 100%
+	);
+	--gradient-linear-color-12: linear-gradient(
+		45deg,
+		rgba(123, 106, 224, 1) 0%,
+		rgba(255, 187, 137, 1) 100%
+	);
+	--gradient-linear-color-13: linear-gradient(
+		135deg,
+		rgba(224, 195, 252, 1) 0%,
+		rgba(142, 197, 252, 1) 100%
+	);
+	--gradient-linear-color-14: linear-gradient(
+		0deg,
+		rgba(254, 214, 227, 1) 0%,
+		rgba(168, 237, 234, 1) 100%
+	);
+	--gradient-linear-color-15: linear-gradient(
+		135deg,
+		rgba(245, 247, 250, 1) 0%,
+		rgba(195, 207, 226, 1) 100%
+	);
+	--gradient-linear-color-16: linear-gradient(
+		45deg,
+		rgba(223, 209, 197, 1) 0%,
+		rgba(255, 246, 235, 1) 100%
+	);
+	--gradient-linear-color-17: linear-gradient(
+		135deg,
+		rgba(255, 246, 183, 1) 0%,
+		rgba(251, 117, 138, 1) 100%
+	);
+	--gradient-linear-color-18: linear-gradient(
+		45deg,
+		rgba(255, 126, 199, 1) 0%,
+		rgba(255, 237, 70, 1) 100%
+	);
+	--gradient-linear-color-19: linear-gradient(
+		0deg,
+		rgba(254, 175, 168, 1) 0%,
+		rgba(245, 239, 239, 1) 100%
+	);
+	--gradient-linear-color-20: linear-gradient(
+		45deg,
+		rgba(233, 222, 250, 1) 0%,
+		rgba(255, 246, 235, 1) 100%
+	);
+	--gradient-linear-color-21: linear-gradient(
+		0deg,
+		rgba(255, 241, 235, 1) 0%,
+		rgba(172, 224, 249, 1) 100%
+	);
+	--gradient-linear-color-22: linear-gradient(
+		0deg,
+		rgba(193, 223, 196, 1) 0%,
+		rgba(222, 236, 221, 1) 100%
+	);
+	--gradient-linear-color-24: linear-gradient(
+		0deg,
+		rgba(172, 203, 238, 1) 0%,
+		rgba(231, 240, 253, 1) 100%
+	);
+	--gradient-linear-color-25: linear-gradient(
+		0deg,
+		rgba(132, 250, 176, 1) 0%,
+		rgba(172, 203, 238, 1) 100%
+	);
+	--gradient-linear-color-26: linear-gradient(
+		45deg,
+		rgba(57, 160, 255, 1) 0%,
+		rgba(143, 255, 133, 1) 100%
+	);
+	--gradient-linear-color-27: linear-gradient(
+		270deg,
+		rgba(116, 235, 213, 1) 0%,
+		rgba(159, 172, 230, 1) 100%
+	);
+	--gradient-linear-color-29: linear-gradient(
+		0deg,
+		rgba(152, 144, 227, 1) 0%,
+		rgba(177, 244, 207, 1) 100%
+	);
+	--gradient-linear-color-30: linear-gradient(
+		45deg,
+		rgba(124, 218, 218, 1) 0%,
+		rgba(246, 151, 170, 1) 100%
+	);
+	--gradient-linear-color-31: linear-gradient(
+		45deg,
+		rgba(177, 255, 150, 1) 0%,
+		rgba(255, 173, 247, 1) 100%
+	);
+	--gradient-linear-color-32: linear-gradient(
+		0deg,
+		rgba(150, 251, 196, 1) 0%,
+		rgba(249, 245, 134, 1) 100%
+	);
+	--gradient-linear-color-33: linear-gradient(
+		45deg,
+		rgba(77, 239, 142, 1) 0%,
+		rgba(255, 235, 58, 1) 100%
+	);
+	--gradient-linear-color-34: linear-gradient(
+		135deg,
+		rgba(240, 255, 0, 1) 0%,
+		rgba(88, 207, 251, 1) 100%
+	);
+	--gradient-linear-color-35: linear-gradient(
+		0deg,
+		rgba(209, 253, 255, 1) 0%,
+		rgba(253, 219, 146, 1) 100%
+	);
+	--gradient-linear-color-36: linear-gradient(
+		0deg,
+		rgba(235, 192, 253, 1) 0%,
+		rgba(217, 222, 216, 1) 100%
+	);
+	--gradient-linear-color-37: linear-gradient(
+		45deg,
+		rgba(255, 164, 246, 1) 0%,
+		rgba(183, 220, 255, 1) 100%
+	);
+	--gradient-linear-color-38: linear-gradient(
+		0deg,
+		rgba(205, 156, 242, 1) 0%,
+		rgba(246, 243, 255, 1) 100%
+	);
+	--gradient-linear-color-39: linear-gradient(
+		-45deg,
+		rgba(245, 200, 245, 1) 0%,
+		rgba(218, 221, 250, 1) 83.85416865348816%
+	);
+	--gradient-linear-color-40: linear-gradient(
+		0deg,
+		rgba(230, 222, 233, 1) 0%,
+		rgba(189, 194, 232, 1) 100%
+	);
+	--gradient-linear-color-41: linear-gradient(
+		0deg,
+		rgba(106, 133, 182, 1) 0%,
+		rgba(186, 200, 224, 1) 100%
+	);
+	--gradient-linear-color-42: linear-gradient(
+		45deg,
+		rgba(139, 139, 139, 1) 0%,
+		rgba(234, 234, 234, 1) 100%
+	);
+	--gradient-linear-color-43: linear-gradient(
+		135deg,
+		rgba(226, 176, 255, 1) 0%,
+		rgba(159, 68, 211, 1) 100%
+	);
+	--gradient-linear-color-44: linear-gradient(
+		135deg,
+		rgba(206, 159, 252, 1) 0%,
+		rgba(115, 103, 240, 1) 100%
+	);
+	--gradient-linear-color-45: linear-gradient(
+		135deg,
+		rgba(114, 237, 242, 1) 0%,
+		rgba(81, 81, 229, 1) 100%
+	);
+	--gradient-linear-color-46: linear-gradient(
+		0deg,
+		rgba(163, 189, 237, 1) 0%,
+		rgba(105, 145, 199, 1) 100%
+	);
+	--gradient-linear-color-47: linear-gradient(
+		0deg,
+		rgba(251, 200, 212, 1) 0%,
+		rgba(151, 149, 240, 1) 100%
+	);
+	--gradient-linear-color-48: linear-gradient(
+		0deg,
+		rgba(167, 166, 203, 1) 0%,
+		rgba(137, 137, 186, 1) 100%
+	);
+	--gradient-linear-color-49: linear-gradient(
+		0deg,
+		rgba(217, 175, 217, 1) 0%,
+		rgba(151, 217, 225, 1) 100%
+	);
+	--gradient-linear-color-50: linear-gradient(
+		135deg,
+		rgba(129, 255, 239, 1) 0%,
+		rgba(240, 103, 180, 1) 100%
+	);
+	--gradient-linear-color-51: linear-gradient(
+		135deg,
+		rgba(220, 176, 237, 1) 0%,
+		rgba(153, 153, 204, 1) 100%
+	);
+	--gradient-linear-color-52: linear-gradient(
+		135deg,
+		rgba(255, 245, 195, 1) 0%,
+		rgba(148, 82, 165, 1) 100%
+	);
+	--gradient-linear-color-53: linear-gradient(
+		135deg,
+		rgba(241, 202, 116, 1) 0%,
+		rgba(166, 77, 182, 1) 100%
+	);
+	--gradient-linear-color-54: linear-gradient(
+		45deg,
+		rgba(77, 106, 208, 1) 0%,
+		rgba(255, 157, 126, 1) 100%
+	);
+	--gradient-linear-color-55: linear-gradient(
+		135deg,
+		rgba(255, 207, 113, 1) 0%,
+		rgba(35, 118, 221, 1) 100%
+	);
+	--gradient-linear-color-56: linear-gradient(
+		135deg,
+		rgba(232, 208, 122, 1) 0%,
+		rgba(83, 18, 214, 1) 100%
+	);
+	--gradient-linear-color-57: linear-gradient(
+		180deg,
+		rgba(191, 217, 254, 1) 0%,
+		rgba(223, 137, 181, 1) 100%
+	);
+	--gradient-linear-color-58: linear-gradient(
+		0deg,
+		rgba(250, 113, 205, 1) 0%,
+		rgba(196, 113, 245, 1) 100%
+	);
+	--gradient-linear-color-59: linear-gradient(
+		135deg,
+		rgba(67, 203, 255, 1) 0%,
+		rgba(151, 8, 204, 1) 100%
+	);
+	--gradient-linear-color-60: linear-gradient(
+		180deg,
+		rgba(117, 121, 255, 1) 0%,
+		rgba(178, 36, 239, 1) 100%
+	);
+	--gradient-linear-color-61: linear-gradient(
+		45deg,
+		rgba(173, 0, 254, 1) 0%,
+		rgba(0, 224, 238, 1) 100%
+	);
+	--gradient-linear-color-62: linear-gradient(
+		135deg,
+		rgba(137, 247, 254, 1) 0%,
+		rgba(102, 166, 255, 1) 100%
+	);
+	--gradient-linear-color-63: linear-gradient(
+		0deg,
+		rgba(0, 158, 253, 1) 0%,
+		rgba(42, 245, 152, 1) 100%
+	);
+	--gradient-linear-color-64: linear-gradient(
+		45deg,
+		rgba(255, 184, 0, 1) 0%,
+		rgba(255, 245, 0, 1) 100%
+	);
+	--gradient-linear-color-65: linear-gradient(
+		135deg,
+		rgba(255, 168, 168, 1) 0%,
+		rgba(252, 255, 0, 1) 100%
+	);
+	--gradient-linear-color-66: linear-gradient(
+		45deg,
+		rgba(255, 122, 0, 1) 0%,
+		rgba(255, 212, 57, 1) 100%
+	);
+	--gradient-linear-color-67: linear-gradient(
+		135deg,
+		rgba(255, 211, 165, 1) 0%,
+		rgba(253, 101, 133, 1) 100%
+	);
+	--gradient-linear-color-68: linear-gradient(
+		180deg,
+		rgba(249, 212, 35, 1) 0%,
+		rgba(225, 79, 173, 1) 100%
+	);
+	--gradient-linear-color-69: linear-gradient(
+		135deg,
+		rgba(247, 79, 172, 1) 0%,
+		rgba(252, 178, 79, 1) 100%
+	);
+	--gradient-linear-color-70: linear-gradient(
+		135deg,
+		rgba(244, 144, 98, 1) 0%,
+		rgba(253, 55, 31, 1) 100%
+	);
+	--gradient-linear-color-71: linear-gradient(
+		45deg,
+		rgba(255, 108, 108, 1) 0%,
+		rgba(221, 123, 255, 1) 100%
+	);
+	--gradient-linear-color-72: linear-gradient(
+		135deg,
+		rgba(249, 119, 148, 1) 0%,
+		rgba(98, 58, 162, 1) 100%
+	);
+	--gradient-linear-color-73: linear-gradient(
+		180deg,
+		rgba(197, 105, 207, 1) 0%,
+		rgba(238, 96, 156, 1) 100%
+	);
+	--gradient-linear-color-74: linear-gradient(
+		0deg,
+		rgba(199, 234, 253, 1) 0%,
+		rgba(232, 25, 139, 1) 100%
+	);
+	--gradient-linear-color-75: linear-gradient(
+		135deg,
+		rgba(240, 147, 251, 1) 0%,
+		rgba(245, 87, 108, 1) 100%
+	);
+	--gradient-linear-color-76: linear-gradient(
+		135deg,
+		rgba(246, 206, 236, 1) 0%,
+		rgba(217, 57, 205, 1) 100%
+	);
+	--gradient-linear-color-77: linear-gradient(
+		135deg,
+		rgba(238, 154, 229, 1) 0%,
+		rgba(89, 97, 249, 1) 100%
+	);
+	--gradient-linear-color-78: linear-gradient(
+		270deg,
+		rgba(106, 17, 203, 1) 0%,
+		rgba(37, 117, 252, 1) 100%
+	);
+	--gradient-linear-color-79: linear-gradient(
+		45deg,
+		rgba(0, 23, 228, 1) 0%,
+		rgba(55, 147, 255, 1) 100%
+	);
+	--gradient-linear-color-80: linear-gradient(
+		0deg,
+		rgba(0, 198, 251, 1) 0%,
+		rgba(0, 91, 234, 1) 100%
+	);
+	--gradient-linear-color-81: linear-gradient(
+		45deg,
+		rgba(75, 115, 255, 1) 0%,
+		rgba(124, 247, 255, 1) 100%
+	);
+	--gradient-linear-color-82: linear-gradient(
+		135deg,
+		rgba(94, 252, 232, 1) 0%,
+		rgba(115, 110, 254, 1) 100%
+	);
+	--gradient-linear-color-83: linear-gradient(
+		0deg,
+		rgba(112, 40, 228, 1) 0%,
+		rgba(229, 178, 202, 1) 100%
+	);
+	--gradient-linear-color-84: linear-gradient(
+		90deg,
+		rgba(120, 115, 245, 1) 0%,
+		rgba(236, 119, 171, 1) 100%
+	);
+	--gradient-linear-color-85: linear-gradient(
+		135deg,
+		rgba(176, 30, 255, 1) 0%,
+		rgba(225, 70, 124, 1) 100%
+	);
+	--gradient-linear-color-86: linear-gradient(
+		45deg,
+		rgba(208, 121, 238, 1) 0%,
+		rgba(138, 136, 251, 1) 100%
+	);
+	--gradient-linear-color-87: linear-gradient(
+		135deg,
+		rgba(201, 159, 255, 1) 0%,
+		rgba(152, 30, 210, 1) 100%
+	);
+	--gradient-linear-color-88: linear-gradient(
+		0deg,
+		rgba(155, 35, 234, 1) 0%,
+		rgba(95, 114, 189, 1) 100%
+	);
+	--gradient-linear-color-89: linear-gradient(
+		135deg,
+		rgba(179, 159, 255, 1) 0%,
+		rgba(106, 30, 210, 1) 100%
+	);
+	--gradient-linear-color-90: linear-gradient(
+		45deg,
+		rgba(67, 0, 177, 1) 0%,
+		rgba(165, 49, 220, 1) 100%
+	);
+	--gradient-linear-color-91: linear-gradient(
+		-45deg,
+		rgba(118, 75, 162, 1) 0%,
+		rgba(102, 126, 234, 1) 100%
+	);
+	--avatarusersquare-olivia-rhye: undefined;
+	--avatarusersquare-olivia-rhye-colorbackground: linear-gradient(to left, #cfcbdc, #cfcbdc);
+	--avatarusersquare-olivia-rhye-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-phoenix-baker: undefined;
+	--avatarusersquare-phoenix-baker-colorbackground: linear-gradient(to left, #d6cfb7, #d6cfb7);
+	--avatarusersquare-phoenix-baker-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-lana-steiner: undefined;
+	--avatarusersquare-lana-steiner-colorbackground: linear-gradient(to left, #d7e3e8, #d7e3e8);
+	--avatarusersquare-lana-steiner-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-demi-wilkinson: undefined;
+	--avatarusersquare-demi-wilkinson-colorbackground: linear-gradient(to left, #dadcd6, #dadcd6);
+	--avatarusersquare-demi-wilkinson-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-candice-wu: undefined;
+	--avatarusersquare-candice-wu-colorbackground: linear-gradient(to left, #d9d0e6, #d9d0e6);
+	--avatarusersquare-candice-wu-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-natali-craig: undefined;
+	--avatarusersquare-natali-craig-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-natali-craig-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-drew-cano: undefined;
+	--avatarusersquare-drew-cano-colorbackground: linear-gradient(to left, #d9e5cc, #d9e5cc);
+	--avatarusersquare-drew-cano-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-orlando-diggs: undefined;
+	--avatarusersquare-orlando-diggs-colorbackground: linear-gradient(to left, #e5ddce, #e5ddce);
+	--avatarusersquare-orlando-diggs-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-andi-lane: undefined;
+	--avatarusersquare-andi-lane-colorbackground: linear-gradient(to left, #dcccbd, #dcccbd);
+	--avatarusersquare-andi-lane-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-kate-morrison: undefined;
+	--avatarusersquare-kate-morrison-colorbackground: linear-gradient(to left, #cfcbdc, #cfcbdc);
+	--avatarusersquare-kate-morrison-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-koray-okumus: undefined;
+	--avatarusersquare-koray-okumus-colorbackground: linear-gradient(to left, #e5cfe7, #e5cfe7);
+	--avatarusersquare-koray-okumus-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-ava-wright: undefined;
+	--avatarusersquare-ava-wright-colorbackground: linear-gradient(to left, #ddd0be, #ddd0be);
+	--avatarusersquare-ava-wright-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-eve-leroy: undefined;
+	--avatarusersquare-eve-leroy-colorbackground: linear-gradient(to left, #dfc3cd, #dfc3cd);
+	--avatarusersquare-eve-leroy-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-zahir-mays: undefined;
+	--avatarusersquare-zahir-mays-colorbackground: linear-gradient(to left, #d3d6e9, #d3d6e9);
+	--avatarusersquare-zahir-mays-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-joshua-wilson: undefined;
+	--avatarusersquare-joshua-wilson-colorbackground: linear-gradient(to left, #d3dccf, #d3dccf);
+	--avatarusersquare-joshua-wilson-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-rene-wells: undefined;
+	--avatarusersquare-rene-wells-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-rene-wells-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-lori-bryson: undefined;
+	--avatarusersquare-lori-bryson-colorbackground: linear-gradient(to left, #dfc3cd, #dfc3cd);
+	--avatarusersquare-lori-bryson-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-anaiah-whitten: undefined;
+	--avatarusersquare-anaiah-whitten-colorbackground: linear-gradient(to left, #d9d0e6, #d9d0e6);
+	--avatarusersquare-anaiah-whitten-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-noah-pierre: undefined;
+	--avatarusersquare-noah-pierre-colorbackground: linear-gradient(to left, #c1d3bb, #c1d3bb);
+	--avatarusersquare-noah-pierre-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-katherine-moss: undefined;
+	--avatarusersquare-katherine-moss-colorbackground: linear-gradient(to left, #c0c6dd, #c0c6dd);
+	--avatarusersquare-katherine-moss-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-mollie-hall: undefined;
+	--avatarusersquare-mollie-hall-colorbackground: linear-gradient(to left, #dfc3cd, #dfc3cd);
+	--avatarusersquare-mollie-hall-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-eduard-franz: undefined;
+	--avatarusersquare-eduard-franze-colorbackground: linear-gradient(to left, #e5ddce, #e5ddce);
+	--avatarusersquare-eduard-franz-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-alec-whitten: undefined;
+	--avatarusersquare-alec-whitten-colorbackground: linear-gradient(to left, #d8ddc0, #d8ddc0);
+	--avatarusersquare-alec-whitten-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-eva-bond: undefined;
+	--avatarusersquare-eva-bond-colorbackground: linear-gradient(to left, #e8d7ea, #e8d7ea);
+	--avatarusersquare-eva-bond-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-sophia-perez: undefined;
+	--avatarusersquare-sophia-perez-colorbackground: linear-gradient(to left, #d7e3e8, #d7e3e8);
+	--avatarusersquare-sophia-perez-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-lyle-kauffman: undefined;
+	--avatarusersquare-lyle-kauffman-colorbackground: linear-gradient(to left, #d6b3b3, #d6b3b3);
+	--avatarusersquare-lyle-kauffman-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-kelly-williams: undefined;
+	--avatarusersquare-kelly-williams-colorbackground: linear-gradient(to left, #dadcd6, #dadcd6);
+	--avatarusersquare-kelly-williams-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-lucy-bond: undefined;
+	--avatarusersquare-lucy-bond-colorbackground: linear-gradient(to left, #e8d7ea, #e8d7ea);
+	--avatarusersquare-lucy-bond-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-alisa-hester: undefined;
+	--avatarusersquare-alisa-hester-colorbackground: linear-gradient(to left, #e5d1e6, #e5d1e6);
+	--avatarusersquare-alisa-hester-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-rosalee-melvin: undefined;
+	--avatarusersquare-rosalee-melvin-colorbackground: linear-gradient(to left, #ddd0be, #ddd0be);
+	--avatarusersquare-rosalee-melvin-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-loki-bright: undefined;
+	--avatarusersquare-loki-bright-colorbackground: linear-gradient(to left, #d7e3e8, #d7e3e8);
+	--avatarusersquare-loki-bright-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-aliah-lane: undefined;
+	--avatarusersquare-aliah-lane-colorbackground: linear-gradient(to left, #cfcbdc, #cfcbdc);
+	--avatarusersquare-aliah-lane-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-anita-cruz: undefined;
+	--avatarusersquare-anita-cruz-colorbackground: linear-gradient(to left, #d7e3e8, #d7e3e8);
+	--avatarusersquare-anita-cruz-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-kari-rasmussen: undefined;
+	--avatarusersquare-kari-rasmussen-colorbackground: linear-gradient(to left, #c7d1b0, #c7d1b0);
+	--avatarusersquare-kari-rasmussen-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-nala-goins: undefined;
+	--avatarusersquare-nala-goins-colorbackground: linear-gradient(to left, #cfcbdc, #cfcbdc);
+	--avatarusersquare-nala-goins-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-am-lie-laurent: undefined;
+	--avatarusersquare-am-lie-laurent-colorbackground: linear-gradient(to left, #ddc0ce, #ddc0ce);
+	--avatarusersquare-am-lie-laurent-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-sienna-hewitt: undefined;
+	--avatarusersquare-sienna-hewitt-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-sienna-hewitt-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-ammar-foley: undefined;
+	--avatarusersquare-ammar-foley-colorbackground: linear-gradient(to left, #c7d1b0, #c7d1b0);
+	--avatarusersquare-ammar-foley-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-pippa-wilkinson: undefined;
+	--avatarusersquare-pippa-wilkinson-colorbackground: linear-gradient(to left, #ced1e5, #ced1e5);
+	--avatarusersquare-pippa-wilkinson-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-olly-schroeder: undefined;
+	--avatarusersquare-olly-schroeder-colorbackground: linear-gradient(to left, #ddd0be, #ddd0be);
+	--avatarusersquare-olly-schroeder-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-mathilde-lewis: undefined;
+	--avatarusersquare-mathilde-lewis-colorbackground: linear-gradient(to left, #dfc2c0, #dfc2c0);
+	--avatarusersquare-mathilde-lewis-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-julius-vaughan: undefined;
+	--avatarusersquare-julius-vaughan-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-julius-vaughan-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-zaid-schwartz: undefined;
+	--avatarusersquare-zaid-schwartz-colorbackground: linear-gradient(to left, #d1e3d9, #d1e3d9);
+	--avatarusersquare-zaid-schwartz-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-lily-rose-chedjou: undefined;
+	--avatarusersquare-lily-rose-chedjou-colorbackground: linear-gradient(to left, #e5ddce, #e5ddce);
+	--avatarusersquare-lily-rose-chedjou-neutralbackground: linear-gradient(
+		to left,
+		#e0e0e0,
+		#e0e0e0
+	);
+	--avatarusersquare-caitlyn-king: undefined;
+	--avatarusersquare-caitlyn-king-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-caitlyn-king-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-fleur-cook: undefined;
+	--avatarusersquare-fleur-cook-colorbackground: linear-gradient(to left, #dadcd6, #dadcd6);
+	--avatarusersquare-fleur-cook-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-marco-kelly: undefined;
+	--avatarusersquare-marco-kelly-colorbackground: linear-gradient(to left, #e3c6d1, #e3c6d1);
+	--avatarusersquare-marco-kelly-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-lulu-meyers: undefined;
+	--avatarusersquare-lulu-meyers-colorbackground: linear-gradient(to left, #d9d0e6, #d9d0e6);
+	--avatarusersquare-lulu-meyers-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-mikey-lawrence: undefined;
+	--avatarusersquare-mikey-lawrence-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-mikey-lawrence-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-freya-browning: undefined;
+	--avatarusersquare-freya-browning-colorbackground: linear-gradient(to left, #dfc2c0, #dfc2c0);
+	--avatarusersquare-freya-browning-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-florence-shaw: undefined;
+	--avatarusersquare-florence-shaw-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-florence-shaw-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-ashwin-santiago: undefined;
+	--avatarusersquare-ashwin-santiago-colorbackground: linear-gradient(to left, #d1e2e7, #d1e2e7);
+	--avatarusersquare-ashwin-santiago-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-nikolas-gibbons: undefined;
+	--avatarusersquare-nikolas-gibbons-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-nikolas-gibbons-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-adriana-o-sullivan: undefined;
+	--avatarusersquare-adriana-o-sullivan-colorbackground: linear-gradient(to left, #e5d1e6, #e5d1e6);
+	--avatarusersquare-adriana-o-sullivan-neutralbackground: linear-gradient(
+		to left,
+		#e0e0e0,
+		#e0e0e0
+	);
+	--avatarusersquare-ethan-campbell: undefined;
+	--avatarusersquare-ethan-campbell-colorbackground: linear-gradient(to left, #dbcabd, #dbcabd);
+	--avatarusersquare-ethan-campbell-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-jaya-willis: undefined;
+	--avatarusersquare-jaya-willis-colorbackground: linear-gradient(to left, #c6d0cb, #c6d0cb);
+	--avatarusersquare-jaya-willis-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-jessie-meyton: undefined;
+	--avatarusersquare-jessie-meyton-colorbackground: linear-gradient(to left, #d3d6e9, #d3d6e9);
+	--avatarusersquare-jessie-meyton-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-hasan-johns: undefined;
+	--avatarusersquare-hasan-johns-colorbackground: linear-gradient(to left, #d8ddc0, #d8ddc0);
+	--avatarusersquare-hasan-johns-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-priya-shepard: undefined;
+	--avatarusersquare-priya-shepard-colorbackground: linear-gradient(to left, #bfd6d7, #bfd6d7);
+	--avatarusersquare-priya-shepard-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-levi-rocha: undefined;
+	--avatarusersquare-levi-rocha-colorbackground: linear-gradient(to left, #dfc2c0, #dfc2c0);
+	--avatarusersquare-levi-rocha-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-zahra-christensen: undefined;
+	--avatarusersquare-zahra-christensen-colorbackground: linear-gradient(to left, #d3dccf, #d3dccf);
+	--avatarusersquare-zahra-christensen-neutralbackground: linear-gradient(
+		to left,
+		#e0e0e0,
+		#e0e0e0
+	);
+	--avatarusersquare-stefan-sears: undefined;
+	--avatarusersquare-stefan-sears-colorbackground: linear-gradient(to left, #d6cfb7, #d6cfb7);
+	--avatarusersquare-stefan-sears-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-ali-mahdi: undefined;
+	--avatarusersquare-ali-mahdi-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-ali-mahdi-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-riley-o-moore: undefined;
+	--avatarusersquare-riley-o-moore-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-riley-o-moore-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-liam-hood: undefined;
+	--avatarusersquare-liam-hood-colorbackground: linear-gradient(to left, #dfc3cd, #dfc3cd);
+	--avatarusersquare-liam-hood-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-brianna-ware: undefined;
+	--avatarusersquare-brianna-ware-colorbackground: linear-gradient(to left, #d6b3b3, #d6b3b3);
+	--avatarusersquare-brianna-ware-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-youssef-roberson: undefined;
+	--avatarusersquare-youssef-roberson-colorbackground: linear-gradient(to left, #d8e0cf, #d8e0cf);
+	--avatarusersquare-youssef-roberson-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-ashton-blackwell: undefined;
+	--avatarusersquare-ashton-blackwell-colorbackground: linear-gradient(to left, #d3d6e9, #d3d6e9);
+	--avatarusersquare-ashton-blackwell-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-cohen-lozano: undefined;
+	--avatarusersquare-cohen-lozano-colorbackground: linear-gradient(to left, #c6d0cb, #c6d0cb);
+	--avatarusersquare-cohen-lozano-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-owen-garcia: undefined;
+	--avatarusersquare-owen-garcia-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-owen-garcia-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-isla-allison: undefined;
+	--avatarusersquare-isla-allison-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-isla-allison-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-elisa-nishikawa: undefined;
+	--avatarusersquare-elisa-nishikawa-colorbackground: linear-gradient(to left, #d3dccf, #d3dccf);
+	--avatarusersquare-elisa-nishikawa-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-erica-wyatt: undefined;
+	--avatarusersquare-erica-wyatt-colorbackground: linear-gradient(to left, #e5cfe7, #e5cfe7);
+	--avatarusersquare-erica-wyatt-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-harry-bender: undefined;
+	--avatarusersquare-harry-bender-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-harry-bender-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-cameron-yang: undefined;
+	--avatarusersquare-cameron-yang-colorbackground: linear-gradient(to left, #d7e3e8, #d7e3e8);
+	--avatarusersquare-cameron-yang-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-noel-baldwin: undefined;
+	--avatarusersquare-noel-baldwin-colorbackground: linear-gradient(to left, #e3d2c6, #e3d2c6);
+	--avatarusersquare-noel-baldwin-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-kyla-clay: undefined;
+	--avatarusersquare-kyla-clay-colorbackground: linear-gradient(to left, #d9d0e6, #d9d0e6);
+	--avatarusersquare-kyla-clay-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-molly-vaughan: undefined;
+	--avatarusersquare-molly-vaughan-colorbackground: linear-gradient(to left, #c1d3bb, #c1d3bb);
+	--avatarusersquare-molly-vaughan-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-jonathan-kelly: undefined;
+	--avatarusersquare-jonathan-kelly-colorbackground: linear-gradient(to left, #e5cfe7, #e5cfe7);
+	--avatarusersquare-jonathan-kelly-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-amanda-lowery: undefined;
+	--avatarusersquare-amanda-lowery-colorbackground: linear-gradient(to left, #e0c1c3, #e0c1c3);
+	--avatarusersquare-amanda-lowery-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-kaitlin-hale: undefined;
+	--avatarusersquare-kaitlin-hale-colorbackground: linear-gradient(to left, #ddd0be, #ddd0be);
+	--avatarusersquare-kaitlin-hale-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-maxwell-tan: undefined;
+	--avatarusersquare-maxwell-tan-colorbackground: linear-gradient(to left, #c2bfd3, #c2bfd3);
+	--avatarusersquare-maxwell-tan-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-elsie-roy: undefined;
+	--avatarusersquare-elsie-roy-colorbackground: linear-gradient(to left, #cbe1ef, #cbe1ef);
+	--avatarusersquare-elsie-roy-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-zuzanna-burke: undefined;
+	--avatarusersquare-zuzanna-burke-colorbackground: linear-gradient(to left, #d6b3b3, #d6b3b3);
+	--avatarusersquare-zuzanna-burke-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-maddison-gillespie: undefined;
+	--avatarusersquare-maddison-gillespie-colorbackground: linear-gradient(to left, #e4cbcc, #e4cbcc);
+	--avatarusersquare-maddison-gillespie-neutralbackground: linear-gradient(
+		to left,
+		#e0e0e0,
+		#e0e0e0
+	);
+	--avatarusersquare-kaden-scott: undefined;
+	--avatarusersquare-kaden-scott-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-kaden-scott-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-adil-floyd: undefined;
+	--avatarusersquare-adil-floyd-colorbackground: linear-gradient(to left, #e5ddce, #e5ddce);
+	--avatarusersquare-adil-floyd-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-marvin-robbins: undefined;
+	--avatarusersquare-marvin-robbins-colorbackground: linear-gradient(to left, #c7d1b0, #c7d1b0);
+	--avatarusersquare-marvin-robbins-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-belle-woods: undefined;
+	--avatarusersquare-belle-woods-colorbackground: linear-gradient(to left, #d7cde5, #d7cde5);
+	--avatarusersquare-belle-woods-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-sarah-page: undefined;
+	--avatarusersquare-sarah-page-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-sarah-page-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-aysha-becker: undefined;
+	--avatarusersquare-aysha-becker-colorbackground: linear-gradient(to left, #d1e2e7, #d1e2e7);
+	--avatarusersquare-aysha-becker-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-blake-riley: undefined;
+	--avatarusersquare-blake-riley-colorbackground: linear-gradient(to left, #d6cfb7, #d6cfb7);
+	--avatarusersquare-blake-riley-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-jay-shepard: undefined;
+	--avatarusersquare-jay-shepard-colorbackground: linear-gradient(to left, #c7d1b0, #c7d1b0);
+	--avatarusersquare-jay-shepard-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-rhea-levine: undefined;
+	--avatarusersquare-rhea-levine-colorbackground: linear-gradient(to left, #d3d6e9, #d3d6e9);
+	--avatarusersquare-rhea-levine-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-franklin-mays: undefined;
+	--avatarusersquare-franklin-mays-colorbackground: linear-gradient(to left, #d7e3e8, #d7e3e8);
+	--avatarusersquare-franklin-mays-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-kelsey-lowe: undefined;
+	--avatarusersquare-kelsey-lowe-colorbackground: linear-gradient(to left, #c9c6d0, #c9c6d0);
+	--avatarusersquare-kelsey-lowe-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-billie-wright: undefined;
+	--avatarusersquare-billie-wright-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-billie-wright-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-madeleine-pitts: undefined;
+	--avatarusersquare-madeleine-pitts-colorbackground: linear-gradient(to left, #cfcbdc, #cfcbdc);
+	--avatarusersquare-madeleine-pitts-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-frank-whitaker: undefined;
+	--avatarusersquare-frank-whitaker-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-frank-whitaker-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-dillan-nguyen: undefined;
+	--avatarusersquare-dillan-nguyen-colorbackground: linear-gradient(to left, #dfc2c0, #dfc2c0);
+	--avatarusersquare-dillan-nguyen-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-katy-fuller: undefined;
+	--avatarusersquare-katy-fuller-colorbackground: linear-gradient(to left, #d1e3d9, #d1e3d9);
+	--avatarusersquare-katy-fuller-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-nicolas-trevino: undefined;
+	--avatarusersquare-nicolas-trevino-colorbackground: linear-gradient(to left, #d6b3b3, #d6b3b3);
+	--avatarusersquare-nicolas-trevino-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-owen-harding: undefined;
+	--avatarusersquare-owen-harding-colorbackground: linear-gradient(to left, #cfcbdc, #cfcbdc);
+	--avatarusersquare-owen-harding-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-ava-bentley: undefined;
+	--avatarusersquare-ava-bentley-colorbackground: linear-gradient(to left, #ccdde1, #ccdde1);
+	--avatarusersquare-ava-bentley-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-harriet-rojas: undefined;
+	--avatarusersquare-harriet-rojas-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-harriet-rojas-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-ethan-valdez: undefined;
+	--avatarusersquare-ethan-valdez-colorbackground: linear-gradient(to left, #d6e7ea, #d6e7ea);
+	--avatarusersquare-ethan-valdez-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-abraham-baker: undefined;
+	--avatarusersquare-abraham-baker-colorbackground: linear-gradient(to left, #d1d2e3, #d1d2e3);
+	--avatarusersquare-abraham-baker-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-sally-mason: undefined;
+	--avatarusersquare-sally-mason-colorbackground: linear-gradient(to left, #ecdddc, #ecdddc);
+	--avatarusersquare-sally-mason-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-jayden-moss: undefined;
+	--avatarusersquare-jayden-moss-colorbackground: linear-gradient(to left, #dfc3cd, #dfc3cd);
+	--avatarusersquare-jayden-moss-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-isobel-fuller: undefined;
+	--avatarusersquare-isobel-fuller-colorbackground: linear-gradient(to left, #e9dcbb, #e9dcbb);
+	--avatarusersquare-isobel-fuller-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-jackson-reed: undefined;
+	--avatarusersquare-jackson-reed-colorbackground: linear-gradient(to left, #d7e3e8, #d7e3e8);
+	--avatarusersquare-jackson-reed-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-courtney-turner: undefined;
+	--avatarusersquare-courtney-turner-colorbackground: linear-gradient(to left, #c7d1b0, #c7d1b0);
+	--avatarusersquare-courtney-turner-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-jordan-burgess: undefined;
+	--avatarusersquare-jordan-burgess-colorbackground: linear-gradient(to left, #c6d0cb, #c6d0cb);
+	--avatarusersquare-jordan-burgess-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-bailey-richards: undefined;
+	--avatarusersquare-bailey-richards-colorbackground: linear-gradient(to left, #e8d7ea, #e8d7ea);
+	--avatarusersquare-bailey-richards-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-rayhan-zua: undefined;
+	--avatarusersquare-rayhan-zua-colorbackground: linear-gradient(to left, #c1debc, #c1debc);
+	--avatarusersquare-rayhan-zua-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-nic-fassbender: undefined;
+	--avatarusersquare-nic-fassbender-colorbackground: linear-gradient(to left, #cfcbdc, #cfcbdc);
+	--avatarusersquare-nic-fassbender-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-leyton-fields: undefined;
+	--avatarusersquare-leyton-fields-colorbackground: linear-gradient(to left, #cfd4c6, #cfd4c6);
+	--avatarusersquare-leyton-fields-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-bec-ferguson: undefined;
+	--avatarusersquare-bec-ferguson-colorbackground: linear-gradient(to left, #e7d3d7, #e7d3d7);
+	--avatarusersquare-bec-ferguson-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-nicolas-wang: undefined;
+	--avatarusersquare-nicolas-wang-colorbackground: linear-gradient(to left, #f1e7da, #f1e7da);
+	--avatarusersquare-nicolas-wang-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-zaynab-donnelly: undefined;
+	--avatarusersquare-zaynab-donnelly-colorbackground: linear-gradient(to left, #c6d0cb, #c6d0cb);
+	--avatarusersquare-zaynab-donnelly-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-genevieve-mclean: undefined;
+	--avatarusersquare-genevieve-mclean-colorbackground: linear-gradient(to left, #bbc0dd, #bbc0dd);
+	--avatarusersquare-genevieve-mclean-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-adem-lane: undefined;
+	--avatarusersquare-adem-lane-colorbackground: linear-gradient(to left, #c7d1b0, #c7d1b0);
+	--avatarusersquare-adem-lane-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-nicola-harris: undefined;
+	--avatarusersquare-nicola-harris-colorbackground: linear-gradient(to left, #ddd0be, #ddd0be);
+	--avatarusersquare-nicola-harris-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-zara-bush: undefined;
+	--avatarusersquare-zara-bush-colorbackground: linear-gradient(to left, #e5d1e6, #e5d1e6);
+	--avatarusersquare-zara-bush-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-byron-robertson: undefined;
+	--avatarusersquare-byron-robertson-colorbackground: linear-gradient(to left, #dbcabd, #dbcabd);
+	--avatarusersquare-byron-robertson-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avatarusersquare-rhianna-shepard: undefined;
+	--avatarusersquare-rhianna-shepard-colorbackground: linear-gradient(to left, #d7e3e8, #d7e3e8);
+	--avatarusersquare-rhianna-shepard-neutralbackground: linear-gradient(to left, #e0e0e0, #e0e0e0);
+	--avataruserportrait-alisa-hester: undefined;
+	--avataruserportrait-rich-wilson: undefined;
+	--avataruserportrait-annie-stanley: undefined;
+	--avataruserportrait-johnny-bell: undefined;
+	--avataruserportrait-mia-ward: undefined;
+	--avataruserportrait-archie-young: undefined;
+	--avataruserportrait-amanda-carr: undefined;
+	--avataruserportrait-megan-sims: undefined;
+	--avataruserportrait-ryan-fox: undefined;
+	--avataruserportrait-mason-phillips: undefined;
+	--avataruserportrait-zoe-silva: undefined;
+	--avataruserportrait-annie-simmons: undefined;
+	--avataruserportrait-harley-white: undefined;
+	--avataruserportrait-amelie-cooper: undefined;
+	--avataruserportrait-evelyn-harrison: undefined;
+	--avataruserportrait-abby-smith: undefined;
+	--avataruserportrait-isla-anderson: undefined;
+	--avataruserportrait-alex-holland: undefined;
+	--avataruserportrait-zachary-collins: undefined;
+	--avataruserportrait-nic-davidson: undefined;
+	--avataruserportrait-josh-knight: undefined;
+	--avataruserportrait-kelly-myer: undefined;
+	--avataruserportrait-laura-palmer: undefined;
+	--avataruserportrait-mollie-morgan: undefined;
+	--avataruserportrait-heather-kelly: undefined;
+	--avataruserportrait-james-dunn: undefined;
+	--avataruserportrait-elijah-johnson: undefined;
+	--avataruserportrait-sara-woodman: undefined;
+	--avatarcompanylogo-layers: undefined;
+	--avatarcompanylogo-sisyphus: undefined;
+	--avatarcompanylogo-capsule: undefined;
+	--avatarcompanylogo-catalog: undefined;
+	--avatarcompanylogo-spherule: undefined;
+	--avatarcompanylogo-luminous: undefined;
+	--avatarcompanylogo-focal-point: undefined;
+	--avatarcompanylogo-polymath: undefined;
+	--avatarcompanylogo-acme-group: undefined;
+	--avatarcompanylogo-segment: undefined;
+	--avatarcompanylogo-feather-dev: undefined;
+	--avatarcompanylogo-galileo: undefined;
+	--avatarcompanylogo-quotient: undefined;
+	--avatarcompanylogo-hourglass: undefined;
+	--avatarcompanylogo-command-r: undefined;
+	--avatarcompanylogo-global-bank: undefined;
+	--avatarcompanylogo-lightbox: undefined;
+	--avatarcompanylogo-alt-shift: undefined;
+	--avatarcompanylogo-nietzsche: undefined;
+	--avatarcompanylogo-epicurious: undefined;
+	--avatarcompanylogo-boltshift: undefined;
+	--avatarcompanylogo-cloud-watch: undefined;
+	--avatarcompanylogo-biosynthesis: undefined;
+	--avatarcompanylogo-interlock: undefined;
+	--avatarcompanylogo-untitled-ui: undefined;
+
+	/* Fonts */
+	--display-2-xl-regular-font-family: Inter, sans-serif;
+	--display-2-xl-regular-font-size: 72px;
+	--display-2-xl-regular-line-height: 90px;
+	--display-2-xl-regular-font-weight: 400;
+	--display-2-xl-regular-font-style: normal;
+	--display-2-xl-medium-font-family: Inter, sans-serif;
+	--display-2-xl-medium-font-size: 72px;
+	--display-2-xl-medium-line-height: 90px;
+	--display-2-xl-medium-font-weight: 500;
+	--display-2-xl-medium-font-style: normal;
+	--display-2-xl-semibold-font-family: Inter, sans-serif;
+	--display-2-xl-semibold-font-size: 72px;
+	--display-2-xl-semibold-line-height: 90px;
+	--display-2-xl-semibold-font-weight: 600;
+	--display-2-xl-semibold-font-style: normal;
+	--display-2-xl-bold-font-family: Inter, sans-serif;
+	--display-2-xl-bold-font-size: 72px;
+	--display-2-xl-bold-line-height: 90px;
+	--display-2-xl-bold-font-weight: 700;
+	--display-2-xl-bold-font-style: normal;
+	--displayxl-regular-font-family: Inter, sans-serif;
+	--displayxl-regular-font-size: 60px;
+	--displayxl-regular-line-height: 72px;
+	--displayxl-regular-font-weight: 400;
+	--displayxl-regular-font-style: normal;
+	--displayxl-medium-font-family: Inter, sans-serif;
+	--displayxl-medium-font-size: 60px;
+	--displayxl-medium-line-height: 72px;
+	--displayxl-medium-font-weight: 500;
+	--displayxl-medium-font-style: normal;
+	--displayxl-semibold-font-family: Inter, sans-serif;
+	--displayxl-semibold-font-size: 60px;
+	--displayxl-semibold-line-height: 72px;
+	--displayxl-semibold-font-weight: 600;
+	--displayxl-semibold-font-style: normal;
+	--displayxl-bold-font-family: Inter, sans-serif;
+	--displayxl-bold-font-size: 60px;
+	--displayxl-bold-line-height: 72px;
+	--displayxl-bold-font-weight: 700;
+	--displayxl-bold-font-style: normal;
+	--displaylg-regular-font-family: Inter, sans-serif;
+	--displaylg-regular-font-size: 48px;
+	--displaylg-regular-line-height: 60px;
+	--displaylg-regular-font-weight: 400;
+	--displaylg-regular-font-style: normal;
+	--displaylg-medium-font-family: Inter, sans-serif;
+	--displaylg-medium-font-size: 48px;
+	--displaylg-medium-line-height: 60px;
+	--displaylg-medium-font-weight: 500;
+	--displaylg-medium-font-style: normal;
+	--displaylg-semibold-font-family: Inter, sans-serif;
+	--displaylg-semibold-font-size: 48px;
+	--displaylg-semibold-line-height: 60px;
+	--displaylg-semibold-font-weight: 600;
+	--displaylg-semibold-font-style: normal;
+	--displaylg-bold-font-family: Inter, sans-serif;
+	--displaylg-bold-font-size: 48px;
+	--displaylg-bold-line-height: 60px;
+	--displaylg-bold-font-weight: 700;
+	--displaylg-bold-font-style: normal;
+	--displaymd-regular-font-family: Inter, sans-serif;
+	--displaymd-regular-font-size: 36px;
+	--displaymd-regular-line-height: 44px;
+	--displaymd-regular-font-weight: 400;
+	--displaymd-regular-font-style: normal;
+	--displaymd-medium-font-family: Inter, sans-serif;
+	--displaymd-medium-font-size: 36px;
+	--displaymd-medium-line-height: 44px;
+	--displaymd-medium-font-weight: 500;
+	--displaymd-medium-font-style: normal;
+	--displaymd-semibold-font-family: Inter, sans-serif;
+	--displaymd-semibold-font-size: 36px;
+	--displaymd-semibold-line-height: 44px;
+	--displaymd-semibold-font-weight: 600;
+	--displaymd-semibold-font-style: normal;
+	--displaymd-bold-font-family: Inter, sans-serif;
+	--displaymd-bold-font-size: 36px;
+	--displaymd-bold-line-height: 44px;
+	--displaymd-bold-font-weight: 700;
+	--displaymd-bold-font-style: normal;
+	--displaysm-regular-font-family: Inter, sans-serif;
+	--displaysm-regular-font-size: 30px;
+	--displaysm-regular-line-height: 38px;
+	--displaysm-regular-font-weight: 400;
+	--displaysm-regular-font-style: normal;
+	--displaysm-medium-font-family: Inter, sans-serif;
+	--displaysm-medium-font-size: 30px;
+	--displaysm-medium-line-height: 38px;
+	--displaysm-medium-font-weight: 500;
+	--displaysm-medium-font-style: normal;
+	--displaysm-semibold-font-family: Inter, sans-serif;
+	--displaysm-semibold-font-size: 30px;
+	--displaysm-semibold-line-height: 38px;
+	--displaysm-semibold-font-weight: 600;
+	--displaysm-semibold-font-style: normal;
+	--displaysm-bold-font-family: Inter, sans-serif;
+	--displaysm-bold-font-size: 30px;
+	--displaysm-bold-line-height: 38px;
+	--displaysm-bold-font-weight: 700;
+	--displaysm-bold-font-style: normal;
+	--displaysm-mediumitalic-font-family: Inter, sans-serif;
+	--displaysm-mediumitalic-font-size: 30px;
+	--displaysm-mediumitalic-line-height: 44px;
+	--displaysm-mediumitalic-font-weight: 500;
+	--displaysm-mediumitalic-font-style: italic;
+	--displayxs-regular-font-family: Inter, sans-serif;
+	--displayxs-regular-font-size: 24px;
+	--displayxs-regular-line-height: 32px;
+	--displayxs-regular-font-weight: 400;
+	--displayxs-regular-font-style: normal;
+	--displayxs-medium-font-family: Inter, sans-serif;
+	--displayxs-medium-font-size: 24px;
+	--displayxs-medium-line-height: 32px;
+	--displayxs-medium-font-weight: 500;
+	--displayxs-medium-font-style: normal;
+	--displayxs-semibold-font-family: Inter, sans-serif;
+	--displayxs-semibold-font-size: 24px;
+	--displayxs-semibold-line-height: 32px;
+	--displayxs-semibold-font-weight: 600;
+	--displayxs-semibold-font-style: normal;
+	--displayxs-bold-font-family: Inter, sans-serif;
+	--displayxs-bold-font-size: 24px;
+	--displayxs-bold-line-height: 32px;
+	--displayxs-bold-font-weight: 700;
+	--displayxs-bold-font-style: normal;
+	--displayxs-mediumitalic-font-family: Inter, sans-serif;
+	--displayxs-mediumitalic-font-size: 24px;
+	--displayxs-mediumitalic-line-height: 36px;
+	--displayxs-mediumitalic-font-weight: 500;
+	--displayxs-mediumitalic-font-style: italic;
+	--textxl-regular-font-family: Inter, sans-serif;
+	--textxl-regular-font-size: 20px;
+	--textxl-regular-line-height: 30px;
+	--textxl-regular-font-weight: 400;
+	--textxl-regular-font-style: normal;
+	--textxl-medium-font-family: Inter, sans-serif;
+	--textxl-medium-font-size: 20px;
+	--textxl-medium-line-height: 30px;
+	--textxl-medium-font-weight: 500;
+	--textxl-medium-font-style: normal;
+	--textxl-semibold-font-family: Inter, sans-serif;
+	--textxl-semibold-font-size: 20px;
+	--textxl-semibold-line-height: 30px;
+	--textxl-semibold-font-weight: 600;
+	--textxl-semibold-font-style: normal;
+	--textxl-bold-font-family: Inter, sans-serif;
+	--textxl-bold-font-size: 20px;
+	--textxl-bold-line-height: 30px;
+	--textxl-bold-font-weight: 700;
+	--textxl-bold-font-style: normal;
+	--textxl-regularitalic-font-family: Inter, sans-serif;
+	--textxl-regularitalic-font-size: 20px;
+	--textxl-regularitalic-line-height: 30px;
+	--textxl-regularitalic-font-weight: 400;
+	--textxl-regularitalic-font-style: italic;
+	--textxl-mediumitalic-font-family: Inter, sans-serif;
+	--textxl-mediumitalic-font-size: 20px;
+	--textxl-mediumitalic-line-height: 30px;
+	--textxl-mediumitalic-font-weight: 500;
+	--textxl-mediumitalic-font-style: italic;
+	--textxl-semibolditalic-font-family: Inter, sans-serif;
+	--textxl-semibolditalic-font-size: 20px;
+	--textxl-semibolditalic-line-height: 30px;
+	--textxl-semibolditalic-font-weight: 600;
+	--textxl-semibolditalic-font-style: italic;
+	--textxl-bolditalic-font-family: Inter, sans-serif;
+	--textxl-bolditalic-font-size: 20px;
+	--textxl-bolditalic-line-height: 30px;
+	--textxl-bolditalic-font-weight: 700;
+	--textxl-bolditalic-font-style: italic;
+	--textxl-regularunderlined-font-family: Inter, sans-serif;
+	--textxl-regularunderlined-font-size: 20px;
+	--textxl-regularunderlined-line-height: 30px;
+	--textxl-regularunderlined-font-weight: 400;
+	--textxl-regularunderlined-font-style: normal;
+	--textlg-regular-font-family: Inter, sans-serif;
+	--textlg-regular-font-size: 18px;
+	--textlg-regular-line-height: 28px;
+	--textlg-regular-font-weight: 400;
+	--textlg-regular-font-style: normal;
+	--textlg-medium-font-family: Inter, sans-serif;
+	--textlg-medium-font-size: 18px;
+	--textlg-medium-line-height: 28px;
+	--textlg-medium-font-weight: 500;
+	--textlg-medium-font-style: normal;
+	--textlg-semibold-font-family: Inter, sans-serif;
+	--textlg-semibold-font-size: 18px;
+	--textlg-semibold-line-height: 28px;
+	--textlg-semibold-font-weight: 600;
+	--textlg-semibold-font-style: normal;
+	--textlg-bold-font-family: Inter, sans-serif;
+	--textlg-bold-font-size: 18px;
+	--textlg-bold-line-height: 28px;
+	--textlg-bold-font-weight: 700;
+	--textlg-bold-font-style: normal;
+	--textlg-regularitalic-font-family: Inter, sans-serif;
+	--textlg-regularitalic-font-size: 18px;
+	--textlg-regularitalic-line-height: 28px;
+	--textlg-regularitalic-font-weight: 400;
+	--textlg-regularitalic-font-style: italic;
+	--textlg-mediumitalic-font-family: Inter, sans-serif;
+	--textlg-mediumitalic-font-size: 18px;
+	--textlg-mediumitalic-line-height: 28px;
+	--textlg-mediumitalic-font-weight: 500;
+	--textlg-mediumitalic-font-style: italic;
+	--textlg-semibolditalic-font-family: Inter, sans-serif;
+	--textlg-semibolditalic-font-size: 18px;
+	--textlg-semibolditalic-line-height: 28px;
+	--textlg-semibolditalic-font-weight: 600;
+	--textlg-semibolditalic-font-style: italic;
+	--textlg-bolditalic-font-family: Inter, sans-serif;
+	--textlg-bolditalic-font-size: 18px;
+	--textlg-bolditalic-line-height: 28px;
+	--textlg-bolditalic-font-weight: 700;
+	--textlg-bolditalic-font-style: italic;
+	--textlg-regularunderlined-font-family: Inter, sans-serif;
+	--textlg-regularunderlined-font-size: 18px;
+	--textlg-regularunderlined-line-height: 28px;
+	--textlg-regularunderlined-font-weight: 400;
+	--textlg-regularunderlined-font-style: normal;
+	--textlg-mediumunderlined-font-family: Inter, sans-serif;
+	--textlg-mediumunderlined-font-size: 18px;
+	--textlg-mediumunderlined-line-height: 28px;
+	--textlg-mediumunderlined-font-weight: 500;
+	--textlg-mediumunderlined-font-style: normal;
+	--textlg-semiboldunderlined-font-family: Inter, sans-serif;
+	--textlg-semiboldunderlined-font-size: 18px;
+	--textlg-semiboldunderlined-line-height: 28px;
+	--textlg-semiboldunderlined-font-weight: 600;
+	--textlg-semiboldunderlined-font-style: normal;
+	--textmd-regular-font-family: Inter, sans-serif;
+	--textmd-regular-font-size: 16px;
+	--textmd-regular-line-height: 24px;
+	--textmd-regular-font-weight: 400;
+	--textmd-regular-font-style: normal;
+	--textmd-medium-font-family: Inter, sans-serif;
+	--textmd-medium-font-size: 16px;
+	--textmd-medium-line-height: 24px;
+	--textmd-medium-font-weight: 500;
+	--textmd-medium-font-style: normal;
+	--textmd-semibold-font-family: Inter, sans-serif;
+	--textmd-semibold-font-size: 16px;
+	--textmd-semibold-line-height: 24px;
+	--textmd-semibold-font-weight: 600;
+	--textmd-semibold-font-style: normal;
+	--textmd-bold-font-family: Inter, sans-serif;
+	--textmd-bold-font-size: 16px;
+	--textmd-bold-line-height: 24px;
+	--textmd-bold-font-weight: 700;
+	--textmd-bold-font-style: normal;
+	--textmd-regularitalic-font-family: Inter, sans-serif;
+	--textmd-regularitalic-font-size: 16px;
+	--textmd-regularitalic-line-height: 24px;
+	--textmd-regularitalic-font-weight: 400;
+	--textmd-regularitalic-font-style: italic;
+	--textmd-mediumitalic-font-family: Inter, sans-serif;
+	--textmd-mediumitalic-font-size: 16px;
+	--textmd-mediumitalic-line-height: 24px;
+	--textmd-mediumitalic-font-weight: 500;
+	--textmd-mediumitalic-font-style: italic;
+	--textmd-semibolditalic-font-family: Inter, sans-serif;
+	--textmd-semibolditalic-font-size: 16px;
+	--textmd-semibolditalic-line-height: 24px;
+	--textmd-semibolditalic-font-weight: 600;
+	--textmd-semibolditalic-font-style: italic;
+	--textmd-bolditalic-font-family: Inter, sans-serif;
+	--textmd-bolditalic-font-size: 16px;
+	--textmd-bolditalic-line-height: 24px;
+	--textmd-bolditalic-font-weight: 700;
+	--textmd-bolditalic-font-style: italic;
+	--textmd-regularunderlined-font-family: Inter, sans-serif;
+	--textmd-regularunderlined-font-size: 16px;
+	--textmd-regularunderlined-line-height: 24px;
+	--textmd-regularunderlined-font-weight: 400;
+	--textmd-regularunderlined-font-style: normal;
+	--textmd-mediumunderlined-font-family: Inter, sans-serif;
+	--textmd-mediumunderlined-font-size: 16px;
+	--textmd-mediumunderlined-line-height: 24px;
+	--textmd-mediumunderlined-font-weight: 500;
+	--textmd-mediumunderlined-font-style: normal;
+	--textmd-semiboldunderlined-font-family: Inter, sans-serif;
+	--textmd-semiboldunderlined-font-size: 16px;
+	--textmd-semiboldunderlined-line-height: 24px;
+	--textmd-semiboldunderlined-font-weight: 600;
+	--textmd-semiboldunderlined-font-style: normal;
+	--textsm-regular-font-family: Inter, sans-serif;
+	--textsm-regular-font-size: 14px;
+	--textsm-regular-line-height: 20px;
+	--textsm-regular-font-weight: 400;
+	--textsm-regular-font-style: normal;
+	--textsm-medium-font-family: Inter, sans-serif;
+	--textsm-medium-font-size: 14px;
+	--textsm-medium-line-height: 20px;
+	--textsm-medium-font-weight: 500;
+	--textsm-medium-font-style: normal;
+	--textsm-semibold-font-family: Inter, sans-serif;
+	--textsm-semibold-font-size: 14px;
+	--textsm-semibold-line-height: 20px;
+	--textsm-semibold-font-weight: 600;
+	--textsm-semibold-font-style: normal;
+	--textsm-bold-font-family: Inter, sans-serif;
+	--textsm-bold-font-size: 14px;
+	--textsm-bold-line-height: 20px;
+	--textsm-bold-font-weight: 700;
+	--textsm-bold-font-style: normal;
+	--textsm-regularunderlined-font-family: Inter, sans-serif;
+	--textsm-regularunderlined-font-size: 14px;
+	--textsm-regularunderlined-line-height: 20px;
+	--textsm-regularunderlined-font-weight: 400;
+	--textsm-regularunderlined-font-style: normal;
+	--textsm-mediumunderlined-font-family: Inter, sans-serif;
+	--textsm-mediumunderlined-font-size: 14px;
+	--textsm-mediumunderlined-line-height: 20px;
+	--textsm-mediumunderlined-font-weight: 500;
+	--textsm-mediumunderlined-font-style: normal;
+	--textsm-semiboldunderlined-font-family: Inter, sans-serif;
+	--textsm-semiboldunderlined-font-size: 14px;
+	--textsm-semiboldunderlined-line-height: 20px;
+	--textsm-semiboldunderlined-font-weight: 600;
+	--textsm-semiboldunderlined-font-style: normal;
+	--textxs-regular-font-family: Inter, sans-serif;
+	--textxs-regular-font-size: 12px;
+	--textxs-regular-line-height: 18px;
+	--textxs-regular-font-weight: 400;
+	--textxs-regular-font-style: normal;
+	--textxs-medium-font-family: Inter, sans-serif;
+	--textxs-medium-font-size: 12px;
+	--textxs-medium-line-height: 18px;
+	--textxs-medium-font-weight: 500;
+	--textxs-medium-font-style: normal;
+	--textxs-semibold-font-family: Inter, sans-serif;
+	--textxs-semibold-font-size: 12px;
+	--textxs-semibold-line-height: 18px;
+	--textxs-semibold-font-weight: 600;
+	--textxs-semibold-font-style: normal;
+	--textxs-bold-font-family: Inter, sans-serif;
+	--textxs-bold-font-size: 12px;
+	--textxs-bold-line-height: 18px;
+	--textxs-bold-font-weight: 700;
+	--textxs-bold-font-style: normal;
+
+	/* Effects */
+	--focusrings-ring-brand-box-shadow: 0px 0px 0px 4px rgba(158, 119, 237, 0.24);
+	--focusrings-ring-brand-shadow-xs-box-shadow: 0px 0px 0px 4px rgba(158, 119, 237, 0.24),
+		0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+	--focusrings-ring-brand-shadow-sm-box-shadow: 0px 0px 0px 4px rgba(158, 119, 237, 0.24),
+		0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+	--focusrings-ring-gray-box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
+	--focusrings-ring-gray-shadow-xs-box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14),
+		0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+	--focusrings-ring-gray-shadow-sm-box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14),
+		0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+	--focusrings-ring-gray-secondary-box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.2);
+	--focusrings-ring-error-box-shadow: 0px 0px 0px 4px rgba(240, 68, 56, 0.24);
+	--focusrings-ring-error-shadow-xs-box-shadow: 0px 0px 0px 4px rgba(240, 68, 56, 0.24),
+		0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+	--shadows-shadow-xs-box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+	--shadows-shadow-sm-box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06),
+		0px 1px 3px 0px rgba(16, 24, 40, 0.1);
+	--shadows-shadow-md-box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06),
+		0px 4px 8px -2px rgba(16, 24, 40, 0.1);
+	--shadows-shadow-lg-box-shadow: 0px 4px 6px -2px rgba(16, 24, 40, 0.03),
+		0px 12px 16px -4px rgba(16, 24, 40, 0.08);
+	--shadows-shadow-xl-box-shadow: 0px 8px 8px -4px rgba(16, 24, 40, 0.03),
+		0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+	--shadows-shadow-2-xl-box-shadow: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+	--shadows-shadow-3-xl-box-shadow: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);
+	--shadows-portfoliomockupshadows-shadow-main-centre-md-box-shadow: 0px 75px 150px 0px
+		rgba(52, 64, 84, 0.14);
+	--shadows-portfoliomockupshadows-shadow-main-centre-lg-box-shadow: 0px 100px 200px 0px
+		rgba(52, 64, 84, 0.18);
+	--shadows-portfoliomockupshadows-shadow-overlay-right-lg-box-shadow: -40px 40px 72px 0px
+		rgba(52, 64, 84, 0.12);
+	--shadows-portfoliomockupshadows-shadow-overlay-left-lg-box-shadow: 100px 100px 150px 0px
+		rgba(52, 64, 84, 0.12);
+	--shadows-portfoliomockupshadows-shadow-grid-md-box-shadow: 32px 32px 64px 0px
+		rgba(52, 64, 84, 0.08);
+	--backdropblurs-backdrop-blur-sm-backdrop-filter: blur(4px);
+	--backdropblurs-backdrop-blur-md-backdrop-filter: blur(8px);
+	--backdropblurs-backdrop-blur-lg-backdrop-filter: blur(12px);
+	--backdropblurs-backdrop-blur-xl-backdrop-filter: blur(20px);
+}
