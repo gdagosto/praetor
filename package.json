@@ -12,7 +12,7 @@
 		"format": "prettier --write .",
 		"component": "node ./.scripts/new-component.js",
 		"postinstall": "paraglide-js compile --project ./project.inlang",
-		"gh-pages": "npm run build && npx gh-pages -d build"
+		"gh-pages": "npm run build && npx gh-pages -d build -t true"
 	},
 	"devDependencies": {
 		"@inlang/paraglide-js": "1.2.1",

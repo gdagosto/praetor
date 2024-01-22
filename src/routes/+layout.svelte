@@ -8,6 +8,7 @@
 	import Swords from 'lucide-svelte/icons/swords';
 	import type { INavItem } from '$lib/types';
 	import { LogoPraetor } from '$lib/components';
+  import { base } from "$app/paths";
 	import { goto } from '$app/navigation';
 	import { ParaglideJS } from '@inlang/paraglide-js-adapter-sveltekit';
 	import { i18n } from '$lib/i18n.js';
@@ -21,13 +22,13 @@
 			icon: ClipboardList,
 			text: m.navItemSummary(),
 			badge: $stPlayers.length,
-			onClick: () => goto(i18n.route('/summary'))
+			onClick: () => goto(i18n.route(`${base}/summary`))
 		},
 		{
 			id: 'rounds',
 			icon: Swords,
 			text: m.navItemRounds(),
-			onClick: () => goto(i18n.route('/rounds'))
+			onClick: () => goto(i18n.route(`${base}/rounds`))
 		},
 		{
 			id: 'settings',
