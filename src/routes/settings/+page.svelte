@@ -1,16 +1,16 @@
 <script lang="ts">
-	import ButtonGroup from '$lib/components/ButtonGroup/ButtonGroup.svelte';
+	import { Button, ButtonGroup } from '$lib/components';
 	import IconBR from '$lib/icons/countries/BR.svelte';
 	import IconUS from '$lib/icons/countries/US.svelte';
 	import { stCurrentPage, stPreferences } from '$lib/stores';
 	import type { IButtonGroupItem } from '$lib/types';
 	import type { IPreferences } from '$lib/types/preferences';
-	import { availableLanguageTags } from '$paraglide/runtime';
-	import SettingsHeader from './components/SettingsHeader.svelte';
-	import SettingsItem from './components/SettingsItem.svelte';
 	import * as m from '$paraglide/messages.js';
+	import { availableLanguageTags } from '$paraglide/runtime';
 	import Moon from 'lucide-svelte/icons/moon';
 	import Sun from 'lucide-svelte/icons/sun';
+	import SettingsHeader from './components/SettingsHeader.svelte';
+	import SettingsItem from './components/SettingsItem.svelte';
 
 	// Save current page
 	stCurrentPage.set('settings');
@@ -71,6 +71,16 @@
 			type="color"
 			items={themeButtons}
 			value={$stPreferences.darkMode}
+			on:change={({ detail }) => onThemeChange(detail)}
+		/>
+	</SettingsItem>
+	<SettingsItem
+		title={m.settingsItemUpdateDbLabelTitle()}
+		subtitle={m.settingsItemUpdateDbLabelSubtitle()}
+	>
+		<Button
+			hierarchy="primary-destructive"
+			text={m.settingsItemUpdateDbButton()}
 			on:change={({ detail }) => onThemeChange(detail)}
 		/>
 	</SettingsItem>

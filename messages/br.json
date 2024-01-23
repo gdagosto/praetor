@@ -34,5 +34,8 @@
 	"settingsItemThemeLabelTitle": "Tema",
 	"settingsItemThemeLabelSubtitle": "Sua preferência de cores ao navegar no sistema",
 	"settingsItemThemeItemLight": "Claro",
-	"settingsItemThemeItemDark": "Escuro"
+	"settingsItemThemeItemDark": "Escuro",
+	"settingsItemUpdateDbLabelTitle": "Recarrega dados dos jogadores",
+	"settingsItemUpdateDbLabelSubtitle": "Recarrega o banco de dados de jogadores da VEKN. Só utilize isso caso não consiga encontrar um jogador pelo seu id VEKN",
+	"settingsItemUpdateDbButton": "Reload"
 }

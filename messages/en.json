@@ -34,5 +34,8 @@
 	"settingsItemThemeLabelTitle": "Theme",
 	"settingsItemThemeLabelSubtitle": "Your preferred color scheme while navigating",
 	"settingsItemThemeItemLight": "Light",
-	"settingsItemThemeItemDark": "Dark"
+	"settingsItemThemeItemDark": "Dark",
+	"settingsItemUpdateDbLabelTitle": "Reload Player DB",
+	"settingsItemUpdateDbLabelSubtitle": "Reloads VEKN Player DB. Use this if you can't find a player by its VEKN id",
+	"settingsItemUpdateDbButton": "Reload"
 }

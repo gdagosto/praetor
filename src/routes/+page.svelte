@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<div class="wrapper">test</div>
+<div class="wrapper"></div>
 
 <style lang="scss">
 </style>

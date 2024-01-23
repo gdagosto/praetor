@@ -12,6 +12,9 @@
 	import { i18n } from '$lib/i18n.js';
 	import * as m from '$paraglide/messages.js';
 	import { onSetLanguageTag } from '$paraglide/runtime';
+	import { playerDB } from '$lib/vekn';
+
+	playerDB.populatePlayerDB();
 
 	function generateNavItems(): INavItem[] {
 		return [

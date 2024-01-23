@@ -49,10 +49,32 @@ function createPreferences() {
 
 export const stPreferences = createPreferences();
 
+function detectUserPreferences() {
+	// Detect user preferred color scheme
+	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+	const languages = navigator.languages || [navigator.language];
+	let preferredLang: IPreferences['lang'] = 'en';
+
+	for (let i = 0, iMax = languages.length; i < iMax; i++) {
+		const langMain = languages[i].slice(0, 2);
+		if (langMain === 'pt') {
+			preferredLang = 'br';
+			break;
+		}
+
+		if (langMain === 'en') {
+			preferredLang = 'en';
+			break;
+		}
+	}
+
+	stPreferences.partialUpdate({ darkMode: prefersDark, lang: preferredLang });
+}
+
 if (browser) {
-	const storedValue = JSON.parse(window.localStorage?.getItem('preferences') ?? '{}');
-	if (storedValue) {
-		const parsedVal = schemaPreferences.safeParse(storedValue);
+	const textVal = window.localStorage?.getItem('preferences');
+	if (textVal) {
+		const parsedVal = schemaPreferences.safeParse(JSON.parse(textVal));
 		if (parsedVal.success) {
 			stPreferences.set(parsedVal.data);
 		} else {
@@ -60,6 +82,7 @@ if (browser) {
 		}
 	} else {
 		window.localStorage?.removeItem('preferences');
+		detectUserPreferences();
 	}
 }
 
