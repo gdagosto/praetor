@@ -27,5 +27,7 @@
 	"summaryEditPlayerFieldVeknSearchButton": "Search",
 	"summaryEditPlayerFieldVeknHint": "Insert player's Vekn ID",
 	"summaryEditPlayerFieldNameLabel": "Name",
-	"summaryEditPlayerFieldSurnameLabel": "Surname"
+	"summaryEditPlayerFieldSurnameLabel": "Surname",
+	"settingsHeaderTitle": "Settings",
+	"settingsHeaderSubtitle": "Manage your user preferences here."
 }

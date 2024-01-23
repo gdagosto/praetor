@@ -27,5 +27,7 @@
 	"summaryEditPlayerFieldVeknSearchButton": "Pesquisar",
 	"summaryEditPlayerFieldVeknHint": "Insira o id cadastrado na VEKN",
 	"summaryEditPlayerFieldNameLabel": "Nome",
-	"summaryEditPlayerFieldSurnameLabel": "Sobrenome"
+	"summaryEditPlayerFieldSurnameLabel": "Sobrenome",
+	"settingsHeaderTitle": "Configurações",
+	"settingsHeaderSubtitle": "Controle suas preferências de usuário aqui."
 }
