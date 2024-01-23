@@ -16,30 +16,29 @@
 	let showModalDelete: () => void;
 	let idUser = -1;
 
-	function onEdit(row: ITableRow, idx: number) {
-		idUser = idx;
+	function onEdit(row: ITableRow) {
+		idUser = row.idx as number;
 		showModalAdd();
 	}
 
-	function onDelete(row: ITableRow, idx: number) {
-		idUser = idx;
+	function onDelete(row: ITableRow) {
+		idUser = row.idx as number;
 		showModalDelete();
 	}
 
-	function onNewUser(rows: Array<ITableRow>) {
-		console.log('action', rows);
+	function onNewUser() {
 		idUser = -1;
 		showModalAdd();
 	}
 
-	// While loading summary page, calculate all VPs and GWs
+	// While loading summary page, calculate all VPs, GWs and TPs
 	function onLoad() {
 		const rounds = $stRounds;
 		const players = $stPlayers;
-		const playersById: Record<number, { vp: number; gw: number }> = {};
+		const playersById: Record<number, { vp: number; gw: number; tp: number }> = {};
 
 		players.forEach((p) => {
-			playersById[p.id] = { vp: 0, gw: 0 };
+			playersById[p.id] = { vp: 0, gw: 0, tp: 0 };
 		});
 
 		rounds.forEach((r) => {
@@ -47,6 +46,7 @@
 				t.players.forEach((p) => {
 					playersById[p.id].vp += p.vp;
 					playersById[p.id].gw += p.gw;
+					playersById[p.id].tp += p.tp;
 				});
 			});
 		});
@@ -54,6 +54,7 @@
 		players.forEach((p, idx) => {
 			players[idx].vp = playersById[p.id].vp;
 			players[idx].gw = playersById[p.id].gw;
+			players[idx].tp = playersById[p.id].tp;
 		});
 
 		stPlayers.set(players);
@@ -100,24 +101,36 @@
 			text: 'Vekn ID'
 		},
 		{
+			id: 'gw',
+			text: 'GWs'
+		},
+		{
 			id: 'vp',
 			text: 'VPs'
 		},
 		{
-			id: 'gw',
-			text: 'GWs'
+			id: 'tp',
+			text: 'TPs'
 		}
 	];
 
 	$: rows = updateRows($stPlayers);
 
 	function updateRows(players: IPlayer[]) {
-		return players.map((player) => ({
-			id: player.id,
-			name: `${player.firstName} ${player.lastName}`,
-			vp: player.vp,
-			gw: player.gw
-		}));
+		return players
+			.map((player, idx) => ({
+				id: player.id,
+				name: `${player.firstName} ${player.lastName}`,
+				vp: player.vp,
+				gw: player.gw,
+				tp: player.tp,
+				idx
+			}))
+			.sort((a, b) => {
+				if (a.gw !== b.gw) return b.gw - a.gw;
+				if (a.vp !== b.vp) return b.vp - a.vp;
+				return b.tp - a.tp;
+			});
 	}
 </script>
 

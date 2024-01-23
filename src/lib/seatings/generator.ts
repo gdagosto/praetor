@@ -34,7 +34,8 @@ function onGenerateFinish(roundId: number, idsPerTable: number[][]) {
 			return {
 				id: $stPlayers[idx].id,
 				vp: 0,
-				gw: 0
+				gw: 0,
+				tp: 0
 			};
 		});
 

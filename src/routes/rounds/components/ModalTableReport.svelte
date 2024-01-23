@@ -81,15 +81,53 @@
 	function onPlayerVPChange(idx: number, vp: number) {
 		players[idx].vp = vp;
 
-		// Update GW.
+		// Update GW and TPs.
 		const playerPos = players.map((p, idx) => ({ ...p, idx })).sort((a, b) => b.vp - a.vp);
+
 		players.forEach((p) => {
 			p.gw = 0;
+			p.tp = 0;
 		});
 
+		let tps: number[] = [];
+		const tableSize = players.length;
+		if (tableSize === 4) tps = [60, 48, 24, 12];
+		if (tableSize === 5) tps = [60, 48, 36, 24, 12];
+
+		let lastVP = playerPos[0].vp;
+		let lastTP = 0;
+		let positionGroups: Array<{ players: number[]; tp: number }> = [];
+		let lastPlayers: number[] = [];
+
+		for (let i = 0, iMax = players.length; i < iMax; i++) {
+			const player = playerPos[i];
+			const tp = tps[i];
+
+			if (lastVP !== player.vp) {
+				positionGroups.push({ tp: lastTP, players: structuredClone(lastPlayers) });
+				lastTP = 0;
+				lastVP = player.vp;
+				lastPlayers = [];
+			}
+
+			lastTP += tp;
+			lastPlayers.push(player.idx);
+		}
+
+		positionGroups.push({ tp: lastTP, players: lastPlayers });
+
+		positionGroups.forEach((posGroup) => {
+			// For each player in a position group, divide the TPs equally
+			const tp = posGroup.tp / posGroup.players.length;
+			posGroup.players.forEach((pIdx) => {
+				players[pIdx].tp = tp;
+			});
+		});
+
+		// Update GW (if exists)
 		const winner = playerPos[0];
 		if (winner.vp < 2) return;
-		if (winner.vp === playerPos[1].vp) return;
+		if (positionGroups[0].players.length > 1) return;
 		players[winner.idx].gw = 1;
 	}
 </script>

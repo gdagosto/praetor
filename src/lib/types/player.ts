@@ -6,6 +6,7 @@ export const schemaPlayer = z.object({
 	lastName: z.string(),
 	vp: z.number().int().nonnegative(),
 	gw: z.number().int().nonnegative(),
+	tp: z.number().int().nonnegative(),
 	dq: z.boolean()
 });
 

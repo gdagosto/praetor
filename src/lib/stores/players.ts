@@ -27,6 +27,7 @@ function createPlayers() {
 				lastName,
 				gw: 0,
 				vp: 0,
+				tp: 0,
 				dq: false
 			});
 			return players;
