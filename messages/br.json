@@ -29,5 +29,10 @@
 	"summaryEditPlayerFieldNameLabel": "Nome",
 	"summaryEditPlayerFieldSurnameLabel": "Sobrenome",
 	"settingsHeaderTitle": "Configurações",
-	"settingsHeaderSubtitle": "Controle suas preferências de usuário aqui."
+	"settingsHeaderSubtitle": "Controle suas preferências de usuário aqui.",
+	"settingsItemLanguageLabelTitle": "Idioma",
+	"settingsItemThemeLabelTitle": "Tema",
+	"settingsItemThemeLabelSubtitle": "Sua preferência de cores ao navegar no sistema",
+	"settingsItemThemeItemLight": "Claro",
+	"settingsItemThemeItemDark": "Escuro"
 }

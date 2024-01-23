@@ -29,5 +29,10 @@
 	"summaryEditPlayerFieldNameLabel": "Name",
 	"summaryEditPlayerFieldSurnameLabel": "Surname",
 	"settingsHeaderTitle": "Settings",
-	"settingsHeaderSubtitle": "Manage your user preferences here."
+	"settingsHeaderSubtitle": "Manage your user preferences here.",
+	"settingsItemLanguageLabelTitle": "Language",
+	"settingsItemThemeLabelTitle": "Theme",
+	"settingsItemThemeLabelSubtitle": "Your preferred color scheme while navigating",
+	"settingsItemThemeItemLight": "Light",
+	"settingsItemThemeItemDark": "Dark"
 }

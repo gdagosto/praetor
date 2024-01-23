@@ -3,7 +3,6 @@ import { browser } from '$app/environment';
 import { schemaPreferences, type IPreferences } from '$lib/types/preferences';
 import { base } from '$app/paths';
 import { goto } from '$app/navigation';
-import { setLanguageTag } from '$paraglide/runtime.js';
 
 const defaultPrefs: IPreferences = {
 	darkMode: false,
@@ -27,10 +26,7 @@ function createPreferences() {
 	const changeLanguage = (lang: IPreferences['lang']) => {
 		update((prefs) => {
 			return { ...prefs, lang };
-			return prefs;
 		});
-
-		setLanguageTag(lang);
 	};
 
 	const langRoute = (route: string) => {
@@ -39,7 +35,6 @@ function createPreferences() {
 
 	const gotoLangRoute = (route: string) => {
 		goto(langRoute(route));
-		setLanguageTag($stPreferences.lang);
 	};
 
 	return {
@@ -68,8 +63,6 @@ if (browser) {
 	}
 }
 
-let $stPreferences: IPreferences;
 stPreferences.subscribe((val) => {
-	$stPreferences = val;
 	window.localStorage.setItem('preferences', JSON.stringify(val));
 });

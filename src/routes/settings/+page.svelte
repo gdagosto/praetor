@@ -2,12 +2,18 @@
 	import ButtonGroup from '$lib/components/ButtonGroup/ButtonGroup.svelte';
 	import IconBR from '$lib/icons/countries/BR.svelte';
 	import IconUS from '$lib/icons/countries/US.svelte';
-	import { stPreferences } from '$lib/stores';
+	import { stCurrentPage, stPreferences } from '$lib/stores';
 	import type { IButtonGroupItem } from '$lib/types';
 	import type { IPreferences } from '$lib/types/preferences';
 	import { availableLanguageTags } from '$paraglide/runtime';
 	import SettingsHeader from './components/SettingsHeader.svelte';
 	import SettingsItem from './components/SettingsItem.svelte';
+	import * as m from '$paraglide/messages.js';
+	import Moon from 'lucide-svelte/icons/moon';
+	import Sun from 'lucide-svelte/icons/sun';
+
+	// Save current page
+	stCurrentPage.set('settings');
 
 	const languageSettings = {
 		br: {
@@ -25,18 +31,47 @@
 		value: lang
 	}));
 
+	const themeButtons: IButtonGroupItem[] = [
+		{
+			text: m.settingsItemThemeItemLight(),
+			icon: Sun,
+			value: false
+		},
+		{
+			text: m.settingsItemThemeItemDark(),
+			icon: Moon,
+			value: true
+		}
+	];
+
 	function onLanguageChange(lang: IPreferences['lang']) {
 		stPreferences.changeLanguage(lang);
+	}
+
+	function onThemeChange(theme: IPreferences['darkMode']) {
+		stPreferences.partialUpdate({ darkMode: theme });
 	}
 </script>
 
 <div class="wrapper">
 	<SettingsHeader />
-	<SettingsItem title="Language">
+	<SettingsItem title={m.settingsItemLanguageLabelTitle()}>
 		<ButtonGroup
+			type="color"
 			items={languageButtons}
 			value={$stPreferences.lang}
 			on:change={({ detail }) => onLanguageChange(detail)}
+		/>
+	</SettingsItem>
+	<SettingsItem
+		title={m.settingsItemThemeLabelTitle()}
+		subtitle={m.settingsItemThemeLabelSubtitle()}
+	>
+		<ButtonGroup
+			type="color"
+			items={themeButtons}
+			value={$stPreferences.darkMode}
+			on:change={({ detail }) => onThemeChange(detail)}
 		/>
 	</SettingsItem>
 </div>

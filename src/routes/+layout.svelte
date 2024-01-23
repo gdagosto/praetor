@@ -11,31 +11,40 @@
 	import { ParaglideJS } from '@inlang/paraglide-js-adapter-sveltekit';
 	import { i18n } from '$lib/i18n.js';
 	import * as m from '$paraglide/messages.js';
+	import { onSetLanguageTag } from '$paraglide/runtime';
+
+	function generateNavItems(): INavItem[] {
+		return [
+			{
+				id: 'summary',
+				icon: ClipboardList,
+				text: m.navItemSummary(),
+				badge: $stPlayers.length,
+				onClick: () => stPreferences.gotoLangRoute('/summary')
+			},
+			{
+				id: 'rounds',
+				icon: Swords,
+				text: m.navItemRounds(),
+				onClick: () => stPreferences.gotoLangRoute('/rounds')
+			},
+			{
+				id: 'settings',
+				icon: Settings,
+				text: m.navItemSettings(),
+				position: 'footer',
+				onClick: () => stPreferences.gotoLangRoute('/settings')
+			}
+		];
+	}
+
+	onSetLanguageTag(() => {
+		navItems = generateNavItems();
+	});
 
 	let navItems: INavItem[];
 
-	$: navItems = [
-		{
-			id: 'summary',
-			icon: ClipboardList,
-			text: m.navItemSummary(),
-			badge: $stPlayers.length,
-			onClick: () => stPreferences.gotoLangRoute('/summary')
-		},
-		{
-			id: 'rounds',
-			icon: Swords,
-			text: m.navItemRounds(),
-			onClick: () => stPreferences.gotoLangRoute('/rounds')
-		},
-		{
-			id: 'settings',
-			icon: Settings,
-			text: m.navItemSettings(),
-			position: 'footer',
-			onClick: () => stPreferences.gotoLangRoute('/settings')
-		}
-	];
+	$: navItems = generateNavItems();
 
 	stRounds.set([]);
 	stRounds.add();
