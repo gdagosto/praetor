@@ -27,6 +27,7 @@ function createPlayers() {
 				lastName,
 				gw: 0,
 				vp: 0,
+				tp: 0,
 				dq: false
 			});
 			return players;
@@ -40,12 +41,22 @@ function createPlayers() {
 		});
 	};
 
+	const resetDQ = () => {
+		update((players) => {
+			for (let i = 0, iMax = players.length; i < iMax; i++) {
+				players[i].dq = false;
+			}
+			return players;
+		});
+	};
+
 	return {
 		subscribe,
 		set,
 		update,
 		updatePlayer,
 		add,
+		resetDQ,
 		remove
 	};
 }

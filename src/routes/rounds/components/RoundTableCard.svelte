@@ -44,6 +44,8 @@
 		min-width: 300px;
 		flex: 1 0 1px;
 		overflow: hidden;
+		display: flex;
+		flex-direction: column;
 
 		box-shadow: var(--shadow-xs);
 		translate: 0 0;
@@ -87,6 +89,7 @@
 		align-items: flex-start;
 		gap: var(--spacing-md, 8px);
 		align-self: stretch;
+		flex: 1 0 0;
 	}
 
 	.player {

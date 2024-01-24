@@ -13,7 +13,6 @@ export function createSortHeader() {
 		update,
 		change: (id: string) =>
 			update((header) => {
-				console.log('change', id, header);
 				if (header.id !== id) {
 					return { id, direction: 1 };
 				}

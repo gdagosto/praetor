@@ -18,6 +18,6 @@ export type IButtonSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 export interface IButtonGroupItem {
 	text?: string;
 	icon?: ComponentType<SvelteComponent> | 'dot';
-	value?: string | number | symbol;
+	value?: string | number | symbol | boolean;
 	disabled?: boolean;
 }

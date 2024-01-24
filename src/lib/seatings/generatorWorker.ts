@@ -31,6 +31,10 @@ export class Generator {
 
 		return this.sg.generateRoundSeatings(roundNum + 1);
 	}
+
+	reset() {
+		this.sg.reset();
+	}
 }
 
 const generator = new Generator();

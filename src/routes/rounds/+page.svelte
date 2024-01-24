@@ -8,8 +8,9 @@
 
 	// Save current page
 	stCurrentPage.set('rounds');
+	let tabItems: ITabItem[];
 
-	const tabItems: ITabItem[] = [...new Array($stTourneySettings.rounds)].map((_, idx) => ({
+	$: tabItems = [...new Array($stTourneySettings.rounds)].map((_, idx) => ({
 		id: idx,
 		text: m.roundsname({ roundNum: idx + 1 }),
 		onClick: () => stCurrentTabRound.set(idx)

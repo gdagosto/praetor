@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { base } from "$app/paths";
-	import { goto } from '$app/navigation';
-	import { i18n } from '$lib/i18n.js';
+	import { stPreferences } from '$lib/stores';
 </script>
 
-<button class="logoWrapper" on:click={() => goto(i18n.route(`${base}/`))} tabindex={-1}>
+<button class="logoWrapper" on:click={() => stPreferences.gotoLangRoute('/')} tabindex={-1}>
 	<div class="logo">
 		<div class="content">
 			<div class="circleDot"></div>

@@ -34,6 +34,10 @@ export default class SeatingGenerator {
 		this.rounds = this.getRounds();
 	}
 
+	reset() {
+		this.rounds = this.getRounds();
+	}
+
 	tablesFromPlayers(playerIds: number[]) {
 		const len = playerIds.length;
 

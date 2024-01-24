@@ -105,12 +105,6 @@
 		:global(.os-scrollbar) {
 			margin-top: 48px;
 			margin-bottom: 4px;
-
-			--os-handle-bg: var(--color-bg-quaternary);
-			--os-handle-bg-active: var(--color-fg-senary);
-			--os-handle-bg-hover: var(--color-fg-senary);
-			// --os-padding-axis: 30;
-			// --os-size: 8px;
 		}
 	}
 

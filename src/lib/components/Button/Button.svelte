@@ -10,10 +10,9 @@
 	export let iconLeft: ComponentType<SvelteComponent> | undefined = undefined;
 	export let iconRight: ComponentType<SvelteComponent> | undefined = undefined;
 	export let iconDot: boolean = false;
-	export let iconOnly: boolean = false;
 	export let disabled: boolean = false;
 
-	$: icon = (iconOnly && iconLeft) || iconRight;
+	$: iconOnly = !text && (iconLeft || iconRight || iconDot);
 	$: iconSize = size === '2xl' ? 24 : 20;
 </script>
 
@@ -25,7 +24,7 @@
 	on:click
 >
 	{#if iconOnly}
-		<svelte:component this={icon} size={iconSize} />
+		<svelte:component this={iconLeft || iconRight} size={iconSize} />
 	{:else}
 		{#if iconLeft}
 			<svelte:component this={iconLeft} size={iconSize} />

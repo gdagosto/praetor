@@ -5,7 +5,7 @@ import { browser } from '$app/environment';
 const defaultValue: IRound[] = [];
 
 function createRounds() {
-	const initialValue = defaultValue;
+	const initialValue = structuredClone(defaultValue);
 
 	const { subscribe, set, update } = writable<IRound[]>(initialValue);
 
@@ -51,6 +51,10 @@ function createRounds() {
 		});
 	};
 
+	const reset = () => {
+		set([]);
+	};
+
 	return {
 		subscribe,
 		set,
@@ -58,7 +62,8 @@ function createRounds() {
 		updateRound,
 		updateTable,
 		add,
-		remove
+		remove,
+		reset
 	};
 }
 

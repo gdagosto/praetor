@@ -16,7 +16,6 @@
 	const { sortHeader } = getContext<ITableContext>('dataTable');
 
 	function onClick() {
-		console.log('onClick');
 		if (!actualData.sortable) return;
 		sortHeader.change(actualData.id);
 	}

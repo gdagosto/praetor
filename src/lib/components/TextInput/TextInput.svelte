@@ -13,6 +13,7 @@
 	export let help = '';
 	export let addonText = '';
 	export let icon: ComponentType<SvelteComponent> | undefined = undefined;
+	export let disabled: boolean = false;
 
 	/** Obtem o valor atual do componente */
 	export let value: string = '';
@@ -38,7 +39,7 @@
 	}
 </script>
 
-<div class={`textInputWrapper size-${size} type-${type}`} class:destructive={error}>
+<div class={`textInputWrapper size-${size} type-${type}`} class:destructive={error} class:disabled>
 	<div class="inputWithLabel">
 		{#if label}
 			<span class="label">{label}</span>
@@ -65,6 +66,7 @@
 						on:change|preventDefault={onChange}
 						on:keyup={onKeyUp}
 						{value}
+						{disabled}
 					/>
 
 					{#if help}
@@ -134,6 +136,17 @@
 					border-top-left-radius: 0;
 					border-bottom-left-radius: 0;
 				}
+			}
+		}
+	}
+
+	.textInputWrapper.disabled {
+		.input {
+			border: 1px solid var(--color-border-disabled, #d0d5dd);
+			background: var(--color-bg-disabled_subtle, #f9fafb);
+
+			.content input {
+				color: var(--color-text-disabled);
 			}
 		}
 	}

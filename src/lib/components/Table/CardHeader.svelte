@@ -33,8 +33,6 @@
 					text={control.text}
 					on:click={() => control.onClick(rows)}
 				/>
-
-				<!-- content here -->
 			{/each}
 		</div>
 		<!-- <div class="dropdown">

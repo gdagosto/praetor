@@ -15,7 +15,11 @@ export const generationProgress = tweened(0, {
 export function generateRound(idRound: number) {
 	stRounds.updateRound(idRound, { state: RoundState.Generating });
 
-	seatWorker.postMessage({ round: idRound, players: get(stPlayers) });
+	seatWorker.postMessage({ type: 'generate', round: idRound, players: get(stPlayers) });
+}
+
+export function resetRoundGenerator() {
+	seatWorker.postMessage({ type: 'reset' });
 }
 
 seatWorker.onmessage = (e) => {
@@ -34,7 +38,8 @@ function onGenerateFinish(roundId: number, idsPerTable: number[][]) {
 			return {
 				id: $stPlayers[idx].id,
 				vp: 0,
-				gw: 0
+				gw: 0,
+				tp: 0
 			};
 		});
 

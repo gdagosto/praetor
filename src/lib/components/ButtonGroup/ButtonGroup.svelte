@@ -5,7 +5,7 @@
 	export let type: 'default' | 'color' = 'default';
 	export let items: IButtonGroupItem[] = [];
 	export let currentIdx: number = -1;
-	export let value: string | number | symbol = '';
+	export let value: string | number | symbol | boolean = '';
 
 	const dispatch = createEventDispatcher();
 
@@ -14,7 +14,7 @@
 		dispatch('change', value);
 	}
 
-	function onValueChange(val: string | number | symbol) {
+	function onValueChange(val: string | number | symbol | boolean) {
 		const idx = items.findIndex((item) => item.value === val);
 		currentIdx = idx;
 	}

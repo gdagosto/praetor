@@ -2,6 +2,8 @@ import Dexie from 'dexie';
 
 import type { Dict, IDbPlayer } from '$lib/types/index.js';
 
+const THROTTLE_UPDATE_RATE = 60 * 1000;
+
 class VeknDB extends Dexie {
 	rankings!: Dexie.Table<IDbPlayer, number>;
 
@@ -26,7 +28,29 @@ class PlayerDB {
 		return db;
 	}
 
+	async populatePlayerDB() {
+		/** Only update player DB if it has no data. Otherwise, don't do anything */
+
+		const hasData = (await this.db.rankings.count()) > 0;
+		if (hasData) return;
+
+		this.updatePlayerDB();
+	}
+
+	async forceUpdatePlayerDB() {
+		/** Updates player DB. If you need to manually update, call this function */
+
+		const lastUpdateTime = parseInt(window.localStorage.getItem('lastDbUpdate') ?? '0');
+		const timeNow = Date.now();
+		const timeElapsed = timeNow - lastUpdateTime;
+		if (timeElapsed < THROTTLE_UPDATE_RATE) return;
+
+		window.localStorage.setItem('lastDbUpdate', timeNow.toString());
+		this.updatePlayerDB();
+	}
+
 	async updatePlayerDB() {
+		/** Do not call this function from outside */
 		const { db } = this;
 		const veknURL = 'https://www.vekn.net/api/index.php?option=com_api&app=vekn&resource=ranking';
 		const url = 'https://corsproxy.io/?' + encodeURIComponent(veknURL);

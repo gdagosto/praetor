@@ -25,7 +25,8 @@ export type IRoundState = (typeof RoundState)[keyof typeof RoundState];
 const schemaRoundPlayer = z.object({
 	id: z.number().int().nonnegative(),
 	vp: z.number().int().nonnegative(),
-	gw: z.number().int().nonnegative()
+	gw: z.number().int().nonnegative(),
+	tp: z.number().int().nonnegative()
 });
 
 const schemaRoundTable = z.object({

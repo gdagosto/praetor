@@ -12,3 +12,9 @@
 main {
 	color: var(--color-text-primary);
 }
+
+.os-scrollbar {
+	--os-handle-bg: var(--color-bg-quaternary);
+	--os-handle-bg-active: var(--color-fg-senary);
+	--os-handle-bg-hover: var(--color-fg-senary);
+}
