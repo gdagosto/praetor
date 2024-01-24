@@ -8,6 +8,7 @@ export * from './round.js';
 export * from './table.js';
 export * from './tabs.js';
 export * from './tourney.js';
+export * from './header.js';
 
 export type Dict<V> = Record<string | number | symbol, V>;
 export interface IDbPlayer {

@@ -7,9 +7,10 @@
 	export let icon: INavItem['icon'] = undefined;
 	export let badge: INavItem['badge'] = undefined;
 	export let text: INavItem['text'] = 'MISSING_TEXT';
+	export let disabled: INavItem['disabled'] = false;
 </script>
 
-<button class="navItemWrapper" class:current on:click>
+<button class="navItemWrapper" class:current on:click {disabled}>
 	<div class="content">
 		{#if dot}
 			<div class="dot" />
@@ -56,6 +57,12 @@
 				--c-nav-item-bg-color: var(--color-bg-secondary_hover);
 				--c-nav-item-text-color: var(--color-text-secondary_hover);
 			}
+		}
+
+		&:disabled {
+			--c-nav-item-text-color: var(--color-text-disabled);
+			--c-nav-item-icon-color: var(--color-fg-disabled);
+			pointer-events: none;
 		}
 	}
 

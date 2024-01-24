@@ -6,6 +6,7 @@ export interface INavItem {
 	icon?: ComponentType<SvelteComponent>;
 	badge?: string | number;
 	text?: string;
+	disabled?: boolean;
 	position?: 'main' | 'footer';
 	onClick?: () => void;
 }

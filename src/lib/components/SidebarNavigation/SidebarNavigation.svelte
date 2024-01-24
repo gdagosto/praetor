@@ -28,6 +28,7 @@
 						text={navItem.text}
 						badge={navItem.badge}
 						current={$stCurrentPage === navItem.id}
+						disabled={navItem.disabled}
 						on:click={() => onClickNavItem(navItem.id, navItem.onClick)}
 					/>
 				{/each}
@@ -42,6 +43,7 @@
 						text={navItem.text}
 						badge={navItem.badge}
 						current={$stCurrentPage === navItem.id}
+						disabled={navItem.disabled}
 						on:click={() => onClickNavItem(navItem.id, navItem.onClick)}
 					/>
 				{/each}

@@ -1,4 +1,4 @@
-import { schemaTourneySettings, type ITourneySettings } from '$lib/types';
+import { schemaTourneySettings, type ITourneySettings, TourneyState } from '$lib/types';
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
@@ -8,7 +8,8 @@ const defaultValue: ITourneySettings = {
 	city: '',
 	format: 'constructed',
 	level: '',
-	rounds: 3
+	rounds: 3,
+	state: TourneyState.Starting
 };
 
 function createTourney() {

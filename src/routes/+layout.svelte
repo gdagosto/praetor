@@ -2,12 +2,12 @@
 	import 'overlayscrollbars/overlayscrollbars.css';
 	import '$lib/style/global.css';
 	import SidebarNavigation from '$lib/components/SidebarNavigation/SidebarNavigation.svelte';
-	import { stPreferences, stPlayers, stRounds } from '$lib/stores';
+	import { stPreferences, stPlayers, stTourneySettings } from '$lib/stores';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import ClipboardList from 'lucide-svelte/icons/clipboard-list';
 	import Settings from 'lucide-svelte/icons/settings';
 	import Swords from 'lucide-svelte/icons/swords';
-	import type { INavItem } from '$lib/types';
+	import { TourneyState, type INavItem, type ITourneySettings } from '$lib/types';
 	import { LogoPraetor } from '$lib/components';
 	import { ParaglideJS } from '@inlang/paraglide-js-adapter-sveltekit';
 	import { i18n } from '$lib/i18n.js';
@@ -17,7 +17,7 @@
 
 	playerDB.populatePlayerDB();
 
-	function generateNavItems(): INavItem[] {
+	function generateNavItems(tourneySettings: ITourneySettings): INavItem[] {
 		return [
 			{
 				id: 'tourney',
@@ -36,6 +36,7 @@
 				id: 'rounds',
 				icon: Swords,
 				text: m.navItemRounds(),
+				disabled: tourneySettings.state === TourneyState.Starting,
 				onClick: () => stPreferences.gotoLangRoute('/rounds')
 			},
 			{
@@ -49,17 +50,12 @@
 	}
 
 	onSetLanguageTag(() => {
-		navItems = generateNavItems();
+		navItems = generateNavItems($stTourneySettings);
 	});
 
 	let navItems: INavItem[];
 
-	$: navItems = generateNavItems();
-
-	stRounds.set([]);
-	stRounds.add();
-	stRounds.add();
-	stRounds.add();
+	$: navItems = generateNavItems($stTourneySettings);
 </script>
 
 <ParaglideJS {i18n} languageTag={$stPreferences.lang}>

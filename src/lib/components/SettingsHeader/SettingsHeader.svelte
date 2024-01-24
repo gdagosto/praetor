@@ -1,8 +1,11 @@
 <script lang="ts">
+	import type { IHeaderControl } from '$lib/types';
+	import Button from '../Button/Button.svelte';
 	import { Divider } from '../Divider/index.js';
 
 	export let title: string = 'MISSING_TITLE';
 	export let subtitle: string = '';
+	export let controls: IHeaderControl[] = [];
 </script>
 
 <section class="headerSection">
@@ -13,6 +16,16 @@
 				{#if subtitle}
 					<h4>{subtitle}</h4>
 				{/if}
+			</div>
+			<div class="actions">
+				{#each controls as control}
+					<Button
+						hierarchy={control.hierarchy}
+						iconLeft={control.icon}
+						text={control.text}
+						on:click={() => control.onClick()}
+					/>
+				{/each}
 			</div>
 		</div>
 		<Divider />
@@ -73,6 +86,14 @@
 					line-height: var(--textmd-regular-line-height);
 					color: var(--color-text-tertiary, #475467);
 				}
+			}
+
+			.actions {
+				display: flex;
+				padding: var(--spacing-none, 0px);
+				align-items: center;
+				gap: var(--spacing-lg, 12px);
+				border-radius: var(--radius-none, 0px);
 			}
 		}
 	}
