@@ -1,14 +1,18 @@
 <script lang="ts">
-	import Divider from './Divider.svelte';
-	import * as m from '$paraglide/messages.js';
+	import { Divider } from '../Divider/index.js';
+
+	export let title: string = 'MISSING_TITLE';
+	export let subtitle: string = '';
 </script>
 
 <section class="headerSection">
 	<div class="pageHeader">
 		<div class="content">
 			<div class="allText">
-				<h2>{m.settingsHeaderTitle()}</h2>
-				<h4>{m.settingsHeaderSubtitle()}</h4>
+				<h2>{title}</h2>
+				{#if subtitle}
+					<h4>{subtitle}</h4>
+				{/if}
 			</div>
 		</div>
 		<Divider />

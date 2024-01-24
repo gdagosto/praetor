@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Divider from './Divider.svelte';
+	import { Divider } from '../Divider/index.js';
 	import HelpCircle from 'lucide-svelte/icons/help-circle';
 
 	export let title: string = 'MISSING_LABEL';

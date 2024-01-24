@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { Button, ButtonGroup } from '$lib/components';
+	import { Button, ButtonGroup, SettingsHeader, SettingsItem } from '$lib/components';
 	import IconBR from '$lib/icons/countries/BR.svelte';
 	import IconUS from '$lib/icons/countries/US.svelte';
 	import { stCurrentPage, stPreferences } from '$lib/stores';
 	import type { IButtonGroupItem } from '$lib/types';
 	import type { IPreferences } from '$lib/types/preferences';
+	import { playerDB } from '$lib/vekn';
 	import * as m from '$paraglide/messages.js';
 	import { availableLanguageTags } from '$paraglide/runtime';
 	import Moon from 'lucide-svelte/icons/moon';
 	import Sun from 'lucide-svelte/icons/sun';
-	import SettingsHeader from './components/SettingsHeader.svelte';
-	import SettingsItem from './components/SettingsItem.svelte';
 
 	// Save current page
 	stCurrentPage.set('settings');
@@ -54,7 +53,7 @@
 </script>
 
 <div class="wrapper">
-	<SettingsHeader />
+	<SettingsHeader title={m.settingsHeaderTitle()} subtitle={m.settingsHeaderSubtitle()} />
 	<SettingsItem title={m.settingsItemLanguageLabelTitle()}>
 		<ButtonGroup
 			type="color"
@@ -81,7 +80,7 @@
 		<Button
 			hierarchy="primary-destructive"
 			text={m.settingsItemUpdateDbButton()}
-			on:change={({ detail }) => onThemeChange(detail)}
+			on:click={() => playerDB.forceUpdatePlayerDB()}
 		/>
 	</SettingsItem>
 </div>

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import '$lib/style/global.css';
 	import 'overlayscrollbars/overlayscrollbars.css';
+	import '$lib/style/global.css';
 	import SidebarNavigation from '$lib/components/SidebarNavigation/SidebarNavigation.svelte';
 	import { stPreferences, stPlayers, stRounds } from '$lib/stores';
+	import Trophy from 'lucide-svelte/icons/trophy';
 	import ClipboardList from 'lucide-svelte/icons/clipboard-list';
 	import Settings from 'lucide-svelte/icons/settings';
 	import Swords from 'lucide-svelte/icons/swords';
@@ -18,6 +19,12 @@
 
 	function generateNavItems(): INavItem[] {
 		return [
+			{
+				id: 'tourney',
+				icon: Trophy,
+				text: m.navItemTourney(),
+				onClick: () => stPreferences.gotoLangRoute('/tourney')
+			},
 			{
 				id: 'summary',
 				icon: ClipboardList,

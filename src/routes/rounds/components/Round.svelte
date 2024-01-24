@@ -56,7 +56,7 @@
 	{:else}
 		<div class="roundTables" in:fly={{ duration: 300, y: 20 }}>
 			{#each data.tables as table, idx}
-				<RoundTableCard data={table} tableNum={idx + 1} on:click={() => onClickTable(idx)} />
+				<RoundTableCard data={table} tableNum={idx} on:click={() => onClickTable(idx)} />
 			{/each}
 		</div>
 	{/if}

@@ -12,3 +12,7 @@ export * from './Table';
 export * from './Tabs';
 export * from './TextInput';
 export * from './ThreeDots';
+
+export * from './SettingsHeader';
+export * from './SettingsItem';
+export * from './Divider';
