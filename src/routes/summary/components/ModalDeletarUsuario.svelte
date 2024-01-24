@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, FeaturedIcon, Modal } from '$lib/components/index.js';
-	import { stPlayers } from '$lib/stores';
+	import { stPlayers, stTourneySettings } from '$lib/stores';
+	import { TourneyState } from '$lib/types';
 	import User from 'lucide-svelte/icons/user';
 
 	export let showModal: () => void;
@@ -8,7 +9,13 @@
 	let dialog: HTMLDialogElement;
 
 	function onDelete() {
-		if (id !== -1) stPlayers.remove(id);
+		if (id !== -1) {
+			if ($stTourneySettings.state === TourneyState.Starting) {
+				stPlayers.remove(id);
+			} else {
+				stPlayers.updatePlayer(id, { dq: true });
+			}
+		}
 		dialog.close();
 	}
 

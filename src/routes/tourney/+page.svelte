@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { Button, ButtonGroup, SettingsHeader, SettingsItem, TextInput } from '$lib/components';
-	import { stCurrentPage, stCurrentTabRound, stRounds, stTourneySettings } from '$lib/stores';
+	import {
+		stCurrentPage,
+		stCurrentTabRound,
+		stPlayers,
+		stRounds,
+		stTourneySettings
+	} from '$lib/stores';
 	import type { IButtonGroupItem, IHeaderControl } from '$lib/types';
 	import { TourneyState, type ITourneySettings } from '$lib/types/tourney';
 	import * as m from '$paraglide/messages.js';
@@ -56,6 +62,9 @@
 		stTourneySettings.updateCol('state', TourneyState.Starting);
 		stRounds.reset();
 		stCurrentTabRound.set(0);
+
+		// Reset disqualifications
+		stPlayers.resetDQ();
 	}
 </script>
 
