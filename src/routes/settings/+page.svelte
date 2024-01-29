@@ -10,6 +10,7 @@
 	import { availableLanguageTags } from '$paraglide/runtime';
 	import Moon from 'lucide-svelte/icons/moon';
 	import Sun from 'lucide-svelte/icons/sun';
+	import { OverlayScrollbarsComponent } from 'overlayscrollbars-svelte';
 
 	// Save current page
 	stCurrentPage.set('settings');
@@ -52,38 +53,40 @@
 	}
 </script>
 
-<div class="wrapper">
-	<SettingsHeader title={m.settingsHeaderTitle()} subtitle={m.settingsHeaderSubtitle()} />
-	<SettingsItem title={m.settingsItemLanguageLabelTitle()}>
-		<ButtonGroup
-			type="color"
-			items={languageButtons}
-			value={$stPreferences.lang}
-			on:change={({ detail }) => onLanguageChange(detail)}
-		/>
-	</SettingsItem>
-	<SettingsItem
-		title={m.settingsItemThemeLabelTitle()}
-		subtitle={m.settingsItemThemeLabelSubtitle()}
-	>
-		<ButtonGroup
-			type="color"
-			items={themeButtons}
-			value={$stPreferences.darkMode}
-			on:change={({ detail }) => onThemeChange(detail)}
-		/>
-	</SettingsItem>
-	<SettingsItem
-		title={m.settingsItemUpdateDbLabelTitle()}
-		subtitle={m.settingsItemUpdateDbLabelSubtitle()}
-	>
-		<Button
-			hierarchy="primary-destructive"
-			text={m.settingsItemUpdateDbButton()}
-			on:click={() => playerDB.forceUpdatePlayerDB()}
-		/>
-	</SettingsItem>
-</div>
+<OverlayScrollbarsComponent style="width: 100%">
+	<div class="wrapper">
+		<SettingsHeader title={m.settingsHeaderTitle()} subtitle={m.settingsHeaderSubtitle()} />
+		<SettingsItem title={m.settingsItemLanguageLabelTitle()}>
+			<ButtonGroup
+				type="color"
+				items={languageButtons}
+				value={$stPreferences.lang}
+				on:change={({ detail }) => onLanguageChange(detail)}
+			/>
+		</SettingsItem>
+		<SettingsItem
+			title={m.settingsItemThemeLabelTitle()}
+			subtitle={m.settingsItemThemeLabelSubtitle()}
+		>
+			<ButtonGroup
+				type="color"
+				items={themeButtons}
+				value={$stPreferences.darkMode}
+				on:change={({ detail }) => onThemeChange(detail)}
+			/>
+		</SettingsItem>
+		<SettingsItem
+			title={m.settingsItemUpdateDbLabelTitle()}
+			subtitle={m.settingsItemUpdateDbLabelSubtitle()}
+		>
+			<Button
+				hierarchy="primary-destructive"
+				text={m.settingsItemUpdateDbButton()}
+				on:click={() => playerDB.forceUpdatePlayerDB()}
+			/>
+		</SettingsItem>
+	</div>
+</OverlayScrollbarsComponent>
 
 <style lang="scss">
 	.wrapper {
