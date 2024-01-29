@@ -7,13 +7,17 @@
 	import { stPlayers } from '$lib/stores';
 	import * as m from '$paraglide/messages.js';
 
-	export let showModal: () => void;
+	export const showModal = () => {
+		actuallyShowModal();
+		setTimeout(() => textInputRef.focus(), 100);
+	};
 	export let id: number = -1;
 
 	let title: string;
 	let subtitle: string;
 	let dialog: HTMLDialogElement;
-
+	let textInputRef: HTMLInputElement;
+	let actuallyShowModal: () => void;
 	let playerData: Partial<IDbPlayer> = {};
 
 	$: prepareModal(id);
@@ -41,10 +45,15 @@
 		}
 	}
 
-	async function onSearch() {
-		const dbData = await playerDB.getPlayerDataByID(playerData.id ?? 0);
-		if (!dbData) return;
+	async function onSearch(e: CustomEvent) {
+		const playerId = parseInt(e.detail);
+		const dbData = await playerDB.getPlayerDataByID(playerId ?? 0);
+		if (!dbData) {
+			playerData = { id: playerId };
+			return;
+		}
 		playerData = dbData;
+		dialog.focus();
 	}
 
 	function onSave() {
@@ -70,7 +79,7 @@
 	}
 </script>
 
-<Modal bind:showModal bind:dialog on:keypress={onKeyPress}>
+<Modal bind:showModal={actuallyShowModal} bind:dialog on:keypress={onKeyPress}>
 	<div class="modalHeader" slot="header">
 		<div class="content">
 			<FeaturedIcon type="modern" size="md" icon={User} />
@@ -83,6 +92,7 @@
 	<div class="modalContent">
 		<div class="row">
 			<TextInput
+				bind:ref={textInputRef}
 				label="Vekn ID"
 				hint={m.summaryEditPlayerFieldVeknHint()}
 				type="trailing-button"

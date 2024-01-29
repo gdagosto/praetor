@@ -43,6 +43,7 @@
 		flex-shrink: 0;
 		background-color: transparent;
 		border: none;
+		outline: none;
 
 		&::before {
 			position: fixed;

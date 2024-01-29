@@ -14,6 +14,7 @@
 	export let addonText = '';
 	export let icon: ComponentType<SvelteComponent> | undefined = undefined;
 	export let disabled: boolean = false;
+	export let ref: HTMLInputElement | undefined = undefined;
 
 	/** Obtem o valor atual do componente */
 	export let value: string = '';
@@ -30,8 +31,12 @@
 		value = e.target.value;
 	}
 
-	function onKeyUp(e: KeyboardEvent) {
-		if (e.key === 'Enter') onButtonClick();
+	function onKeyPress(e: KeyboardEvent) {
+		if (!(e.target instanceof HTMLInputElement)) return;
+		if (e.key === 'Enter') {
+			value = e.target.value;
+			onButtonClick();
+		}
 	}
 
 	function onButtonClick() {
@@ -60,11 +65,12 @@
 					{/if}
 
 					<input
+						bind:this={ref}
 						type="text"
 						{placeholder}
 						on:input={onInput}
 						on:change|preventDefault={onChange}
-						on:keyup={onKeyUp}
+						on:keypress={onKeyPress}
 						{value}
 						{disabled}
 					/>
