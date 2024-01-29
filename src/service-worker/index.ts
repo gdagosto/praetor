@@ -1,3 +1,4 @@
+// @ts-nocheck
 /// <reference types="@sveltejs/kit" />
 import { build, files, version } from '$service-worker';
 
@@ -33,6 +34,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
 	// ignore POST requests etc
 	if (event.request.method !== 'GET') return;
+	if (event.request.url.startsWith('https://redirect')) return;
 
 	async function respond() {
 		const url = new URL(event.request.url);

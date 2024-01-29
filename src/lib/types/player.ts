@@ -13,3 +13,12 @@ export const schemaPlayer = z.object({
 export const schemaPlayerArr = z.array(schemaPlayer);
 
 export type IPlayer = z.infer<typeof schemaPlayer>;
+
+export type IVeknPlayer = {
+	city: string;
+	countryname: string;
+	firstname: string;
+	lastname: string;
+	statename: string;
+	veknid: string;
+};
