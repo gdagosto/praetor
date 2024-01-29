@@ -34,7 +34,6 @@
 	];
 
 	function onInputChange(col: keyof ITourneySettings, rawData: string) {
-		console.log('onInputChange', col, rawData);
 		let data: number | string | undefined = rawData;
 
 		if (col === 'headJudge' || col === 'organizer' || col === 'rounds') {
@@ -50,7 +49,6 @@
 
 		// Initialize rounds
 		for (let i = 0, iMax = $stTourneySettings.rounds; i < iMax; i++) {
-			console.log('add');
 			stRounds.add();
 		}
 
