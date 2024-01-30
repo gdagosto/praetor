@@ -31,6 +31,7 @@
 */
 
 import type { IPlayer, IRound, IVeknPlayer } from '$lib/types';
+import { sortPlayers } from '$lib/utils/player';
 import { playerDB } from '$lib/vekn';
 import { veknUrl } from './utils';
 
@@ -89,32 +90,49 @@ async function getVeknAuthToken() {
 	return;
 }
 
-export function prepareArchonData(stRounds: IRound[], stPlayers: IPlayer[]) {
+export async function prepareArchonData(stRounds: IRound[], players: IPlayer[]) {
 	NUM_ATTEMPTS = 0;
-	const playersData = '';
+	let playersData = '';
 	let tablesData = '';
 
-	const P = stPlayers.length;
-	const R = stRounds.length;
-	let T = 0;
+	const numRounds = stRounds.length;
 
-	const finalRound = R - 1;
+	const finalRound = numRounds - 1;
 	const playersSet = new Set();
 
-	stPlayers.forEach(async (player) => {
-		// Check if player id exists on VEKN DB
-		const exists = await playerDB.getPlayerDataByID(player.id);
-		if (exists) playersSet.add(player.id);
+	const sortedPlayers = sortPlayers(players);
 
-		const playerData = [];
-		playerData.push('FINAL_RANK');
-		playerData.push(player.firstName);
-		playerData.push(player.lastName);
-	});
+	await Promise.all(
+		sortedPlayers.map(async (player, idx) => {
+			console.log('p', idx, player);
+			// Check if player id exists on VEKN DB
+			const exists = await playerDB.getPlayerDataByID(player.id);
+			if (exists) playersSet.add(player.id);
+
+			const playerData = [];
+			const finalRank = player.dq ? 'DQ' : idx + 1;
+
+			playerData.push(finalRank);
+			playerData.push(player.firstName);
+			playerData.push(player.lastName);
+			playerData.push('PLACEHOLDER_CITY');
+			playerData.push(player.id);
+			playerData.push(player.gw);
+			playerData.push(player.vp);
+			playerData.push(0);
+			playerData.push(player.tp);
+			playerData.push(0);
+			playerData.push(0);
+
+			// Join and add to playersData
+			playersData += playerData.join('§') + '§';
+			console.log('playerData', playerData.join('§'));
+			console.log('playersData', playersData);
+		})
+	);
 
 	stRounds.forEach((round, i) => {
 		const roundIdx = i === finalRound ? 0 : i + 1;
-		T += round.tables.length;
 		round.tables.forEach((table) => {
 			const tableData: Array<number | string> = [roundIdx];
 			let tableGW = 0;
@@ -129,5 +147,9 @@ export function prepareArchonData(stRounds: IRound[], stPlayers: IPlayer[]) {
 		});
 	});
 
-	return `${R}¤${playersData}¤${tablesData}`;
+	console.log('NUM_ROUNDS', numRounds);
+	console.log('PLAYERS_DATA', playersData);
+	console.log('TABLES_DATA', tablesData);
+
+	return `${numRounds}¤${playersData}¤${tablesData}`;
 }

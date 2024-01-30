@@ -1,15 +1,25 @@
 <script lang="ts">
-	import { getPlayerRegistryData } from '$lib/vekn';
+	import { Button } from '$lib/components';
+	import { stPlayers, stRounds } from '$lib/stores';
+	import { downloadTournamentFile, uploadTournamentFile } from '$lib/utils/import';
 
-	async function getPlayer(id: number) {
-		const data = getPlayerRegistryData(id);
-		console.log((await data).city);
+	async function onClick() {
+		console.log('stRounds', $stRounds);
+		console.log('stPlayers', $stPlayers);
+		downloadTournamentFile();
 	}
 
-	getPlayer(6130073);
+	async function onClick2() {
+		console.log('stRounds', $stRounds);
+		console.log('stPlayers', $stPlayers);
+		uploadTournamentFile();
+	}
 </script>
 
-<div class="wrapper"></div>
+<div class="wrapper">
+	<Button on:click={onClick} text="GENERATE ARCHON DATA"></Button>
+	<Button on:click={onClick2} text="IMPORT DATA"></Button>
+</div>
 
 <style lang="scss">
 </style>
