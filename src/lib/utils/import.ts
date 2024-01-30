@@ -100,6 +100,8 @@ export async function exportTournamentFile() {
 				tableData.push(player.id, player.vp, player.tp);
 				if (player.gw) tableGW = player.id;
 			});
+
+			if (table.players.length === 4) tableData.push('', '', '');
 			tableData.push(tableGW);
 			tablesData += tableData.join('§') + '§';
 		});
@@ -166,7 +168,7 @@ function importTournamentData(content: string) {
 
 	let player = structuredClone(newPlayer);
 
-	for (let i = 0, iMax = playerData.length; i < iMax; i++) {
+	for (let i = 0, iMax = playerData.length - 1; i < iMax; i++) {
 		const col = i % 11;
 		const val = playerData[i];
 		switch (col) {
@@ -234,10 +236,9 @@ function importTournamentData(content: string) {
 	let roundTable = structuredClone(newRoundTable);
 	let roundPlayer = structuredClone(newRoundPlayer);
 
-	for (let i = 0, iMax = tableData.length; i < iMax; i++) {
+	for (let i = 0, iMax = tableData.length - 1; i < iMax; i++) {
 		const col = i % 17;
 		const val = parseInt(tableData[i]);
-
 		switch (col) {
 			case 0: // round
 				if (val === 0) {
@@ -250,7 +251,13 @@ function importTournamentData(content: string) {
 			case 4:
 			case 7:
 			case 10:
+				roundPlayer.id = val;
+				break;
 			case 13:
+				if (isNaN(val)) {
+					i += 2;
+					continue;
+				}
 				roundPlayer.id = val;
 				break;
 			case 2:
