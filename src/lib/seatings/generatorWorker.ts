@@ -1,5 +1,6 @@
 import SeatingGenerator from './class.js';
 import type { IPlayer } from '$lib/types/player.js';
+import type { IRoundTable } from '$lib/types/round.js';
 
 export class Generator {
 	sg: SeatingGenerator;
@@ -34,6 +35,20 @@ export class Generator {
 
 	reset() {
 		this.sg.reset();
+	}
+
+	importRound(roundNum: number, players: IPlayer[], roundTables: IRoundTable[]) {
+		// Create a player mapping
+		const playerMap = players.reduce<Record<number, number>>((dict, p, idx) => {
+			dict[p.id] = idx;
+			return dict;
+		}, {});
+
+		this.sg.rounds[roundNum] = roundTables.map((table) =>
+			table.players.map((player) => playerMap[player.id])
+		);
+
+		console.log(this.sg.rounds[roundNum]);
 	}
 }
 

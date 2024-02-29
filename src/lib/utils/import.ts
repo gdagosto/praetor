@@ -2,6 +2,7 @@
  * Import file format
  * Each "section" is separated by the following symbol: ¤
  * Each "column" and "row" is separated by the following symbol: §
+ * The part that should be sent to archon is also separated by the following symbol: ±
  *
  * Section 1: Number of rounds. Add 1 for the finals
  *
@@ -32,6 +33,19 @@
  * - playerTP     => How many TPs the player got in this table;
  * Then, add at the end
  * - tableGW      => Player's V:EKN ID of whoever got the GW; If no one got the GW, put 0;
+ * 
+ * From now on, sections SHOULD NOT be send to V:EKN. The ± symbol is used to split between the two sections
+ * 
+ * Section 4: Tournament info
+ * - Event name
+ * - Event date (dd-mm-yy)
+ * - Organizer ID
+ * - City
+ * - Format
+ * - Level
+ * - Head judge ID
+ * - Tournament state
+ * 
  */
 import { stRounds, stPlayers } from '$lib/stores';
 import { get } from 'svelte/store';
@@ -44,6 +58,7 @@ import {
 	RoundTableState,
 	type IRoundTable
 } from '$lib/types';
+import { importRounds } from '$lib/seatings/generator';
 
 export async function downloadTournamentFile() {
 	const content = await exportTournamentFile();
@@ -107,6 +122,9 @@ export async function exportTournamentFile() {
 		});
 	});
 
+	// Save tournament info
+	const tournamentInfo = 
+
 	return `${numRounds}¤${playersData}¤${tablesData}`;
 }
 
@@ -143,7 +161,8 @@ export function uploadTournamentFile() {
 }
 
 function importTournamentData(content: string) {
-	const [roundNumRaw, playerDataRaw, tableDataRaw] = content.split('¤');
+	const [archonContent, praetorContent] = content.split('±')
+	const [roundNumRaw, playerDataRaw, tableDataRaw] = archonContent.split('¤');
 	console.log('ROUND_NUM', roundNumRaw);
 	console.log('PLAYER_DATA', playerDataRaw);
 	console.log('TABLE_DATA', tableDataRaw);
@@ -286,4 +305,9 @@ function importTournamentData(content: string) {
 
 	// Rounds data
 	stRounds.set(rounds);
+
+	// Table generator data
+	importRounds();
+
+	// Tournament settings
 }

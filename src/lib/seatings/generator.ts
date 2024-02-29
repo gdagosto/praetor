@@ -22,6 +22,20 @@ export function resetRoundGenerator() {
 	seatWorker.postMessage({ type: 'reset' });
 }
 
+export function importRounds() {
+	const $stRounds = get(stRounds);
+	const $stPlayers = get(stPlayers);
+
+	$stRounds.forEach((round, idx) => {
+		seatWorker.postMessage({
+			type: 'import',
+			round: idx,
+			players: $stPlayers,
+			tables: round.tables
+		});
+	});
+}
+
 seatWorker.onmessage = (e) => {
 	if (e.data.type === 'cb') {
 		generationProgress.set(e.data.percent);

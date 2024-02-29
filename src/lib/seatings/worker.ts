@@ -1,4 +1,4 @@
-import type { IPlayer } from '$lib/types';
+import type { IPlayer, IRoundTable } from '$lib/types';
 import generator from './generatorWorker';
 
 self.onmessage = (e) => {
@@ -6,6 +6,8 @@ self.onmessage = (e) => {
 		resetRoundGenerator();
 	} else if (e.data.type === 'generate') {
 		generateRoundSeatings(e.data.round, e.data.players);
+	} else if (e.data.type === 'import') {
+		importRoundSeatings(e.data.round, e.data.players, e.data.tables);
 	}
 };
 
@@ -25,6 +27,15 @@ function generateRoundSeatings(round: number, players: IPlayer[]) {
 		type: 'finish',
 		roundId: round,
 		rounds: generator.sg.rounds
+	});
+}
+
+function importRoundSeatings(round: number, players: IPlayer[], tables: IRoundTable[]) {
+	generator.importRound(round, players, tables);
+
+	postMessage({
+		type: 'import',
+		roundId: round
 	});
 }
 
