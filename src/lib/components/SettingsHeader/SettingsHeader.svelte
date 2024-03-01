@@ -24,6 +24,7 @@
 						iconLeft={control.icon}
 						text={control.text}
 						on:click={() => control.onClick()}
+						disabled={control.disabled ?? false}
 					/>
 				{/each}
 			</div>

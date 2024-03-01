@@ -12,18 +12,36 @@
 	import * as m from '$paraglide/messages.js';
 	import { OverlayScrollbarsComponent } from 'overlayscrollbars-svelte';
 	import PlaySquare from 'lucide-svelte/icons/play-square';
+	import Upload from 'lucide-svelte/icons/upload';
 	import { resetRoundGenerator } from '$lib/seatings/generator';
+	import { downloadTournamentFile, uploadTournamentFile } from '$lib/utils/import';
 	// Save current page
 	stCurrentPage.set('tourney');
 
-	const headerControls: IHeaderControl[] = [
-		{
-			text: m.tourneyHeaderButtonStart(),
-			hierarchy: 'primary',
-			icon: PlaySquare,
-			onClick: onStartTourney
-		}
-	];
+	let headerControls: IHeaderControl[] = [];
+
+	$: headerControls = updateHeaderControls($stTourneySettings);
+
+	function updateHeaderControls(tourney: ITourneySettings): IHeaderControl[] {
+		const disabled = tourney.state !== TourneyState.Starting;
+
+		return [
+			{
+				text: m.tourneyHeaderButtonImport(),
+				hierarchy: 'tertiary-gray',
+				icon: Upload,
+				onClick: onImportTourney,
+				disabled
+			},
+			{
+				text: m.tourneyHeaderButtonStart(),
+				hierarchy: 'primary',
+				icon: PlaySquare,
+				onClick: onStartTourney,
+				disabled
+			}
+		];
+	}
 
 	const formatButtons: IButtonGroupItem[] = [
 		{
@@ -54,6 +72,14 @@
 
 		// Reset round generator
 		resetRoundGenerator();
+	}
+
+	function onImportTourney() {
+		uploadTournamentFile();
+	}
+
+	function onExportTourney() {
+		downloadTournamentFile();
 	}
 
 	function onResetTourney() {
@@ -166,6 +192,17 @@
 				placeholder={m.tourneyItemHeadJudgeLabelTitle()}
 				value={$stTourneySettings.headJudge?.toString() ?? ''}
 				on:change={({ detail }) => onInputChange('headJudge', detail)}
+			/>
+		</SettingsItem>
+
+		<SettingsItem
+			title={m.tourneyItemExportLabelTitle()}
+			subtitle={m.tourneyItemExportLabelSubtitle()}
+		>
+			<Button
+				hierarchy="primary"
+				text={m.tourneyItemExportButton()}
+				on:click={() => onExportTourney()}
 			/>
 		</SettingsItem>
 

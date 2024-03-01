@@ -7,4 +7,5 @@ export interface IHeaderControl {
 	text?: string;
 	onClick: () => void;
 	hierarchy: IButtonHierarchy;
+	disabled?: boolean;
 }

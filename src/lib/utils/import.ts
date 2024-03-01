@@ -33,9 +33,9 @@
  * - playerTP     => How many TPs the player got in this table;
  * Then, add at the end
  * - tableGW      => Player's V:EKN ID of whoever got the GW; If no one got the GW, put 0;
- * 
+ *
  * From now on, sections SHOULD NOT be send to V:EKN. The ± symbol is used to split between the two sections
- * 
+ *
  * Section 4: Tournament info
  * - Event name
  * - Event date (dd-mm-yy)
@@ -45,28 +45,54 @@
  * - Level
  * - Head judge ID
  * - Tournament state
- * 
+ *
  */
-import { stRounds, stPlayers } from '$lib/stores';
-import { get } from 'svelte/store';
-import { sortPlayers } from './player';
+import { stPlayers, stRounds, stTourneySettings } from '$lib/stores';
+import type {
+	IPlayer,
+	IRound,
+	IRoundPlayer,
+	IRoundTable,
+	ITourneyFormat,
+	ITourneySettings,
+	ITourneyState
+} from '$lib/types';
 import {
 	RoundState,
-	type IPlayer,
-	type IRound,
-	type IRoundPlayer,
 	RoundTableState,
-	type IRoundTable
+	TourneyState,
+	schemaTourneyFormat,
+	schemaTourneyState
 } from '$lib/types';
+import { get } from 'svelte/store';
+import { sortPlayers } from './player';
+
 import { importRounds } from '$lib/seatings/generator';
+import { normalize } from '.';
 
 export async function downloadTournamentFile() {
 	const content = await exportTournamentFile();
+	const tSettings = get(stTourneySettings);
+	let fileName = (tSettings.name ?? 'praetor') + '-';
+	if (tSettings.date) {
+		fileName += tSettings.date;
+	} else {
+		const dt = new Date();
+		const day = dt.getDay();
+		const month = dt.getMonth() + 1;
+
+		fileName += day < 10 ? '0' + day : day;
+		fileName += '-' + (month < 10 ? '0' + month : month);
+		fileName += '-' + dt.getFullYear().toString().slice(2);
+	}
+
+	// Sanitize filename
+	fileName = normalize(fileName).replace(/[^a-z0-9_-]/gi, '');
 
 	const a = document.createElement('a');
 	const file = new Blob([content], { type: 'text/plain' });
 	a.href = URL.createObjectURL(file);
-	a.download = 'praetor-data.txt';
+	a.download = `${fileName}.txt`;
 	a.click();
 	URL.revokeObjectURL(a.href);
 }
@@ -77,11 +103,12 @@ export async function exportTournamentFile() {
 
 	const rounds = get(stRounds);
 	const sortedPlayers = sortPlayers(get(stPlayers));
+	const tourney = get(stTourneySettings);
 
 	let playersData = '';
 	let tablesData = '';
 
-	const numRounds = rounds.length;
+	const numRounds = tourney.rounds;
 	const finalRound = numRounds - 1;
 
 	// Update players data
@@ -123,9 +150,16 @@ export async function exportTournamentFile() {
 	});
 
 	// Save tournament info
-	const tournamentInfo = 
+	let tournamentInfo = (tourney.name ?? '') + '§';
+	tournamentInfo += (tourney.date ?? '') + '§';
+	tournamentInfo += (tourney.organizer ?? '') + '§';
+	tournamentInfo += (tourney.city ?? '') + '§';
+	tournamentInfo += (tourney.format ?? '') + '§';
+	tournamentInfo += (tourney.level ?? '') + '§';
+	tournamentInfo += (tourney.headJudge ?? '') + '§';
+	tournamentInfo += tourney.state ?? TourneyState.Starting;
 
-	return `${numRounds}¤${playersData}¤${tablesData}`;
+	return `${numRounds}¤${playersData}¤${tablesData}±${tournamentInfo}`;
 }
 
 export function uploadTournamentFile() {
@@ -161,15 +195,17 @@ export function uploadTournamentFile() {
 }
 
 function importTournamentData(content: string) {
-	const [archonContent, praetorContent] = content.split('±')
+	const [archonContent, tourneyDataRaw] = content.split('±');
 	const [roundNumRaw, playerDataRaw, tableDataRaw] = archonContent.split('¤');
 	console.log('ROUND_NUM', roundNumRaw);
 	console.log('PLAYER_DATA', playerDataRaw);
 	console.log('TABLE_DATA', tableDataRaw);
+	console.log('TOURNEY_DATA', tourneyDataRaw);
 
 	const roundNum = parseInt(roundNumRaw);
 	const playerData = playerDataRaw.split('§');
 	const tableData = tableDataRaw.split('§');
+	const tourneyData = tourneyDataRaw.split('§');
 
 	const players = [];
 	const newPlayer: IPlayer = {
@@ -310,4 +346,29 @@ function importTournamentData(content: string) {
 	importRounds();
 
 	// Tournament settings
+	const parseFormat = schemaTourneyFormat.safeParse(tourneyData[4]);
+	let tourneyFormat: ITourneyFormat = 'constructed';
+	if (parseFormat.success) {
+		tourneyFormat = parseFormat.data;
+	}
+
+	const parseState = schemaTourneyState.safeParse(tourneyData[7]);
+	let tourneyState: ITourneyState = TourneyState.Starting;
+	if (parseState.success) {
+		tourneyState = parseState.data;
+	}
+
+	const tourneySettings: ITourneySettings = {
+		name: tourneyData[0],
+		date: tourneyData[1],
+		organizer: tourneyData[2] ? parseInt(tourneyData[2]) : undefined,
+		city: tourneyData[3],
+		format: tourneyFormat,
+		level: tourneyData[5],
+		headJudge: tourneyData[6] ? parseInt(tourneyData[6]) : undefined,
+		state: tourneyState,
+		rounds: roundNum
+	};
+
+	stTourneySettings.set(tourneySettings);
 }
