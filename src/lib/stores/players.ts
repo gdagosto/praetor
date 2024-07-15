@@ -1,6 +1,7 @@
 import { schemaPlayerArr, type IPlayer } from '$lib/types';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { browser } from '$app/environment';
+import { stRounds } from '.';
 
 const defaultValue: IPlayer[] = [];
 
@@ -28,7 +29,10 @@ function createPlayers() {
 				gw: 0,
 				vp: 0,
 				tp: 0,
-				dq: false
+				coin: 0,
+				vpFinals: 0,
+				dq: false,
+				wd: false
 			});
 			return players;
 		});
@@ -45,7 +49,43 @@ function createPlayers() {
 		update((players) => {
 			for (let i = 0, iMax = players.length; i < iMax; i++) {
 				players[i].dq = false;
+				players[i].wd = false;
 			}
+			return players;
+		});
+	};
+
+	const updateResults = () => {
+		const rounds = get(stRounds);
+		const playersById: Record<number, { vp: number; gw: number; tp: number; vpFinals: number }> =
+			{};
+
+		update((players) => {
+			players.forEach((p) => {
+				playersById[p.id] = { vp: 0, gw: 0, tp: 0, vpFinals: 0 };
+			});
+
+			const finalRound = rounds.length - 1;
+			rounds.forEach((r, idx) => {
+				r.tables.forEach((t) => {
+					t.players.forEach((p) => {
+						playersById[p.id].vp += p.vp;
+						playersById[p.id].gw += p.gw;
+						playersById[p.id].tp += p.tp;
+
+						if (idx == finalRound) {
+							playersById[p.id].vpFinals += p.vp;
+						}
+					});
+				});
+			});
+
+			players.forEach((p, idx) => {
+				players[idx].vp = playersById[p.id].vp;
+				players[idx].gw = playersById[p.id].gw;
+				players[idx].tp = playersById[p.id].tp;
+			});
+
 			return players;
 		});
 	};
@@ -55,6 +95,7 @@ function createPlayers() {
 		set,
 		update,
 		updatePlayer,
+		updateResults,
 		add,
 		resetDQ,
 		remove

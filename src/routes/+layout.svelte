@@ -2,7 +2,7 @@
 	import 'overlayscrollbars/overlayscrollbars.css';
 	import '$lib/style/global.css';
 	import SidebarNavigation from '$lib/components/SidebarNavigation/SidebarNavigation.svelte';
-	import { stPreferences, stPlayers, stTourneySettings } from '$lib/stores';
+	import { stPreferences, stPlayers, stTourneySettings, stRounds } from '$lib/stores';
 	import Trophy from 'lucide-svelte/icons/trophy';
 	import ClipboardList from 'lucide-svelte/icons/clipboard-list';
 	import Settings from 'lucide-svelte/icons/settings';
@@ -56,6 +56,11 @@
 	let navItems: INavItem[];
 
 	$: navItems = generateNavItems($stTourneySettings);
+
+	$: console.log('stTourneySettings', $stTourneySettings);
+	$: console.log('stPlayers', $stPlayers);
+	$: console.log('stPreferences', $stPreferences);
+	$: console.log('stRounds', $stRounds);
 </script>
 
 <ParaglideJS {i18n} languageTag={$stPreferences.lang}>

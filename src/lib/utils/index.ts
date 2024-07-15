@@ -54,3 +54,10 @@ export const setPath = (object: Record<any, any>, path: Array<string | number>, 
 		}
 	}, object);
 };
+
+export function normalize(str: string) {
+	return str
+		.normalize('NFD')
+		.replace(/\p{Diacritic}/gu, '')
+		.toLowerCase();
+}

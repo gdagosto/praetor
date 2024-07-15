@@ -8,7 +8,9 @@
 
 	"tourneyHeaderTitle": "Torneio",
 	"tourneyHeaderSubtitle": "Informações do torneio, para preencher o Archon",
-	"tourneyHeaderButtonStart": "Iniciar torneio",
+
+	"tourneyHeaderButtonImport": "Importar",
+	"tourneyHeaderButtonStart": "Iniciar",
 	"tourneyItemEventNameLabelTitle": "Nome do evento",
 	"tourneyItemEventNameLabelSubtitle": "",
 	"tourneyItemEventDateLabelTitle": "Data do evento (dd-mm-yy)",
@@ -29,8 +31,11 @@
 	"tourneyItemHeadJudgeLabelSubtitle": "O id deve corresponder ao registrado na V:EKN.",
 	"tourneyItemMultiJudgeSystemLabelTitle": "Sistema de juizes múltiplos",
 	"tourneyItemMultiJudgeSystemLabelSubtitle": "This indicates whether the tournament used the multi-judge system (6 judges, all of whom played in the tournament), rather than all non-playing Judges.",
+	"tourneyItemExportLabelTitle": "Exporta torneio",
+	"tourneyItemExportLabelSubtitle": "Exporta os dados do torneio para consultas posteriores.",
+	"tourneyItemExportButton": "Exportar",
 	"tourneyItemResetLabelTitle": "Reinicia torneio",
-	"tourneyItemResetLabelSubtitle": "Mantém informações dos jogadores, mas remove dados das rodadas e resultados",
+	"tourneyItemResetLabelSubtitle": "Mantém informações dos jogadores, mas remove dados das rodadas e resultados.",
 	"tourneyItemResetButton": "Reiniciar",
 
 	"summaryHeaderTitle": "Visão geral",
