@@ -8,19 +8,19 @@
     import * as m from '$lib/paraglide/messages.js'
 	import { cn, isDesktop } from "$lib/utils";
 	import { goto } from "$app/navigation";
-    
-    let open = false;
+	import { stTournament } from "$lib/stores/tournament.svelte";
 
-    function onImportVekn() {
-        goto('/import/vekn')
+    let {open = $bindable(false), data} = $props();
+
+    function onConfirm() {
+        stTournament.setInfo(data);
+        goto(`/tournament`)
     }
+
    </script>
     
    {#if isDesktop.current}
     <Dialog.Root bind:open>
-     <Dialog.Trigger class={buttonVariants({ variant: "outline" })}>
-        {@render title()}
-    </Dialog.Trigger>
      <Dialog.Content class="sm:max-w-[425px]">
       <Dialog.Header>
        <Dialog.Title>{@render title()}</Dialog.Title>
@@ -33,9 +33,6 @@
     </Dialog.Root>
    {:else}
     <Drawer.Root bind:open>
-     <Drawer.Trigger class={buttonVariants({ variant: "outline" })}
-      >{@render title()}</Drawer.Trigger
-     >
      <Drawer.Content>
       <Drawer.Header class="text-left">
        <Drawer.Title>{@render title()}</Drawer.Title>
@@ -59,17 +56,23 @@
 
 
 {#snippet title()}
-{m.add_event_title()}
+{m.add_event_vekn_confirm_dialog_title()}
 {/snippet}
 
 
 {#snippet description()}
-{m.add_event_description()}
+{m.add_event_vekn_confirm_dialog_description()}
 {/snippet}
 
 {#snippet content(drawer = false)}
-   <form class={cn("grid items-start gap-4", drawer && 'px-4')}>
-    <Button onclick={onImportVekn}>{m.add_event_button_import_vekn()}</Button>
-    <Button  disabled>{m.add_event_button_import_praetor()}</Button>
-   </form>
+    <div class={cn('flex flex-col gap-4', drawer && 'px-4')}>
+    <div class={cn('grid grid-cols-[max-content_1fr] gap-2 items-center')}>
+        <div class='text-muted-foreground text-sm text-right'>{m.add_event_vekn_confirm_dialog_event_name()}</div>
+        <div class='font-semibold'>{data.event_name}</div>
+        <div  class='text-muted-foreground text-sm text-right'>{m.add_event_vekn_confirm_dialog_event_rounds()}</div>
+        <div class='font-semibold'>{data.rounds}</div>
+        
+    </div>
+    <Button onclick={onConfirm}>{m.add_event_vekn_confirm_dialog_event_confirm()}</Button>
+</div>
 {/snippet}

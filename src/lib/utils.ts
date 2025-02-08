@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { MediaQuery } from 'svelte/reactivity';
 import { twMerge } from 'tailwind-merge';
-import { stVeknCredentials } from './stores/vekn';
+import { stVeknCredentials } from './stores/vekn.svelte';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));

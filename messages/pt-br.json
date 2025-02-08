@@ -6,5 +6,13 @@
 	"add_event_button_import_vekn": "Importar da VEKN",
 	"add_event_button_import_praetor": "Importar arquivo do Praetor",
 	"add_event_vekn_input_id_placeholder": "Id do evento",
-	"add_event_vekn_input_id_button_import": "Importar"
+	"add_event_vekn_input_id_button_import": "Importar",
+	"add_event_vekn_confirm_dialog_title": "Novo evento",
+	"add_event_vekn_confirm_dialog_description": "Confirme se os dados do seu evento foram importados corretamente",
+	"add_event_vekn_confirm_dialog_event_name": "Nome",
+	"add_event_vekn_confirm_dialog_event_rounds": "Rodadas",
+	"add_event_vekn_confirm_dialog_event_confirm": "Confirmar",
+	"drawer_cancel": "Cancelar",
+	"please_wait": "Aguarde"
+	
 }
