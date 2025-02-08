@@ -1,0 +1,10 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"hello_world": "Hello, {name} from pt-br!",
+	"add_event_title": "Novo evento",
+	"add_event_description": "Adicione um evento através do id VEKN ou através de um arquivo do Praetor",
+	"add_event_button_import_vekn": "Importar da VEKN",
+	"add_event_button_import_praetor": "Importar arquivo do Praetor",
+	"add_event_vekn_input_id_placeholder": "Id do evento",
+	"add_event_vekn_input_id_button_import": "Importar"
+}

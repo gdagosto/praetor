@@ -1,0 +1,22 @@
+@baseUrl = https://www.vekn.net
+@apiUrl = {{baseUrl}}/api/vekn
+
+@token = {{login.response.body.data.auth}}
+
+# @name login
+POST {{apiUrl}}/login
+Content-Type: application/x-www-form-urlencoded
+
+username=Schwarzenegger
+&password=keening123BR
+
+###
+# @name events
+@eventId = {{events.response.body.data.events[0].event_id}}
+GET {{apiUrl}}/event?date=2024-10-27
+Authorization: Bearer {{token}}
+
+###
+# @name event_id
+GET {{apiUrl}}/event/{{eventId}}
+Authorization: Bearer {{token}}
