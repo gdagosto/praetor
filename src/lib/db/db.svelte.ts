@@ -1,55 +1,91 @@
 // db.ts
+import { stPages } from '$lib/stores/sidebar.svelte';
 import { stTournament } from '$lib/stores/tournament.svelte';
 import Dexie, { type EntityTable } from 'dexie';
 
-type IDatabase = Dexie & {
-	info: EntityTable<
-		IDbInfo,
-		'id' // primary key "id" (for the typings only)
-	>;
+export type IDatabase = Dexie & {
+	info: EntityTable<IDbInfo, 'id'>;
 };
 
-interface IDbInfo {
+export interface IDbInfo {
 	id: number;
 	key: string;
 	value: string;
 }
 
-let db: IDatabase | undefined;
+export let db: IDatabase | undefined;
 
-const cleanup = $effect.root(() => {
-	$effect(() => {
-		console.log('id:', stTournament.info.id);
-		if (!stTournament) return;
-		console.log('id:2', stTournament.info.id);
-		db = new Dexie(`t${stTournament.info.id}`) as IDatabase;
-		console.log('id3', db);
+function versionDb(id: number) {
+	// No need to do any checks.
+	// Dexie checks if the database exists or not, and creates it accordingly
+	const myDb = new Dexie(`praetor${id}`) as IDatabase;
 
-		// Schema declaration:
-		db.version(1).stores({
-			info: '++id, key, value' // primary key "id" (for the runtime!)
-		});
-		console.log('id4');
-
-		db.on('populate', () => {
-			console.log('dbPopulate');
-			db?.info.bulkAdd([
-				{
-					key: 'name',
-					value: stTournament.info.name
-				},
-				{
-					key: 'rounds',
-					value: String(stTournament.info.rounds)
-				},
-				{
-					key: 'hasFinals',
-					value: String(stTournament.info.hasFinals)
-				}
-			]);
-		});
+	// Schema declaration
+	myDb.version(1).stores({
+		info: 'key, value'
 	});
-});
 
-export type { IDbInfo };
-export { db };
+	return myDb;
+}
+
+export function createDatabase(data: typeof stTournament.info) {
+	// If there is no data, return
+	if (!data) return;
+
+	// If the id is 0, no tournament is selected. Return
+	if (data.id === 0) return;
+
+	db = versionDb(data.id);
+	db.on('populate', () => {
+		console.log('dbPopulate');
+		db?.info.bulkAdd([
+			{
+				key: 'name',
+				value: data.name
+			},
+			{
+				key: 'rounds',
+				value: String(data.rounds)
+			},
+			{
+				key: 'hasFinals',
+				value: String(data.hasFinals)
+			}
+		]);
+	});
+	db.open();
+}
+
+export async function openDatabase(id: number) {
+	console.log('OPEN_DATABASE', id);
+	// If there is no data, return
+	if (!id || id <= 0) return;
+
+	try {
+		db = versionDb(id);
+		await db.open();
+
+		const [name, hasFinals, rounds] = await Promise.all([
+			db.info.get({ key: 'name' }).then((r) => r?.value),
+			db.info.get({ key: 'hasFinals' }).then((r) => r?.value === 'true'),
+			db.info.get({ key: 'rounds' }).then((r) => (r ? Number(r.value) : r))
+		]);
+
+		// TODO: Show an error message if it fails
+		if (!name || !hasFinals || !rounds) {
+			console.error(`Something didn't work!`, name, hasFinals, rounds);
+			return;
+		}
+
+		stTournament.loadInfo({
+			id,
+			name,
+			hasFinals,
+			rounds
+		});
+
+		stPages.setRounds(rounds, hasFinals);
+	} catch (err) {
+		console.error(err);
+	}
+}

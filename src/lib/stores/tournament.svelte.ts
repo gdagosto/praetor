@@ -1,8 +1,4 @@
-interface ITournamentRawData {
-	event_id: number;
-	event_name: string;
-	rounds: string;
-}
+import type { ITournamentRawData } from '$lib/types';
 
 class StTournament {
 	info = $state({
@@ -21,6 +17,11 @@ class StTournament {
 			rounds: Number(rounds),
 			hasFinals: final === '+F'
 		};
+	}
+
+	loadInfo(info: typeof this.info) {
+		console.log('LOAD_INFO');
+		this.info = info;
 	}
 }
 

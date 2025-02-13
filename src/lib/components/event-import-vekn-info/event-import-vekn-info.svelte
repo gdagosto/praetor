@@ -9,12 +9,22 @@
 	import { cn, isDesktop } from "$lib/utils";
 	import { goto } from "$app/navigation";
 	import { stTournament } from "$lib/stores/tournament.svelte";
+	import { createDatabase } from "$lib/db/db.svelte";
+    import type { ITournamentRawData } from '$lib/types';
 
-    let {open = $bindable(false), data} = $props();
+    interface Props {
+        open: boolean;
+        data: ITournamentRawData
+    }
+
+
+    let {open = $bindable(false), data}: Props = $props();
 
     function onConfirm() {
+        // Create a new database with the tournament data
         stTournament.setInfo(data);
-        goto(`/tournament`)
+        createDatabase(stTournament.info);
+        goto(`/${data.event_id}/info`)
     }
 
    </script>
