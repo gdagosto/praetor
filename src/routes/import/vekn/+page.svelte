@@ -6,10 +6,11 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as m from '$lib/paraglide/messages.js';
 	import { veknApi } from '$lib/utils';
+	import type { ITournamentRawData } from '$lib/types';
 
 	let inputVeknId: number | undefined = $state(undefined);
 
-	let confirmationData = $state({});
+	let confirmationData = $state<ITournamentRawData>();
 	let isConfirmationOpen = $state(false);
 	let isButtonSubmitting = $state(false);
 

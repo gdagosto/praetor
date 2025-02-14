@@ -16,14 +16,14 @@
 	}
 
 	function tournamentURL(url: string) {
-		return `/${stTournament.info.id}/${url}`;
+		return `/${stTournament.id}/${url}`;
 	}
 </script>
 
 
 <Sidebar.Root {...restProps} collapsible='offcanvas' bind:ref>
 	<Sidebar.Header>
-		<TournamentSwitcher tournaments={[{name: stTournament.info.name, id: stTournament.info.id}]}/>
+		<TournamentSwitcher closeSidebar={close}/>
 	</Sidebar.Header>
 	<Sidebar.Content>
 		<!-- We create a Sidebar.Group for each parent. -->

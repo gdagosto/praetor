@@ -1,12 +1,18 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import { stTournament } from "$lib/stores/tournament.svelte";
+	import { stTournament, stTournaments } from "$lib/stores/tournament.svelte";
 	import Check from "lucide-svelte/icons/check";
 	import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
 	import GalleryVerticalEnd from "lucide-svelte/icons/gallery-vertical-end";
 
-	let { tournaments }: { tournaments: {id: number, name: string}[] } = $props();
+	let {closeSidebar}: {closeSidebar: CallableFunction} = $props();
+	
+	function onSelect(id: number) {
+		closeSidebar();
+		goto(`${id}`);
+	}
 
 </script>
 
@@ -26,17 +32,17 @@
 							<GalleryVerticalEnd class="size-4" />
 						</div>
 						<div class="flex flex-col gap-0.5 leading-none">
-							<span class="font-semibold">{stTournament.info.name}</span>
+							<span class="font-semibold">{stTournament.info.current.name}</span>
 						</div>
 						<ChevronsUpDown class="ml-auto" />
 					</Sidebar.MenuButton>
 				{/snippet}
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Content class="w-[--bits-dropdown-menu-anchor-width]" align="start">
-				{#each tournaments as t (t.id)}
-					<DropdownMenu.Item onSelect={() => console.log(t.id)}>
+				{#each stTournaments.current ?? [] as t (t.id)}
+					<DropdownMenu.Item onSelect={() => onSelect(t.id)}>
 						{t.name}
-						{#if t.id === stTournament.info.id}
+						{#if t.id === stTournament.info.current.id}
 							<Check class="ml-auto" />
 						{/if}
 					</DropdownMenu.Item>

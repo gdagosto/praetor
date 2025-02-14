@@ -10,7 +10,7 @@ class StPages {
 			items: [
 				{
 					title: 'Tournament Info',
-					url: 'info'
+					url: ''
 				},
 				{
 					title: 'Players',
@@ -31,6 +31,7 @@ class StPages {
 	]);
 
 	setRounds(rounds: number, hasFinals: boolean) {
+		console.debug('SET_ROUNDS', rounds, hasFinals);
 		let roundsData = [];
 
 		for (let i = 1; i <= rounds; i++) {

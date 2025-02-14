@@ -4,12 +4,18 @@
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import {Separator} from "$lib/components/ui/separator/index.js";
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
-	import { openDatabase } from "$lib/db/db.svelte.js";
+	import { stTournament } from "$lib/stores/tournament.svelte";
+	import { stPages } from "$lib/stores/sidebar.svelte";
 
     let {children, data}: LayoutProps = $props();
 
-	openDatabase(data.id)
+	$effect(() => {
+		stTournament.id = data.id;
+	})
 
+	$effect(() => {
+		stPages.setRounds(stTournament.info.current.rounds, stTournament.info.current.hasFinals)
+	})
 </script>
 
 

@@ -3,9 +3,6 @@
 	import type { PageProps } from '../../rounds/[roundNumber]/$types';
 
 	let { data }: PageProps = $props();
-
-    
-    $inspect('page-x-loaded')
 </script>
 
 

@@ -8,23 +8,23 @@
     import * as m from '$lib/paraglide/messages.js'
 	import { cn, isDesktop } from "$lib/utils";
 	import { goto } from "$app/navigation";
-	import { stTournament } from "$lib/stores/tournament.svelte";
-	import { createDatabase } from "$lib/db/db.svelte";
+	import { addTournament } from "$lib/db/db.svelte";
     import type { ITournamentRawData } from '$lib/types';
 
     interface Props {
         open: boolean;
-        data: ITournamentRawData
+        data: ITournamentRawData | undefined;
     }
 
 
     let {open = $bindable(false), data}: Props = $props();
 
     function onConfirm() {
+        if (!data) return;
         // Create a new database with the tournament data
-        stTournament.setInfo(data);
-        createDatabase(stTournament.info);
-        goto(`/${data.event_id}/info`)
+        
+        addTournament(data);
+        goto(`/${data.event_id}`)
     }
 
    </script>
@@ -78,9 +78,9 @@
     <div class={cn('flex flex-col gap-4', drawer && 'px-4')}>
     <div class={cn('grid grid-cols-[max-content_1fr] gap-2 items-center')}>
         <div class='text-muted-foreground text-sm text-right'>{m.add_event_vekn_confirm_dialog_event_name()}</div>
-        <div class='font-semibold'>{data.event_name}</div>
+        <div class='font-semibold'>{data?.event_name}</div>
         <div  class='text-muted-foreground text-sm text-right'>{m.add_event_vekn_confirm_dialog_event_rounds()}</div>
-        <div class='font-semibold'>{data.rounds}</div>
+        <div class='font-semibold'>{data?.rounds}</div>
         
     </div>
     <Button onclick={onConfirm}>{m.add_event_vekn_confirm_dialog_event_confirm()}</Button>
