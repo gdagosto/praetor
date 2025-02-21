@@ -1,30 +1,33 @@
 // db.ts
 import type { ITournamentRawData } from '$lib/types';
+import { veknApi } from '$lib/utils';
 import Dexie, { type EntityTable } from 'dexie';
 
 export type IDatabase = Dexie & {
-	tournaments: EntityTable<IDbTournaments, 'id'>;
-	players: EntityTable<IDbPlayers, 'id'>;
-	standings: EntityTable<IDbStandings, 'id'>;
-	roundTables: EntityTable<IDbTables, 'id'>;
+	tournaments: EntityTable<IDbTournament, 'id'>;
+	players: EntityTable<IDbPlayer, 'id'>;
+	standings: EntityTable<IDbStanding, 'id'>;
+	roundTables: EntityTable<IDbTable, 'id'>;
 };
 
 // Define tables
-export interface IDbTournaments {
+export interface IDbTournament {
 	id: number;
 	name: string;
 	rounds: number;
 	hasFinals: boolean;
 }
 
-export interface IDbPlayers {
+export interface IDbPlayer {
 	id: number;
 	firstName: string;
 	lastName: string;
 	country: string;
+	idText: string;
+	fullName: string;
 }
 
-export interface IDbStandings {
+export interface IDbStanding {
 	id: number;
 	tournamentId: number;
 	playerId: number;
@@ -32,10 +35,10 @@ export interface IDbStandings {
 	gw: number;
 	vp: number;
 	tp: number;
-	status: 'winner' | 'finalist' | 'dq' | 'wd';
+	status: 'winner' | 'finalist' | 'dq' | 'wd' | '';
 }
 
-export interface IDbTables {
+export interface IDbTable {
 	id: number;
 	tournamentId: number;
 	tableNum: number;
@@ -50,12 +53,23 @@ export let db: IDatabase = new Dexie('praetor') as IDatabase;
 // Schema declaration
 db.version(1).stores({
 	tournaments: 'id, name, rounds, hasFinals',
-	players: '++id, firstName, lastName, country',
-	standings: '++id, tournamentId, playerId, placement, gw, vp, tp, status',
-	roundTables: '++id, tournamentId, tableNum, winnerId, players'
+	players: '++id, firstName, lastName, country, idText, fullName',
+	standings:
+		'++id, &[tournamentId+playerId], tournamentId, playerId, placement, gw, vp, tp, status',
+	roundTables: '++id, &[tournamentId+tableNum], tournamentId, tableNum, winnerId, players'
 });
 
 db.open();
+
+db.on('ready', async (rawDb) => {
+	const db = rawDb as unknown as IDatabase;
+
+	// Check if data is already filled
+	const count = await db.players.count();
+	console.debug('ON_READY_PLAYER_COUNT', count);
+
+	if (count === 0) getVeknRankings(db as unknown as IDatabase);
+});
 
 export function addTournament(data: ITournamentRawData) {
 	// If there is no data, return
@@ -72,4 +86,25 @@ export function addTournament(data: ITournamentRawData) {
 		rounds: Number(rounds),
 		hasFinals: final === '+F'
 	});
+}
+
+export async function getVeknRankings(myDb: IDatabase = db) {
+	console.debug('GET_VEKN_RANKINGS');
+	const data = await veknApi('ranking');
+	const players = data?.players;
+	if (!players) {
+		console.error('RELOAD_RANKINGS_MISSING_PLAYERS', data);
+		return;
+	}
+
+	const dbPlayers = players.map((p: any) => ({
+		id: Number(p.veknid),
+		firstName: p.firstname,
+		lastName: p.lastname,
+		country: p.country,
+		idText: p.veknid,
+		fullName: `${p.firstname} ${p.lastname}`
+	}));
+
+	myDb.players.bulkPut(dbPlayers);
 }

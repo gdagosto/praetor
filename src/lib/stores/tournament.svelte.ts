@@ -1,4 +1,4 @@
-import { db, type IDbStandings, type IDbTables, type IDbTournaments } from '$lib/db/db.svelte';
+import { db, type IDbStanding, type IDbTable, type IDbTournament } from '$lib/db/db.svelte';
 import { stateQuery } from '$lib/utils/stateQuery.svelte';
 
 const INITIAL_TOURNAMENT = {
@@ -9,8 +9,34 @@ const INITIAL_TOURNAMENT = {
 };
 
 class StTournament {
+	addPlayer = async (playerId: number) => {
+		// Check if the player exists
+		const playerExists = await db.players.get(playerId);
+		if (!playerExists) {
+			console.log('PLAYER_DOESNT_EXIST');
+			return;
+		}
+
+		// Check if this player is already on the tournament
+		const playerAlreadyIn = await db.standings.get({ playerId: playerId, tournamentId: this.id });
+		if (playerAlreadyIn) {
+			console.log('PLAYER_ALREADY_IN');
+			return;
+		}
+
+		db.standings.add({
+			playerId,
+			tournamentId: this.id,
+			placement: 0,
+			gw: 0,
+			vp: 0,
+			tp: 0,
+			status: ''
+		});
+	};
+
 	id = $state<number>(0);
-	info = stateQuery<IDbTournaments>(
+	info = stateQuery<IDbTournament>(
 		INITIAL_TOURNAMENT,
 		async () => {
 			const result = await db.tournaments.get(this.id);
@@ -19,13 +45,13 @@ class StTournament {
 		() => [this.id]
 	);
 
-	standings = stateQuery<IDbStandings[]>(
+	standings = stateQuery<IDbStanding[]>(
 		[],
 		() => db.standings.where('tournamentId').equals(this.id).toArray(),
 		() => [this.id]
 	);
 
-	tables = stateQuery<IDbTables[]>(
+	tables = stateQuery<IDbTable[]>(
 		[],
 		() => db.roundTables.where('tournamentId').equals(this.id).toArray(),
 		() => [this.id]
@@ -34,4 +60,4 @@ class StTournament {
 
 export const stTournament = new StTournament();
 
-export const stTournaments = stateQuery<IDbTournaments[]>([], () => db.tournaments.toArray());
+export const stTournaments = stateQuery<IDbTournament[]>([], () => db.tournaments.toArray());

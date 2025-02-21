@@ -11,7 +11,7 @@
 	
 	function onSelect(id: number) {
 		closeSidebar();
-		goto(`${id}`);
+		goto(`/${id}`);
 	}
 
 </script>
