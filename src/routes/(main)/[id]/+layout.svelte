@@ -1,28 +1,27 @@
 <script lang="ts">
-	import type { LayoutProps } from "./$types";
-	import {AppSidebar} from "../_components/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import {Separator} from "$lib/components/ui/separator/index.js";
-	import * as Breadcrumb from "$lib/components/ui/breadcrumb/index.js";
-	import { stTournament } from "$lib/stores/tournament.svelte";
-	import { stPages } from "$lib/stores/sidebar.svelte";
+	import type { LayoutProps } from './$types';
+	import { AppSidebar } from '../_components/index.js';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import { Separator } from '$lib/components/ui/separator/index.js';
+	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
+	import { stTournament } from '$lib/stores/tournament.svelte';
+	import { stPages } from '$lib/stores/sidebar.svelte';
 
-    let {children, data}: LayoutProps = $props();
+	let { children, data }: LayoutProps = $props();
 
 	$effect(() => {
 		stTournament.id = data.id;
-	})
+	});
 
 	$effect(() => {
-		stPages.setRounds(stTournament.info.current.rounds, stTournament.info.current.hasFinals)
-	})
+		stPages.setRounds(stTournament.info.current.rounds, stTournament.info.current.hasFinals);
+	});
 </script>
-
 
 <Sidebar.Provider>
 	<AppSidebar />
 	<Sidebar.Inset>
-        <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+		<header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
 			<Sidebar.Trigger class="-ml-1" />
 			<Separator orientation="vertical" class="mr-2 h-4" />
 			<Breadcrumb.Root>
@@ -37,10 +36,8 @@
 				</Breadcrumb.List>
 			</Breadcrumb.Root>
 		</header>
-		<div class="flex flex-1 flex-col gap-4 p-4 h-1">
-
-        {@render children()}
-    </div>
+		<div class="flex h-1 flex-1 flex-col gap-4">
+			{@render children()}
+		</div>
 	</Sidebar.Inset>
 </Sidebar.Provider>
-

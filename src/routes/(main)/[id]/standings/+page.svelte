@@ -6,6 +6,7 @@
 	import { buttonVariants } from '$lib/components/ui/button/button.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
+	import * as Card from '$lib/components/ui/card/index.js';
 
 	$inspect('STANDINGS', stTournament.standings.current);
 	$inspect('PLAYER_IDS', stPlayers.ids);
@@ -17,14 +18,19 @@
 	}
 </script>
 
-<ScrollArea class="flex h-full flex-1 flex-col">
-	{#each stPlayers.players.current as player}
-		<div class="flex border-b-1 p-2 last:mb-8">{player.fullName} - {player.id}</div>
-	{/each}
+<ScrollArea class="h-full flex-1 p-4">
+	<div class="flex flex-col gap-4">
+		{#each stTournament.standings.current as standing}
+			{@const player = stPlayers.players.current.find((p) => p.id === standing.playerId)}
+			<Card.Root>
+				<Card.Header>
+					<Card.Title>{player?.fullName}</Card.Title>
+					<Card.Description>{standing.placement}</Card.Description>
+				</Card.Header>
+				<Card.Content>
+					<p>Card Content</p>
+				</Card.Content>
+			</Card.Root>
+		{/each}
+	</div>
 </ScrollArea>
-
-<footer class="flex w-full flex-col border-t-1 p-4">
-	<Autocomplete onsuccess={onNewPlayerSubmit} baseClass={buttonVariants({ variant: 'default' })}>
-		{m.add_player_title()}
-	</Autocomplete>
-</footer>
