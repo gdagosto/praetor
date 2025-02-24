@@ -11,23 +11,18 @@
 	$inspect('PLAYER_IDS', stPlayers.ids);
 	$inspect('PLAYERS', stPlayers.players.current);
 
-
 	function onNewPlayerSubmit(id: number) {
 		console.debug('NEW_PLAYER_SUBMIT', id);
-        stTournament.addPlayer(id);
+		stTournament.addPlayer(id);
 	}
-
-    
 </script>
 
-
-
-<ScrollArea class='h-full flex-1 flex flex-col rounded-md border-1'>
-    {#each stPlayers.players.current as player}
-         <div class='flex border-b-1 last:border-b-0 p-2'>{player.fullName} - {player.id}</div>
-    {/each}
+<ScrollArea class="flex h-full flex-1 flex-col rounded-md border-1">
+	{#each stPlayers.players.current as player}
+		<div class="flex border-b-1 p-2 last:mb-8">{player.fullName} - {player.id}</div>
+	{/each}
 </ScrollArea>
 
-<Autocomplete onsuccess={onNewPlayerSubmit} baseClass={buttonVariants({variant: 'default'})}>
+<Autocomplete onsuccess={onNewPlayerSubmit} baseClass={buttonVariants({ variant: 'default' })}>
 	{m.add_player_title()}
 </Autocomplete>

@@ -2,6 +2,8 @@ import { type ClassValue, clsx } from 'clsx';
 import { MediaQuery } from 'svelte/reactivity';
 import { twMerge } from 'tailwind-merge';
 import { stVeknCredentials } from './stores/vekn.svelte';
+import { goto } from '$app/navigation';
+import { ForbiddenError, HttpError } from './error/http';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -22,28 +24,37 @@ async function veknFetch(endpoint: string, init: RequestInit) {
 		const res = await fetch(veknUrl(endpoint), init);
 		if (res.ok) {
 			const json = await res.json();
-			if (json.err_code) throw new Error(`[${json.err_code}] ${json.err_msg}`);
+			if (json.err_code) {
+				if (json.err_code === 403) throw new ForbiddenError(json.err_msg);
+				throw new HttpError(json.err_msg, json.err_code);
+			}
 			return json.data;
 		}
 
 		const errMessage = await res.text();
-		throw new Error(`[${res.status}] ${errMessage}`);
+		if (res.status === 403) throw new ForbiddenError(errMessage);
+		throw new HttpError(errMessage, res.status);
 	} catch (err) {
-		console.error('Fetch error', err);
 		if (typeof err === 'string') throw new Error(err);
 		if (err instanceof Error) throw err;
 	}
 }
 
-async function veknLogin() {
+export async function veknLogin() {
 	console.debug('VEKN_LOGIN');
 
 	const loginData = new FormData();
 	loginData.append('username', stVeknCredentials.current.username);
 	loginData.append('password', stVeknCredentials.current.password);
 
-	const data = await veknFetch('login', { method: 'POST', body: loginData });
-	stVeknCredentials.current.token = data.auth;
+	try {
+		const data = await veknFetch('login', { method: 'POST', body: loginData });
+		stVeknCredentials.current.token = data.auth;
+		stVeknCredentials.current.isLoggedIn = true;
+	} catch (err) {
+		console.error(err);
+		if (err instanceof ForbiddenError) stVeknCredentials.current.isLoggedIn = false;
+	}
 }
 
 export async function veknApi(endpoint: string, init?: RequestInit) {
