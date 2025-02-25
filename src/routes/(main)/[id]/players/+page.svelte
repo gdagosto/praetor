@@ -23,7 +23,7 @@
 	}
 
 	function onPlayerEdit(id: number) {
-		console.debug('ON_PLAYER_EDIT',id);
+		console.debug('ON_PLAYER_EDIT', id);
 		playerEditId = id;
 		playerEditOpen = true;
 	}
@@ -31,12 +31,18 @@
 
 <ScrollArea class="relative h-full flex-1">
 	<div class="bg-accent absolute top-0 left-0 h-10 w-full"></div>
-	<grid class="grid grid-cols-[1fr_auto_auto] items-center gap-x-4 p-2 pl-4 pb-1">
+	<grid class="grid grid-cols-[30px_1fr_auto_auto] items-center gap-x-4 p-2 pb-1">
+		<div class="sticky top-2 z-10 text-left font-semibold"></div>
 		<div class="sticky top-2 z-10 text-left font-semibold">{m.players_table_player_header()}</div>
 		<div class="sticky top-2 z-10 text-center font-semibold">{m.players_table_id_header()}</div>
 		<div class="sticky top-2 z-10 text-center font-semibold"></div>
-		<div class="sticky top-10 z-10 col-span-3 mx-[-20px] mt-1 mb-2 border-b-1"></div>
+		<div class="sticky top-10 z-10 col-span-4 mx-[-20px] mt-1 mb-2 border-b-1"></div>
 		{#each stPlayers.players.current as player}
+			{@const status = stTournament.standings.current.find((s) => s.playerId === player.id)?.status ?? ''}
+
+			<div class="text-muted-foreground w-2 text-xs font-medium uppercase">
+				{status.length > 2 ? status.slice(0, 1) : status}
+			</div>
 			<div class="truncate">{player.fullName}</div>
 			<div class="text-center">{player.id}</div>
 			<div>
@@ -44,15 +50,19 @@
 					<Ellipsis />
 				</Button>
 			</div>
-			<div class="col-span-3 mx-[-20px] my-1 border-b-1 last:hidden"></div>
+			<div class="col-span-4 mx-[-20px] my-1 border-b-1 last:hidden"></div>
 		{/each}
 	</grid>
 </ScrollArea>
 
 <footer class="flex w-full flex-col border-t-1 p-4">
-	<Autocomplete placeholder={m.add_player_input_name_placeholder()} onsuccess={onNewPlayerSubmit} baseClass={buttonVariants({ variant: 'default' })}>
+	<Autocomplete
+		placeholder={m.add_player_input_name_placeholder()}
+		onsuccess={onNewPlayerSubmit}
+		baseClass={buttonVariants({ variant: 'default' })}
+	>
 		{m.add_player_title()}
 	</Autocomplete>
 </footer>
 
-<PlayerEditDialog bind:open={playerEditOpen} id={playerEditId}/>
+<PlayerEditDialog bind:open={playerEditOpen} id={playerEditId} />

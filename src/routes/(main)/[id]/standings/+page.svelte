@@ -22,7 +22,7 @@
 		{#each stTournament.standings.current as standing, i}
 			{@const player = stPlayers.players.current.find((p) => p.id === standing.playerId)}
 
-			<div class="w-2">
+			<div class="w-2 uppercase text-muted-foreground text-xs font-medium">
 				{#if standing.status}
 					{standing.status.length > 2 ? standing.status.slice(0, 1) : standing.status}
 				{:else if standing.placement}

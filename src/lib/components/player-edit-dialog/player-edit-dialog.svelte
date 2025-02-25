@@ -95,7 +95,7 @@
 
 {#snippet content(drawer = false)}
 	<form class={cn('grid items-start gap-4', drawer && 'px-4')}>
-		{#if !isInTable}
+		{#if isInTable}
 			<Button type="button" variant="default" onclick={onRemove}>
 				{m.players_edit_dialog_button_remove()}
 			</Button>
