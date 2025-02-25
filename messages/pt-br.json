@@ -8,7 +8,7 @@
 	"login_dialog_username_label": "Usuário",
 	"login_dialog_username_placeholder": "Nome de usuário...",
 	"login_dialog_password_label": "Senha",
-	"login_dialog_password_placeholder": "",
+	"login_dialog_password_placeholder": "Sua senha...",
 	"login_dialog_confirm": "Entrar",
 	"add_event_title": "Novo evento",
 	"add_event_description": "Adicione um evento através do id VEKN ou através de um arquivo do Praetor",
@@ -26,5 +26,17 @@
 	"add_player_input_name_label": "Nome",
 	"add_player_input_name_placeholder": "Nome do jogador...",
 	"add_player_input_id_label": "Id da VEKN",
-	"add_player_input_id_placeholder": "Insira o Id VEKN..."
+	"add_player_input_id_placeholder": "Insira o Id VEKN...",
+	"players_table_player_header": "Jogador",
+	"players_table_id_header": "VEKN",
+	"standings_table_player_header": "Jogador",
+	"standings_table_gw_header": "GW",
+	"standings_table_vp_header": "VP",
+	"standings_table_tp_header": "TP",
+	"players_edit_dialog_title": "Editar jogador",
+	"players_edit_dialog_description": "Altere aqui o status do jogador no campeonato. Se o jogador não participou de nenhuma mesa, é possível removê-lo por completo. Caso contrário, é possível desclassificar ou ausentar o jogador.",
+	"players_edit_dialog_button_remove": "Remover (X)",
+	"players_edit_dialog_button_withdraw": "Retirar (WD)",
+	"players_edit_dialog_button_disqualify": "Desqualificar (DQ)",
+	"players_edit_dialog_button_restitute": "Restabelecer"
 }

@@ -1,4 +1,10 @@
-import { db, type IDbStanding, type IDbTable, type IDbTournament } from '$lib/db/db.svelte';
+import {
+	db,
+	type IDbPlayer,
+	type IDbStanding,
+	type IDbTable,
+	type IDbTournament
+} from '$lib/db/db.svelte';
 import { stateQuery } from '$lib/utils/stateQuery.svelte';
 
 const INITIAL_TOURNAMENT = {
@@ -9,6 +15,28 @@ const INITIAL_TOURNAMENT = {
 };
 
 class StTournament {
+	id = $state<number>(0);
+	info = stateQuery<IDbTournament>(
+		INITIAL_TOURNAMENT,
+		async () => {
+			const result = await db.tournaments.get(this.id);
+			return result ?? INITIAL_TOURNAMENT;
+		},
+		() => [this.id]
+	);
+
+	standings = stateQuery<IDbStanding[]>(
+		[],
+		() => db.standings.where('tournamentId').equals(this.id).toArray(),
+		() => [this.id]
+	);
+
+	tables = stateQuery<IDbTable[]>(
+		[],
+		() => db.roundTables.where('tournamentId').equals(this.id).toArray(),
+		() => [this.id]
+	);
+
 	addPlayer = async (playerId: number) => {
 		// Check if the player exists
 		const playerExists = await db.players.get(playerId);
@@ -35,27 +63,18 @@ class StTournament {
 		});
 	};
 
-	id = $state<number>(0);
-	info = stateQuery<IDbTournament>(
-		INITIAL_TOURNAMENT,
-		async () => {
-			const result = await db.tournaments.get(this.id);
-			return result ?? INITIAL_TOURNAMENT;
-		},
-		() => [this.id]
-	);
+	removePlayerByStandingId = async (standingId: number) => {
+		db.standings.delete(standingId);
+	};
 
-	standings = stateQuery<IDbStanding[]>(
-		[],
-		() => db.standings.where('tournamentId').equals(this.id).toArray(),
-		() => [this.id]
-	);
-
-	tables = stateQuery<IDbTable[]>(
-		[],
-		() => db.roundTables.where('tournamentId').equals(this.id).toArray(),
-		() => [this.id]
-	);
+	editPlayerStatusByStandingId = async (
+		standingId: IDbStanding['id'],
+		status: IDbStanding['status']
+	) => {
+		db.standings.update(standingId, {
+			status
+		});
+	};
 }
 
 export const stTournament = new StTournament();

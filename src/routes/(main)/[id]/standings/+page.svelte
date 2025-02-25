@@ -4,46 +4,36 @@
 	import { stTournament } from '$lib/stores/tournament.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
-	import * as Card from '$lib/components/ui/card/index.js';
-	import { Badge } from '$lib/components/ui/badge';
 
 	$inspect('STANDINGS', stTournament.standings.current);
 	$inspect('PLAYER_IDS', stPlayers.ids);
 	$inspect('PLAYERS', stPlayers.players.current);
-
-	function onNewPlayerSubmit(id: number) {
-		console.debug('NEW_PLAYER_SUBMIT', id);
-		stTournament.addPlayer(id);
-	}
 </script>
 
-<ScrollArea class="h-full flex-1 p-4">
-	<div class="flex flex-col gap-4">
+<ScrollArea class="relative h-full flex-1">
+	<div class="bg-accent absolute top-0 left-0 h-10 w-full"></div>
+	<grid class="grid grid-cols-[30px_1fr_30px_30px_30px] gap-x-2 p-2 items-center">
+		<div class="sticky top-2 z-10 text-left font-semibold"></div>
+		<div class="sticky top-2 z-10 text-left font-semibold">{m.standings_table_player_header()}</div>
+		<div class="sticky top-2 z-10 text-center font-semibold">{m.standings_table_gw_header()}</div>
+		<div class="sticky top-2 z-10 text-center font-semibold">{m.standings_table_vp_header()}</div>
+		<div class="sticky top-2 z-10 text-center font-semibold">{m.standings_table_tp_header()}</div>
+		<div class="sticky top-10 z-10 col-span-5 mx-[-20px] my-2 border-b-1"></div>
 		{#each stTournament.standings.current as standing, i}
 			{@const player = stPlayers.players.current.find((p) => p.id === standing.playerId)}
-			<Card.Root>
-				<Card.Header class='flex-row justify-between pt-4 pr-4 align-middle'>
-					<Card.Title class='text-lg'>{player?.fullName}</Card.Title>
-					{#if standing.placement}
-						<Badge variant="outline" class='rounded-md'>{i+1}º</Badge>
-					{/if}
-					
-				</Card.Header>
-				<Card.Content class='flex justify-around'>
-					<div class='flex flex-col align-middle text-center'>
-						<span class='font-medium text-2xl'>{standing.gw}</span>
-						<h3 class='text-sm'>GW</h3>
-					</div>
-					<div class='flex flex-col align-middle text-center'>
-						<span class='font-medium text-2xl'>{standing.vp}</span>
-						<h3 class='text-sm'>VP</h3>
-					</div>
-					<div class='flex flex-col align-middle text-center'>
-						<span class='font-medium text-2xl'>{standing.tp}</span>
-						<h3 class='text-sm'>TP</h3>
-					</div>
-				</Card.Content>
-			</Card.Root>
+
+			<div class="w-2">
+				{#if standing.status}
+					{standing.status.length > 2 ? standing.status.slice(0, 1) : standing.status}
+				{:else if standing.placement}
+					{standing.placement}°
+				{/if}
+			</div>
+			<div class="truncate">{player?.fullName.trim() || `VEKN:${player?.id}`}</div>
+			<div class="text-center">{standing.gw}</div>
+			<div class="text-center">{standing.vp}</div>
+			<div class="text-center">{standing.tp}</div>
+			<div class="col-span-5 mx-[-20px] my-2 border-b-1 last:hidden"></div>
 		{/each}
-	</div>
+	</grid>
 </ScrollArea>
