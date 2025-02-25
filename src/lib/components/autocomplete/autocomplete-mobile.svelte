@@ -71,6 +71,7 @@
     function onOpenChange(val: boolean) {
         console.log('ON_OPEN_CHANGE', val)
         open = val;
+        inputData = '';
     }
 
 
@@ -99,7 +100,7 @@
 			onsubmit={onSubmit}
 		>
 			<Input
-				placeholder="PLACEHOLDER"
+				{placeholder}
                 tabindex={1}
 				class="rounded-none border-none pl-0 focus-visible:ring-0"
 				bind:value={inputData}

@@ -83,8 +83,11 @@
 			bind:value={stVeknCredentials.current.password}
 		/>
 
-		<Button onclick={onLogin}>{m.login_dialog_confirm()}</Button>
-		<Drawer.Close class={buttonVariants({ variant: 'secondary' })}>{m.drawer_cancel()}</Drawer.Close
-		>
+		<Button onclick={onLogin} type='submit'>{m.login_dialog_confirm()}</Button>
+		{#if drawer}
+			<Drawer.Close class={buttonVariants({ variant: 'secondary' })}
+				>{m.drawer_cancel()}</Drawer.Close
+			>
+		{/if}
 	</form>
 {/snippet}

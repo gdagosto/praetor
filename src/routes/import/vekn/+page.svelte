@@ -18,7 +18,9 @@
 		if (!inputVeknId || inputVeknId < 0) return;
 
 		isButtonSubmitting = true;
-		const data = await veknApi(`event/${inputVeknId}`);
+		const data = await veknApi(`event/${inputVeknId}`).catch(() => {
+			isButtonSubmitting = false;
+		});
 		isButtonSubmitting = false;
 
 		confirmationData = data.events[0];
