@@ -63,6 +63,23 @@ class StTournament {
 		});
 	};
 
+	addRoundTable = async (roundNum: number, tableNum: number, playerIds: number[]) => {
+		// Check if the item exists
+
+		const table = await db.roundTables.get({ tournamentId: this.id, roundNum, tableNum });
+
+		db.roundTables.put(
+			{
+				tournamentId: this.id,
+				roundNum,
+				tableNum,
+				winnerId: 0,
+				players: playerIds.map((id) => ({ vp: 0, playerId: id }))
+			},
+			table?.id
+		);
+	};
+
 	removePlayerByStandingId = async (standingId: number) => {
 		db.standings.delete(standingId);
 	};

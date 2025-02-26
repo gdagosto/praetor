@@ -41,6 +41,7 @@ export interface IDbStanding {
 export interface IDbTable {
 	id: number;
 	tournamentId: number;
+	roundNum: number;
 	tableNum: number;
 	winnerId: number;
 	players: Array<{
@@ -56,7 +57,8 @@ db.version(1).stores({
 	players: '++id, firstName, lastName, country, idText, fullName',
 	standings:
 		'++id, &[tournamentId+playerId], tournamentId, playerId, placement, gw, vp, tp, status',
-	roundTables: '++id, &[tournamentId+tableNum], tournamentId, tableNum, winnerId, players'
+	roundTables:
+		'++id, &[tournamentId+roundNum+tableNum], tournamentId, roundNum, tableNum, winnerId, players'
 });
 
 db.open();
