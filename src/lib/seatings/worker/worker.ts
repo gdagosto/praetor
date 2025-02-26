@@ -21,7 +21,7 @@ function generateRoundSeatings(
 
 	const mapperId2Index: Record<number, number> = {};
 	const mapperIndex2Id: Record<number, number> = {};
-	let curIndex = activeIds.length;
+	let curIndex = 0;
 
 	for (let i = 0, iMax = activeIds.length; i < iMax; i++) {
 		const playerId = activeIds[i];
@@ -55,14 +55,15 @@ function generateRoundSeatings(
 		roundNumber,
 		previousRoundsWithIndexes,
 		activePlayersIndexes,
-		curIndex,
-		generatorCallback
+		curIndex
+		// generatorCallback
 	);
 
 	const roundWithIds = round.map((table) => table.map((idx) => mapperIndex2Id[idx]));
 
 	console.log('Generating the round took ' + (performance.now() - t0) + ' milliseconds.');
 	console.log(`Final score: ${score}. Generated round below`);
+	console.log(round);
 	console.log(roundWithIds);
 
 	postMessage({

@@ -127,7 +127,7 @@ function optimise(
 		round[i1][i2] = aux;
 
 		// Only recompute the changed round, other rounds have not varied
-		const previousMeasure = measures[roundIdx];
+		const previousMeasure = measures[roundIdx - 1];
 		measures[roundIdx] = measure(round, playerCount, previousMeasure, [i1, j1]);
 		score = Score.fastTotal(sumMeasures(measures));
 		const scoreDiff = score - previousScore;
@@ -154,6 +154,7 @@ function optimise(
 			if (score < bestScore) {
 				bestState = structuredClone(rounds[roundIdx]);
 				bestScore = score;
+				console.debug('NEW_BEST', bestScore, rounds);
 			}
 		}
 

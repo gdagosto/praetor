@@ -19,19 +19,25 @@ export const generationProgress = generationTween.current;
 
 export async function generateRound(idRound: number) {
 	// Get previous rounds
-	const previousRoundsDB = await db.roundTables
+	const previousRoundTablesQuery = await db.roundTables
 		.where(['tournamentId', 'roundNum'])
 		.between([stTournament.id, 0], [stTournament.id, idRound], true, false)
 		.toArray();
 
-	console.debug('PREVIOUS_ROUNDS_DB', previousRoundsDB);
+	console.debug('PREVIOUS_ROUNDS_DB', previousRoundTablesQuery);
 
 	// We need to convert the database data into a number[][][], containing the playerIds.
 	// TODO: Populate this item
-	const previousRounds: number[][][] = [];
+	const previousRounds: number[][][] = new Array(idRound).fill([]);
+
+	for (let i = 0, iMax = previousRoundTablesQuery.length; i < iMax; i++) {
+		const roundTable = previousRoundTablesQuery[i];
+		previousRounds[roundTable.roundNum][roundTable.tableNum] = roundTable.players.map(
+			(p) => p.playerId
+		);
+	}
 
 	// Build an array of active player ids
-
 	const activeStandings = stTournament.standings.current.filter(
 		(s) => !INACTIVE_STATUS.includes(s.status)
 	);

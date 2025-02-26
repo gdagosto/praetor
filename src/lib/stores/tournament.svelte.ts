@@ -67,17 +67,23 @@ class StTournament {
 		// Check if the item exists
 
 		const table = await db.roundTables.get({ tournamentId: this.id, roundNum, tableNum });
+		const players = playerIds.map((id) => ({ vp: 0, playerId: id }));
+		console.debug('ADD_ROUND_TABLE', table?.id, playerIds);
 
-		db.roundTables.put(
-			{
+		if (table) {
+			db.roundTables.update(table.id, {
+				winnerId: 0,
+				players
+			});
+		} else {
+			db.roundTables.add({
 				tournamentId: this.id,
 				roundNum,
 				tableNum,
 				winnerId: 0,
-				players: playerIds.map((id) => ({ vp: 0, playerId: id }))
-			},
-			table?.id
-		);
+				players
+			});
+		}
 	};
 
 	removePlayerByStandingId = async (standingId: number) => {
