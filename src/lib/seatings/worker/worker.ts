@@ -3,7 +3,12 @@ import { ITERATIONS } from './constants';
 
 self.onmessage = (e) => {
 	if (e.data.type === 'generate') {
-		generateRoundSeatings(e.data.roundNumber, e.data.previousRounds, e.data.activeIds);
+		generateRoundSeatings(
+			e.data.roundNumber,
+			e.data.previousRounds,
+			e.data.activeIds,
+			e.data.totalRounds
+		);
 		// } else if (e.data.type === 'import') {
 		// 	importRoundSeatings(e.data.round, e.data.players, e.data.tables);
 	}
@@ -12,7 +17,8 @@ self.onmessage = (e) => {
 function generateRoundSeatings(
 	roundNumber: number,
 	previousRounds: number[][][],
-	activeIds: number[]
+	activeIds: number[],
+	totalRounds: number
 ) {
 	// We need to convert from playerId to playerIdx [0,1,2,3,4] so we can use the generator
 	console.debug('GENERATE_ROUND_SEATINGS | roundNumber', roundNumber);
@@ -55,7 +61,8 @@ function generateRoundSeatings(
 		roundNumber,
 		previousRoundsWithIndexes,
 		activePlayersIndexes,
-		curIndex
+		curIndex,
+		totalRounds
 		// generatorCallback
 	);
 

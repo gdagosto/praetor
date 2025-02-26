@@ -1,11 +1,11 @@
 import { type IMeasure, RULES } from './constants';
 
 export class Score {
-	static fastTotal(measure: IMeasure): number {
-		return this.total(measure);
+	static fastTotal(measure: IMeasure, totalRounds: number): number {
+		return this.total(measure, totalRounds);
 	}
 
-	static total(measure: IMeasure): number {
+	static total(measure: IMeasure, totalRounds: number): number {
 		const iMax = measure.oppMatrix.length;
 		const jMax = measure.oppMatrix[0].length;
 
@@ -78,6 +78,9 @@ export class Score {
 			// Same position groups for an opponent twice
 			Math.floor(countSamePositionGroupsTwice / 2)
 		];
+
+		// The 2nd rule must change if it is a 2 round tournament.
+		if (totalRounds === 2) rules[1] = rules[3];
 
 		return rules.reduce((sum, rule, idx) => sum + rule * RULES[idx][2], 0);
 	}

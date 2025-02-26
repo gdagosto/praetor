@@ -65,6 +65,7 @@ export function generateRound(
 	previousRounds: number[][][],
 	activePlayers: number[],
 	playerCount: number,
+	totalRounds: number,
 	cb: IGeneratorCallback = exampleGeneratorCb
 ) {
 	console.debug('GENERATE_ROUND | roundNumber', roundNumber);
@@ -81,16 +82,17 @@ export function generateRound(
 	// For the first round, there's no need to do anything crazy. Just randomly shuffle the players
 	if (roundNumber === 0) {
 		const round = shuffle(playersTables);
-		return { round, score: Score.total(measure(round, playerCount)) };
+		return { round, score: Score.total(measure(round, playerCount), totalRounds) };
 	}
 
 	// If it's not the first round, need to optimise based on the constraints.
-	return optimise([...previousRounds, playersTables], playerCount, cb);
+	return optimise([...previousRounds, playersTables], playerCount, totalRounds, cb);
 }
 
 function optimise(
 	rounds: number[][][],
 	playerCount: number,
+	totalRounds: number,
 	cb: CallableFunction | undefined = undefined
 ) {
 	const TEMPERATURE_MIN = 0.001;
@@ -103,7 +105,7 @@ function optimise(
 	const roundIdx = rounds.length - 1;
 	const measures = rounds.map((round) => measure(round, playerCount));
 
-	let score = Score.fastTotal(sumMeasures(measures));
+	let score = Score.fastTotal(sumMeasures(measures), totalRounds);
 	let previousScore = score;
 	let bestScore = score;
 	let bestState = structuredClone(rounds[roundIdx]);
@@ -129,7 +131,7 @@ function optimise(
 		// Only recompute the changed round, other rounds have not varied
 		const previousMeasure = measures[roundIdx - 1];
 		measures[roundIdx] = measure(round, playerCount, previousMeasure, [i1, j1]);
-		score = Score.fastTotal(sumMeasures(measures));
+		score = Score.fastTotal(sumMeasures(measures), totalRounds);
 		const scoreDiff = score - previousScore;
 		trials++;
 
@@ -173,7 +175,7 @@ function optimise(
 		}
 	}
 
-	return { round: bestState, score: Score.total(sumMeasures(measures)) };
+	return { round: bestState, score: Score.total(sumMeasures(measures), totalRounds) };
 }
 
 function measure(

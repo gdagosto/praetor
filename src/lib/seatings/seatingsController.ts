@@ -28,10 +28,12 @@ export async function generateRound(idRound: number) {
 
 	// We need to convert the database data into a number[][][], containing the playerIds.
 	// TODO: Populate this item
-	const previousRounds: number[][][] = new Array(idRound).fill([]);
+	const previousRounds: number[][][] = new Array(idRound);
+	for (let i = 0; i < idRound; i++) previousRounds[i] = [];
 
 	for (let i = 0, iMax = previousRoundTablesQuery.length; i < iMax; i++) {
 		const roundTable = previousRoundTablesQuery[i];
+		console.debug('DEBUG', roundTable, previousRounds);
 		previousRounds[roundTable.roundNum][roundTable.tableNum] = roundTable.players.map(
 			(p) => p.playerId
 		);
@@ -46,7 +48,8 @@ export async function generateRound(idRound: number) {
 		type: 'generate',
 		roundNumber: idRound,
 		previousRounds,
-		activeIds: activeStandings.map((s) => s.playerId)
+		activeIds: activeStandings.map((s) => s.playerId),
+		totalRounds: stTournament.info.current.rounds
 	});
 }
 
