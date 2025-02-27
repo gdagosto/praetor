@@ -47,6 +47,7 @@ export interface IDbTable {
 	players: Array<{
 		playerId: number;
 		vp: number;
+		tp: number;
 	}>;
 }
 

@@ -28,7 +28,7 @@
 	});
 
 	function onclickTable(table: IDbTable) {
-		console.debug('ON_CLICK_TABLE', table);
+		console.debug('ON_CLICK_TABLE', $state.snapshot(table));
 		tableReportTable = table;
 		tableReportOpen = true;
 	}
@@ -47,7 +47,7 @@
 					{#each table.players as tablePlayer}
 						{@const player = stPlayers.getById(tablePlayer.playerId)}
 						<div class="align-center flex justify-start gap-2 rounded-md p-2">
-							<Badge variant="outline" class="rounded-md">{tablePlayer.vp}</Badge>
+							<Badge variant="outline" class="rounded-md w-10 justify-center">{tablePlayer.vp}</Badge>
 							<span class="text-md">{player?.fullName}</span>
 						</div>
 					{/each}

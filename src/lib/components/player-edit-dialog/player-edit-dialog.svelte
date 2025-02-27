@@ -80,7 +80,11 @@
 			</Drawer.Header>
 
 			{@render content(true)}
-			<Drawer.Footer class="pt-4"></Drawer.Footer>
+			<Drawer.Footer class="pt-4">
+				<Drawer.Close class={buttonVariants({ variant: 'secondary' })}
+					>{m.drawer_cancel()}</Drawer.Close
+				>
+			</Drawer.Footer>
 		</Drawer.Content>
 	</Drawer.Root>
 {/if}
@@ -95,7 +99,7 @@
 
 {#snippet content(drawer = false)}
 	<form class={cn('grid items-start gap-4', drawer && 'px-4')}>
-		{#if isInTable}
+		{#if !isInTable}
 			<Button type="button" variant="default" onclick={onRemove}>
 				{m.players_edit_dialog_button_remove()}
 			</Button>
@@ -116,12 +120,6 @@
 			<Button type="button" variant="default" onclick={onRestitute}>
 				{m.players_edit_dialog_button_restitute()}
 			</Button>
-		{/if}
-
-		{#if drawer}
-			<Drawer.Close class={buttonVariants({ variant: 'secondary' })}
-				>{m.drawer_cancel()}</Drawer.Close
-			>
 		{/if}
 	</form>
 {/snippet}

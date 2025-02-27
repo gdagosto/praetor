@@ -3,12 +3,11 @@ import SeatingWorker from './worker/worker.js?worker';
 // import { RoundState, type IPlayer, RoundTableState } from '$lib/types';
 const seatWorker = new SeatingWorker();
 
-const INACTIVE_STATUS: IDbStanding['status'][] = ['wd', 'dq'];
-
 import { Tween } from 'svelte/motion';
 import { cubicOut } from 'svelte/easing';
 import { stTournament } from '$lib/stores/tournament.svelte';
-import { db, type IDbStanding } from '$lib/db/db.svelte';
+import { db } from '$lib/db/db.svelte';
+import { INACTIVE_STATUS } from '$lib/utils/status';
 
 const generationTween = new Tween(0, {
 	duration: 100,

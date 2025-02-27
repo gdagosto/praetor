@@ -8,6 +8,8 @@
 	import * as ToggleGroup from '$lib/components/ui/toggle-group/index.js';
 	import { Label } from '$lib/components/ui/label';
 	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { stTournament } from '$lib/stores/tournament.svelte';
 
 	interface Props {
 		open: boolean;
@@ -15,7 +17,96 @@
 	}
 
 	let { open = $bindable(false), table }: Props = $props();
+	let vps = table.players.map((p) => p.vp);
+	let fulls = $state(vps.map((vp) => String(Math.floor(vp))));
+	let halfs = $state(vps.map((vp) => (vp % 1) === 0.5));
 
+	$effect(() => {
+		console.debug('ON_EFFECT');
+		vps = table.players.map((p) => p.vp);
+		fulls = vps.map((vp) => String(Math.floor(vp)));
+		halfs = vps.map((vp) => (vp % 1) === 0.5);
+	})
+
+
+	function onsubmit() {
+		console.debug('ON_SUBMIT');
+
+		let roundPlayers: IDbTable['players'] = [];
+
+		// Figure out each player VPs
+		for (let i = 0, iMax = table.players.length; i < iMax; i++) {
+			const player = table.players[i];
+			roundPlayers.push({
+				playerId: player.playerId,
+				vp: Number(fulls[i]) + (halfs[i] ? 0.5 : 0),
+				tp: 0
+			})
+		}
+
+		// Now, figure out how many tps each player got
+		const playerPos = roundPlayers.map((p, idx) => ({ ...p, idx })).sort((a, b) => b.vp - a.vp);
+		
+
+		// Start the tp array based on number of players
+		let tps: number[] = [];
+		const tableSize = roundPlayers.length;		
+		if (tableSize === 4) tps = [60, 48, 24, 12];
+		if (tableSize === 5) tps = [60, 48, 36, 24, 12];
+
+		// Group players into respective table results, so we can figure out
+		let lastVP = roundPlayers[0].vp;
+		let lastTP = 0;
+		let positionGroups: Array<{ players: number[]; tp: number }> = [];
+		let lastPlayers: number[] = [];
+		let winnerId = 0;
+
+		for (let i = 0, iMax = playerPos.length; i < iMax; i++) {
+			const player = playerPos[i];
+			const tp = tps[i];
+
+			if (lastVP !== player.vp) {
+				positionGroups.push({ tp: lastTP, players: structuredClone(lastPlayers) });
+				lastTP = 0;
+				lastVP = player.vp;
+				lastPlayers = [];
+			}
+
+			lastTP += tp;
+			lastPlayers.push(player.idx);
+		}
+
+		positionGroups.push({ tp: lastTP, players: lastPlayers });
+
+		positionGroups.forEach((posGroup) => {
+			// For each player in a position group, divide the TPs equally
+			const tp = posGroup.tp / posGroup.players.length;
+			posGroup.players.forEach((pIdx) => {
+				roundPlayers[pIdx].tp = tp;
+			});
+		});
+
+		// Figure out if there was a winner
+		if (roundPlayers[playerPos[0].idx].tp === tps[0]) {
+			winnerId = playerPos[0].playerId
+		}
+
+		// Recompute vps based on fulls and halfs
+		stTournament.reportRoundTable(table.roundNum, table.tableNum, roundPlayers, winnerId);
+
+		open = false;
+
+	}
+
+	function onValueChange(value: string, idx: number) {
+		console.debug('ON_VALUE_CHANGE', value, idx)
+		const numValue = Number(value);
+		if (isNaN(numValue)) return;
+		fulls[idx] = value;
+	}
+
+	$inspect(fulls)
+	$inspect(halfs)
 </script>
 
 {#if isDesktop.current}
@@ -41,7 +132,11 @@
 			</Drawer.Header>
 
 			{@render content(true)}
-			<Drawer.Footer class="pt-4"></Drawer.Footer>
+			<Drawer.Footer class="pt-4">
+				<Drawer.Close class={buttonVariants({ variant: 'secondary' })}
+					>{m.drawer_cancel()}</Drawer.Close
+				>
+			</Drawer.Footer>
 		</Drawer.Content>
 	</Drawer.Root>
 {/if}
@@ -56,7 +151,7 @@
 
 {#snippet content(drawer = false)}
 	<form class={cn('grid items-start gap-8', drawer && 'px-4')}>
-		{#each table.players as tablePlayer}
+		{#each table.players as tablePlayer, idx}
 			{@const player = stPlayers.getById(tablePlayer.playerId)}
 			<div class="flex flex-col items-stretch gap-2">
 				<div class="flex w-full items-center justify-start gap-2 px-2">
@@ -64,38 +159,34 @@
 						{player?.fullName}
 					</span>
 					<Label for="{tablePlayer.playerId}-chk" class="ml-auto">+0.5</Label>
-					<Checkbox id="{tablePlayer.playerId}-chk" />
+					<Checkbox id="{tablePlayer.playerId}-chk" bind:checked={halfs[idx]}/>
 				</div>
 				<ToggleGroup.Root
 					type="single"
-					value={String(tablePlayer.vp)}
-					class="flex w-full rounded-md bg-muted p-1 h-11"
+					class="bg-muted flex h-11 w-full rounded-md p-1"
+					value={fulls[idx]}
+					onValueChange={(v) => onValueChange(v,idx)}
 				>
 					{@render toggleItem('0')}
 					{@render toggleItem('1')}
 					{@render toggleItem('2')}
 					{@render toggleItem('3')}
 					{@render toggleItem('4')}
-					{@render toggleItem('5')}
+					{#if table.players.length === 5}
+						 {@render toggleItem('5')}
+					{/if}
 				</ToggleGroup.Root>
+
 			</div>
 		{/each}
+		<Button type='submit' onclick={onsubmit}>{m.table_report_dialog_button_submit()}</Button>
 	</form>
 {/snippet}
 
 {#snippet toggleItem(value = '0')}
 	<ToggleGroup.Item
 		{value}
-		class="h-9 flex-auto basis-1 rounded-sm ring-offset-background focus-visible:ring-ring data-[state=on]:bg-background data-[state=on]:text-foreground inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:shadow text-zinc-600 dark:text-zinc-200"
-	>
-		{value}
-	</ToggleGroup.Item>
-{/snippet}
-
-{#snippet toggleItemOld(value = '0')}
-	<ToggleGroup.Item
-		{value}
-		class="flex-auto basis-1 rounded-sm data-[state=on]:bg-background data-[state=on]:font-bold"
+		class="ring-offset-background focus-visible:ring-ring data-[state=on]:bg-background data-[state=on]:text-foreground inline-flex h-9 flex-auto basis-1 items-center justify-center rounded-sm px-3 py-1 text-sm font-medium whitespace-nowrap text-zinc-600 transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=on]:shadow dark:text-zinc-200"
 	>
 		{value}
 	</ToggleGroup.Item>

@@ -6,6 +6,7 @@ import {
 	type IDbTournament
 } from '$lib/db/db.svelte';
 import { stateQuery } from '$lib/utils/stateQuery.svelte';
+import { INACTIVE_STATUS } from '$lib/utils/status';
 
 const INITIAL_TOURNAMENT = {
 	id: 0,
@@ -27,7 +28,7 @@ class StTournament {
 
 	standings = stateQuery<IDbStanding[]>(
 		[],
-		() => db.standings.where('tournamentId').equals(this.id).toArray(),
+		() => db.standings.where('tournamentId').equals(this.id).sortBy('placement'),
 		() => [this.id]
 	);
 
@@ -67,7 +68,7 @@ class StTournament {
 		// Check if the item exists
 
 		const table = await db.roundTables.get({ tournamentId: this.id, roundNum, tableNum });
-		const players = playerIds.map((id) => ({ vp: 0, playerId: id }));
+		const players = playerIds.map((id) => ({ playerId: id, vp: 0, tp: 0 }));
 		console.debug('ADD_ROUND_TABLE', table?.id, playerIds);
 
 		if (table) {
@@ -84,6 +85,92 @@ class StTournament {
 				players
 			});
 		}
+	};
+
+	reportRoundTable = async (
+		roundNum: number,
+		tableNum: number,
+		players: IDbTable['players'],
+		winnerId: IDbTable['winnerId']
+	) => {
+		const table = await db.roundTables.get({ tournamentId: this.id, roundNum, tableNum });
+		if (!table) return;
+
+		console.log('tableId', table.id, 'players', players);
+
+		db.roundTables.update(table.id, { winnerId, players });
+
+		// Trigger a standings update
+		this.updateStandings();
+	};
+
+	updateStandings = async () => {
+		// TODO: There's probably a smarter way to do this, but for now we redo everything all the time
+
+		// Recalculate standings, aggregating player GWs, VPs and TPs
+
+		// Don't trust liveQueries, as they might is probably stale when this is called
+		const standings = await db.standings.where('tournamentId').equals(this.id).toArray();
+		const roundTables = await db.roundTables.where('tournamentId').equals(this.id).toArray();
+		const playersById: Record<
+			number,
+			{
+				id: IDbStanding['id'];
+				vp: IDbStanding['vp'];
+				gw: IDbStanding['gw'];
+				tp: IDbStanding['tp'];
+				placement: IDbStanding['placement'];
+				status: IDbStanding['status'];
+			}
+		> = {};
+
+		standings.forEach((s) => {
+			playersById[s.playerId] = { id: s.id, gw: 0, vp: 0, tp: 0, placement: 0, status: s.status };
+		});
+
+		roundTables.forEach((roundTable) => {
+			if (roundTable.winnerId) {
+				playersById[roundTable.winnerId].gw += 1;
+			}
+
+			roundTable.players.forEach(({ playerId, vp, tp }) => {
+				playersById[playerId].vp += vp;
+				playersById[playerId].tp += tp;
+			});
+		});
+
+		const placementDict: Record<number, number[]> = {};
+
+		// Finally, update placement. To do so, we need to group players into groups based on vp, tp and gw
+		Object.entries(playersById).forEach(([playerId, { gw, vp, tp, status }]) => {
+			let rank = 0;
+			if (!INACTIVE_STATUS.includes(status)) {
+				rank = gw * 1_000_000 + vp * 1_000 + tp;
+			}
+			if (!placementDict[rank]) placementDict[rank] = [];
+			placementDict[rank].push(Number(playerId));
+		});
+
+		// Now, we order the placement groups,
+		// so we can get player placement in the tournament at the moment
+		const placementGroups = Object.entries(placementDict).sort(
+			(a, b) => Number(b[0]) - Number(a[0])
+		);
+
+		let placement = 1;
+		for (let i = 0, iMax = placementGroups.length; i < iMax; i++) {
+			const groupIds = placementGroups[i][1];
+			const playerCount = groupIds.length;
+			for (let j = 0, jMax = playerCount; j < jMax; j++) {
+				const player = playersById[groupIds[j]];
+				player.placement = placement;
+			}
+			placement += playerCount;
+		}
+
+		Object.values(playersById).forEach((standing) => {
+			db.standings.update(standing.id, standing);
+		});
 	};
 
 	removePlayerByStandingId = async (standingId: number) => {
