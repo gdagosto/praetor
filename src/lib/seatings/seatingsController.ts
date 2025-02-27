@@ -21,20 +21,20 @@ export async function generateRound(idRound: number) {
 	// Get previous rounds
 	const previousRoundTablesQuery = await db.roundTables
 		.where(['tournamentId', 'roundNum'])
-		.between([stTournament.id, 0], [stTournament.id, idRound], true, false)
+		.between([stTournament.id, 1], [stTournament.id, idRound], true, false)
 		.toArray();
 
 	console.debug('PREVIOUS_ROUNDS_DB', previousRoundTablesQuery);
 
 	// We need to convert the database data into a number[][][], containing the playerIds.
 	// TODO: Populate this item
-	const previousRounds: number[][][] = new Array(idRound);
-	for (let i = 0; i < idRound; i++) previousRounds[i] = [];
+	const previousRounds: number[][][] = new Array(idRound - 1);
+	for (let i = 0; i < idRound - 1; i++) previousRounds[i] = [];
 
 	for (let i = 0, iMax = previousRoundTablesQuery.length; i < iMax; i++) {
 		const roundTable = previousRoundTablesQuery[i];
 		console.debug('DEBUG', roundTable, previousRounds);
-		previousRounds[roundTable.roundNum][roundTable.tableNum] = roundTable.players.map(
+		previousRounds[roundTable.roundNum - 1][roundTable.tableNum - 1] = roundTable.players.map(
 			(p) => p.playerId
 		);
 	}
@@ -46,7 +46,7 @@ export async function generateRound(idRound: number) {
 
 	seatWorker.postMessage({
 		type: 'generate',
-		roundNumber: idRound,
+		roundNumber: idRound - 1,
 		previousRounds,
 		activeIds: activeStandings.map((s) => s.playerId),
 		totalRounds: stTournament.info.current.rounds
@@ -71,7 +71,7 @@ function onGenerateFinish(roundId: number, round: number[][]) {
 
 	// Save to database
 	round.forEach((table, tableIdx) => {
-		stTournament.addRoundTable(roundId, tableIdx, table);
+		stTournament.addRoundTable(roundId + 1, tableIdx + 1, table);
 	});
 
 	// const idsPerTable = generator.sg.rounds[idRound];

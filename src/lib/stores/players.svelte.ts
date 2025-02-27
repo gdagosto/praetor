@@ -10,6 +10,8 @@ class StPlayers {
 		() => db.players.bulkGet(this.ids).then((players) => players.filter((p) => !!p)),
 		() => [this.ids]
 	);
+
+	getById = (id: number) => this.players.current.find((p) => p.id === id);
 }
 
 export const stPlayers = new StPlayers();

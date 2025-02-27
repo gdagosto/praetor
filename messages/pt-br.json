@@ -38,5 +38,7 @@
 	"players_edit_dialog_button_remove": "Remover (X)",
 	"players_edit_dialog_button_withdraw": "Retirar (WD)",
 	"players_edit_dialog_button_disqualify": "Desqualificar (DQ)",
-	"players_edit_dialog_button_restitute": "Restabelecer"
+	"players_edit_dialog_button_restitute": "Restabelecer",
+	"table_report_dialog_title": "Resultados da mesa {tableNum}",
+	"table_report_dialog_description": "Reporte aqui os VPs obtidos pelos jogadores"
 }
