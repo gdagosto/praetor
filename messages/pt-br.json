@@ -41,5 +41,8 @@
 	"players_edit_dialog_button_restitute": "Restabelecer",
 	"table_report_dialog_title": "Resultados da mesa {tableNum}",
 	"table_report_dialog_description": "Reporte aqui os VPs obtidos pelos jogadores",
-	"table_report_dialog_button_submit": "Atualizar resultados"
+	"table_report_dialog_button_submit": "Atualizar resultados",
+	"round_delete_dialog_title": "Deletar rodada",
+	"round_delete_dialog_description": "Caso uma rodada tenha sido gerada incorretamente, é possível deletá-la a partir do botão abaixo.\n\nATENÇÃO! Não é possível desfazer essa operação. Proceda com cautela.",
+	"round_delete_dialog_button": "Deletar"
 }

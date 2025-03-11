@@ -1,9 +1,9 @@
 <script lang="ts">
+	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
 	import '$lib/db/db.svelte';
+	import * as m from '$lib/paraglide/messages.js';
 	import { stPlayers } from '$lib/stores/players.svelte';
 	import { stTournament } from '$lib/stores/tournament.svelte';
-	import * as m from '$lib/paraglide/messages.js';
-	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
 
 	$inspect('STANDINGS', stTournament.standings.current);
 	$inspect('PLAYER_IDS', stPlayers.ids);
@@ -12,17 +12,17 @@
 
 <ScrollArea class="relative h-full flex-1">
 	<div class="bg-accent absolute top-0 left-0 h-10 w-full"></div>
-	<grid class="grid grid-cols-[30px_1fr_30px_30px_30px] gap-x-2 p-2 items-center">
+	<grid class="grid grid-cols-[30px_1fr_30px_30px_30px] items-center gap-x-2 p-2">
 		<div class="sticky top-2 z-10 text-left font-semibold"></div>
 		<div class="sticky top-2 z-10 text-left font-semibold">{m.standings_table_player_header()}</div>
 		<div class="sticky top-2 z-10 text-center font-semibold">{m.standings_table_gw_header()}</div>
 		<div class="sticky top-2 z-10 text-center font-semibold">{m.standings_table_vp_header()}</div>
 		<div class="sticky top-2 z-10 text-center font-semibold">{m.standings_table_tp_header()}</div>
 		<div class="sticky top-10 z-10 col-span-5 mx-[-20px] my-2 border-b-1"></div>
-		{#each stTournament.standings.current as standing, i}
+		{#each stTournament.standings.current as standing}
 			{@const player = stPlayers.players.current.find((p) => p.id === standing.playerId)}
 
-			<div class="w-2 uppercase text-muted-foreground text-xs font-medium">
+			<div class="text-muted-foreground w-2 text-xs font-medium uppercase">
 				{#if standing.status}
 					{standing.status.length > 2 ? standing.status.slice(0, 1) : standing.status}
 				{:else if standing.placement}

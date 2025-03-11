@@ -37,6 +37,8 @@ function exampleGeneratorCb(
 function tablesFromPlayers(playerIds: number[]) {
 	const len = playerIds.length;
 
+	if (len < 4) throw new Error('Cant run a tournament without at least 4 players');
+
 	if ([6, 7, 11].includes(len)) {
 		throw new Error(`Staggered rounds not yet supported.`);
 	}

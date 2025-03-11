@@ -1,10 +1,4 @@
-import {
-	db,
-	type IDbPlayer,
-	type IDbStanding,
-	type IDbTable,
-	type IDbTournament
-} from '$lib/db/db.svelte';
+import { db, type IDbStanding, type IDbTable, type IDbTournament } from '$lib/db/db.svelte';
 import { stateQuery } from '$lib/utils/stateQuery.svelte';
 import { INACTIVE_STATUS } from '$lib/utils/status';
 
@@ -35,6 +29,20 @@ class StTournament {
 	tables = stateQuery<IDbTable[]>(
 		[],
 		() => db.roundTables.where('tournamentId').equals(this.id).toArray(),
+		() => [this.id]
+	);
+
+	currentRound = stateQuery<number>(
+		0,
+		async () => {
+			const data = await db.roundTables
+				.where('tournamentId')
+				.equals(this.id)
+				.reverse()
+				.sortBy('roundNum');
+			if (data.length === 0) return 0;
+			return data[0]['roundNum'];
+		},
 		() => [this.id]
 	);
 
@@ -102,6 +110,12 @@ class StTournament {
 
 		// Trigger a standings update
 		this.updateStandings();
+	};
+
+	deleteRound = async (roundNum: number) => {
+		console.debug('DELETE_ROUND', roundNum);
+
+		db.roundTables.where(['tournamentId', 'roundNum']).equals([this.id, roundNum]).delete();
 	};
 
 	updateStandings = async () => {
