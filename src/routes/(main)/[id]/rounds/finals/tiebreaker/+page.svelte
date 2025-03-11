@@ -7,6 +7,7 @@
 	import { stPlayers } from '$lib/stores/players.svelte';
 	import { goto } from '$app/navigation';
 	import { tick } from 'svelte';
+	import { shuffle } from '$lib/utils/random.js';
 
 	let page = $state(0);
 	let maxPage = $derived(stFinals.ties.length);
@@ -28,8 +29,18 @@
 		stFinals.ties[page].players = [removed, ...current];
 	}
 
+	function random() {
+		stFinals.ties[page].players = shuffle(stFinals.ties[page].players);
+		if (hasNextPage) {
+			nextPage();
+		} else {
+			finish();
+		}
+	}
+
 	function finish() {
 		stFinals.finalizeTiebreakers();
+		goto('placements');
 	}
 
 	if (stFinals.ties.length === 0) {
@@ -41,7 +52,7 @@
 
 {#if stFinals.ties.length > 0}
 	<div class="flex h-full w-full flex-col items-center justify-center">
-		<h2>
+		<h2 class="mb-8">
 			Desempate de {stFinals.ties[page].placement}º
 		</h2>
 		<div class="flex w-full flex-col gap-2 p-4">
@@ -56,6 +67,7 @@
 					</span>
 				</Button>
 			{/each}
+			<Button onclick={random} class="mt-8">Random</Button>
 		</div>
 	</div>
 

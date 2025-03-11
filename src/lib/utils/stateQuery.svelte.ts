@@ -5,7 +5,7 @@ export function stateQuery<T>(
 	querier: () => T | Promise<T>,
 	dependencies?: () => unknown[]
 ) {
-	let query = $state<{ current: T }>({ current: initial });
+	const query = $state<{ current: T }>({ current: initial });
 	$effect.root(() => {
 		$effect(() => {
 			dependencies?.();

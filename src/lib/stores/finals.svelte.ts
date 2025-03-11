@@ -1,4 +1,5 @@
 import { db, type IDbStanding } from '$lib/db/db.svelte';
+import { stateQuery } from '$lib/utils/stateQuery.svelte';
 import { stTournament } from './tournament.svelte';
 
 interface ITie {
@@ -15,6 +16,15 @@ interface IFinalsPlacements {
 class StFinals {
 	ties = $state<ITie[]>([]);
 	placements = $state<IFinalsPlacements[]>([]);
+	finalists = stateQuery<IDbStanding[]>(
+		[],
+		async () =>
+			(await db.standings.where('tournamentId').equals(stTournament.id).sortBy('placement')).slice(
+				0,
+				5
+			),
+		() => [stTournament.id]
+	);
 
 	generatePlacements = async () => {
 		// Don't trust liveQueries, as they might is probably stale when this is called
