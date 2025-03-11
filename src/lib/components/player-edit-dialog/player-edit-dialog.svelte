@@ -53,6 +53,7 @@
 		console.debug('ON_RESTITUTE', id);
 		if (!standing) throw new Error('STANDINGS_PLAYER_NOT_FOUND');
 		stTournament.editPlayerStatusByStandingId(standing.id, '');
+		stTournament.updateStandings();
 		open = false;
 	}
 </script>

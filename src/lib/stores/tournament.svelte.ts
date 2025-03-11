@@ -121,6 +121,9 @@ class StTournament {
 	updateStandings = async () => {
 		// TODO: There's probably a smarter way to do this, but for now we redo everything all the time
 
+		// Reset finalists
+		db.standings.where('status').equals('finalist').modify({ status: '' });
+
 		// Recalculate standings, aggregating player GWs, VPs and TPs
 
 		// Don't trust liveQueries, as they might is probably stale when this is called
@@ -183,8 +186,31 @@ class StTournament {
 		}
 
 		Object.values(playersById).forEach((standing) => {
+			console.log('oi', standing);
 			db.standings.update(standing.id, standing);
 		});
+	};
+
+	selectFinalists = async (ids: number[]) => {
+		console.log('SELECT_FINALISTS', ids);
+
+		// Reset finalists
+		db.standings.where('status').equals('finalist').modify({ status: '' });
+
+		const bulkUpdate = ids.map(
+			(standingId, idx) =>
+				({
+					key: standingId,
+					changes: {
+						placement: idx + 1,
+						status: idx < 5 ? 'finalist' : ''
+					}
+				}) as const
+		);
+
+		console.log(bulkUpdate);
+
+		db.standings.bulkUpdate(bulkUpdate);
 	};
 
 	removePlayerByStandingId = async (standingId: number) => {

@@ -68,9 +68,9 @@
 					{#each table.players as tablePlayer}
 						{@const player = stPlayers.getById(tablePlayer.playerId)}
 						<div class="align-center flex justify-start gap-2 rounded-md p-2">
-							<Badge variant="outline" class="w-10 justify-center rounded-md"
-								>{tablePlayer.vp}</Badge
-							>
+							<Badge variant="outline" class="w-10 justify-center rounded-md">
+								{tablePlayer.vp}
+							</Badge>
 							<span class="text-md">{player?.fullName}</span>
 						</div>
 					{/each}
