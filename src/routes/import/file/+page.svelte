@@ -6,15 +6,15 @@
 
 	$inspect('value', value);
 
-	$effect(() => {
-		if (!fileInput) return;
+	function onChange(e: any) {
+		console.log('on_change', e.target.files);
 		const reader = new FileReader();
 		reader.addEventListener('load', () => {
 			console.log(reader.result);
 		});
 
-		reader.readAsText(fileInput.files[0], 'utf-8');
-	});
+		reader.readAsText(e.target.files[0], 'utf-8');
+	}
 </script>
 
-<Input type="file" bind:ref={fileInput} bind:value />
+<Input type="file" onchange={onChange} bind:value />
