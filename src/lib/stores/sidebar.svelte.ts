@@ -32,7 +32,7 @@ class StPages {
 
 	setRounds(rounds: number, hasFinals: boolean) {
 		console.debug('SET_ROUNDS', rounds, hasFinals);
-		let roundsData = [];
+		const roundsData = [];
 
 		for (let i = 1; i <= rounds; i++) {
 			roundsData.push({

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import RoundDeleteDialog from '$lib/components/round-delete-dialog/round-delete-dialog.svelte';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
@@ -7,6 +8,7 @@
 	import '$lib/db/db.svelte';
 	import type { IDbTable } from '$lib/db/db.svelte';
 	import { generateRound } from '$lib/seatings/seatingsController';
+	import { stFinals } from '$lib/stores/finals.svelte';
 	import { stPlayers } from '$lib/stores/players.svelte';
 	import { stTournament } from '$lib/stores/tournament.svelte';
 	import type { PageProps } from './$types';
@@ -26,7 +28,23 @@
 
 	$inspect(stTournament.currentRound.current);
 
+	async function onGenerateFinals() {
+		console.debug('GENERATE_FINALS');
+		// Verify needed tiebreakers
+		await stTournament.updateStandings();
+		await stFinals.generatePlacements();
+		await stFinals.generateTiebreakers();
+
+		if (stFinals.ties.length > 0) {
+			goto('finals/tiebreaker');
+		} else {
+			goto('finals/seatings');
+		}
+	}
+
 	function onGenerateRound() {
+		if (data.roundNumber === 100) return onGenerateFinals();
+
 		console.debug('ON_GENERATE_ROUND', data.roundNumber, stPlayers.ids.length);
 		const activePlayers = stTournament.standings.current.filter(
 			(s) => s.status !== 'dq' && s.status !== 'wd'

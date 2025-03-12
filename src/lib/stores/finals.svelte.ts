@@ -78,6 +78,8 @@ class StFinals {
 		const { placements } = this;
 		const standingIds = placements.map((p) => p.standingId);
 
+		console.debug('AUX_1', standingIds);
+
 		// Check tiebreakers for fixes
 		for (let i = 0, iMax = this.ties.length; i < iMax; i++) {
 			const tie = this.ties[i];
@@ -86,13 +88,14 @@ class StFinals {
 				const standingId = tie.players[j].id;
 
 				standingIds[pos] = standingId;
+				console.debug('AUX_2', tie.players[j], pos, standingIds);
 				if (pos >= 5) continue;
 				placements[pos].playerId = tie.players[j].playerId;
 				placements[pos].standingId = standingId;
 			}
 		}
 
-		console.debug('FINAL_PLACEMENTS', $state.snapshot(placements));
+		console.debug('FINAL_PLACEMENTS', $state.snapshot(placements), standingIds);
 
 		// Now, update the standings to show players as finalists
 		stTournament.selectFinalists(standingIds);

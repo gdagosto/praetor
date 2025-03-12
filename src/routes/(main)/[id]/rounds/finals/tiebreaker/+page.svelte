@@ -1,13 +1,17 @@
 <script lang="ts">
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { stFinals } from '$lib/stores/finals.svelte';
-	import ChevronRight from 'lucide-svelte/icons/chevron-right';
-	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
-	import Check from 'lucide-svelte/icons/check';
-	import { stPlayers } from '$lib/stores/players.svelte';
 	import { goto } from '$app/navigation';
-	import { tick } from 'svelte';
+	import { DragNDrop } from '$lib/components/drag-n-drop';
+	import Button, { buttonVariants } from '$lib/components/ui/button/button.svelte';
+	import type { IDbStanding } from '$lib/db/db.svelte';
+	import * as m from '$lib/paraglide/messages.js';
+	import { stFinals } from '$lib/stores/finals.svelte';
+	import { stPlayers } from '$lib/stores/players.svelte';
+	import { cn } from '$lib/utils';
 	import { shuffle } from '$lib/utils/random.js';
+	import Check from 'lucide-svelte/icons/check';
+	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
+	import ChevronRight from 'lucide-svelte/icons/chevron-right';
+	import { tick } from 'svelte';
 
 	let page = $state(0);
 	let maxPage = $derived(stFinals.ties.length);
@@ -23,10 +27,10 @@
 		if (page < maxPage - 1) page++;
 	}
 
-	function moveToTop(idx: number) {
-		const current = stFinals.ties[page].players;
-		const removed = current.splice(idx, 1)[0];
-		stFinals.ties[page].players = [removed, ...current];
+	function onSaveBasicList(e: IDbStanding[]) {
+		console.debug('ON_SAVE', $state.snapshot(stFinals.ties[page].players), e);
+		stFinals.ties[page].players = e;
+		console.debug('ON_SAVE', $state.snapshot(stFinals.ties[page].players));
 	}
 
 	function random() {
@@ -51,23 +55,35 @@
 </script>
 
 {#if stFinals.ties.length > 0}
-	<div class="flex h-full w-full flex-col items-center justify-center">
-		<h2 class="mb-8">
-			Desempate de {stFinals.ties[page].placement}º
+	<div class="flex h-full w-full flex-col justify-center p-8">
+		<h2 class=" text-lg font-medium">
+			{m.finals_tiebreaker_title({ current: stFinals.ties[page].placement })}
 		</h2>
-		<div class="flex w-full flex-col gap-2 p-4">
-			{#each stFinals.ties[page].players as standing, idx}
-				{@const player = stPlayers.getById(standing.playerId)}
-				<Button variant="outline" onclick={() => moveToTop(idx)} class="flex justify-between">
-					<span>
-						{player?.fullName}
-					</span>
-					<span>
-						{standing.placement + idx}º
-					</span>
-				</Button>
-			{/each}
-			<Button onclick={random} class="mt-8">Random</Button>
+		<h3 class="text-muted-foreground mb-2 text-sm whitespace-pre-wrap">
+			{m.finals_tiebreaker_description_1()}
+		</h3>
+		<h3 class="text-muted-foreground mb-8 text-sm whitespace-pre-wrap">
+			{m.finals_tiebreaker_description_2()}
+		</h3>
+
+		<div class="flex w-full flex-col gap-2">
+			<DragNDrop
+				listName="Basic list"
+				items={stFinals.ties[page].players}
+				onFinalize={(e) => onSaveBasicList(e)}
+				group="basic-list"
+				class="flex w-full flex-col gap-2"
+			>
+				{#snippet children(item, idx)}
+					{@const player = stPlayers.getById(item.playerId)}
+					<div class={cn(buttonVariants({ variant: 'outline' }), 'flex w-full justify-between')}>
+						<span>{player?.fullName}</span>
+						<span>{item.placement + idx}º</span>
+					</div>
+				{/snippet}
+			</DragNDrop>
+
+			<Button onclick={random} class="mt-8">{m.finals_tiebreaker_random()}</Button>
 		</div>
 	</div>
 
@@ -81,7 +97,7 @@
 			<ChevronLeft />
 		</Button>
 		<div class="flex w-[100px] items-center justify-center text-sm font-medium">
-			Empate {page + 1} de {maxPage}
+			{m.finals_tiebreaker_page({ current: page + 1, max: maxPage })}
 		</div>
 
 		{#if hasNextPage}

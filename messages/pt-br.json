@@ -44,5 +44,12 @@
 	"table_report_dialog_button_submit": "Atualizar resultados",
 	"round_delete_dialog_title": "Deletar rodada",
 	"round_delete_dialog_description": "Caso uma rodada tenha sido gerada incorretamente, é possível deletá-la a partir do botão abaixo.\n\nATENÇÃO! Não é possível desfazer essa operação. Proceda com cautela.",
-	"round_delete_dialog_button": "Deletar"
+	"round_delete_dialog_button": "Deletar",
+	"finals_tiebreaker_title": "Desempate - {current}º",
+	"finals_tiebreaker_description_1": "Não foi possível determinar todos os finalistas, pois existem jogadores empatados.",
+	"finals_tiebreaker_description_2": "Ordene os jogadores empatados manualmente, ou clique no botão para desempatar aleatoriamente",
+	"finals_tiebreaker_random": "Desempatar aleatóriamente",
+	"finals_tiebreaker_page": "Empate {current} de {max}",
+	"finals_placements_title": "Posicionamento",
+	"finals_placements_description": "Determine aqui a posição de mesa de cada um dos finalistas"
 }
