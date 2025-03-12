@@ -45,7 +45,10 @@
 	},
 	"dependencies": {
 		"@inlang/paraglide-sveltekit": "^0.15.5",
+		"@types/file-saver-es": "^2.0.3",
 		"dexie": "^4.0.11",
+		"dexie-export-import": "^4.1.4",
+		"file-saver-es": "^2.0.5",
 		"tailwindcss-animate": "^1.0.7",
 		"vite@3": "link:tailwindcss/vite@3"
 	},
