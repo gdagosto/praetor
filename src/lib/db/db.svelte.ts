@@ -35,6 +35,7 @@ export interface IDbStanding {
 	gw: number;
 	vp: number;
 	tp: number;
+	coinranking: number;
 	status: 'winner' | 'finalist' | 'dq' | 'wd' | '';
 }
 
@@ -51,13 +52,13 @@ export interface IDbTable {
 	}>;
 }
 
-export let db: IDatabase = new Dexie('praetor') as IDatabase;
+export const db: IDatabase = new Dexie('praetor') as IDatabase;
 // Schema declaration
 db.version(1).stores({
 	tournaments: 'id, name, rounds, hasFinals',
 	players: '++id, firstName, lastName, country, idText, fullName',
 	standings:
-		'++id, &[tournamentId+playerId], tournamentId, playerId, placement, gw, vp, tp, status',
+		'++id, &[tournamentId+playerId], tournamentId, playerId, placement, gw, vp, tp, coinranking, status',
 	roundTables:
 		'++id, &[tournamentId+roundNum+tableNum], tournamentId, roundNum, tableNum, winnerId, players'
 });

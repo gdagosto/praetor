@@ -78,14 +78,14 @@ class StFinals {
 		const { placements } = this;
 		const standingIds = placements.map((p) => p.standingId);
 
-		console.debug('AUX_1', standingIds);
-
 		// Check tiebreakers for fixes
 		for (let i = 0, iMax = this.ties.length; i < iMax; i++) {
 			const tie = this.ties[i];
 			for (let j = 0, jMax = tie.players.length; j < jMax; j++) {
 				const pos = tie.placement + j - 1;
 				const standingId = tie.players[j].id;
+
+				stTournament.updateCoinRanking(standingId, j + 1);
 
 				standingIds[pos] = standingId;
 				console.debug('AUX_2', tie.players[j], pos, standingIds);

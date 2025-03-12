@@ -68,6 +68,7 @@ class StTournament {
 			gw: 0,
 			vp: 0,
 			tp: 0,
+			coinranking: 0,
 			status: ''
 		});
 	};
@@ -137,15 +138,30 @@ class StTournament {
 				gw: IDbStanding['gw'];
 				tp: IDbStanding['tp'];
 				placement: IDbStanding['placement'];
+				coinranking: IDbStanding['coinranking'];
 				status: IDbStanding['status'];
 			}
 		> = {};
 
 		standings.forEach((s) => {
-			playersById[s.playerId] = { id: s.id, gw: 0, vp: 0, tp: 0, placement: 0, status: s.status };
+			playersById[s.playerId] = {
+				id: s.id,
+				gw: 0,
+				vp: 0,
+				tp: 0,
+				placement: 0,
+				coinranking: 0,
+				status: s.status
+			};
 		});
 
 		roundTables.forEach((roundTable) => {
+			// Check if it's the final table
+			if (roundTable.roundNum === 100) {
+				playersById[roundTable.winnerId].status = 'winner';
+				return;
+			}
+
 			if (roundTable.winnerId) {
 				playersById[roundTable.winnerId].gw += 1;
 			}
@@ -191,6 +207,10 @@ class StTournament {
 		});
 	};
 
+	updateCoinRanking = async (id: IDbStanding['id'], coinranking: IDbStanding['coinranking']) => {
+		db.standings.update(id, { coinranking });
+	};
+
 	selectFinalists = async (ids: number[]) => {
 		console.log('SELECT_FINALISTS', ids);
 
@@ -211,6 +231,12 @@ class StTournament {
 		console.log(bulkUpdate);
 
 		db.standings.bulkUpdate(bulkUpdate);
+	};
+
+	getStandingByPlayerId = (id: number) => {
+		const player = this.standings.current.find((p) => p.playerId === id);
+		if (!player) throw new Error(`Cant find standing for vekn ${id}`);
+		return player;
 	};
 
 	removePlayerByStandingId = async (standingId: number) => {

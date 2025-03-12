@@ -2,7 +2,6 @@ import { type ClassValue, clsx } from 'clsx';
 import { MediaQuery } from 'svelte/reactivity';
 import { twMerge } from 'tailwind-merge';
 import { stVeknCredentials } from './stores/vekn.svelte';
-import { goto } from '$app/navigation';
 import { ForbiddenError, HttpError } from './error/http';
 
 export function cn(...inputs: ClassValue[]) {

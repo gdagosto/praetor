@@ -19,15 +19,14 @@
 	let { open = $bindable(false), table }: Props = $props();
 	let vps = table.players.map((p) => p.vp);
 	let fulls = $state(vps.map((vp) => String(Math.floor(vp))));
-	let halfs = $state(vps.map((vp) => (vp % 1) === 0.5));
+	let halfs = $state(vps.map((vp) => vp % 1 === 0.5));
 
 	$effect(() => {
 		console.debug('ON_EFFECT');
 		vps = table.players.map((p) => p.vp);
 		fulls = vps.map((vp) => String(Math.floor(vp)));
-		halfs = vps.map((vp) => (vp % 1) === 0.5);
-	})
-
+		halfs = vps.map((vp) => vp % 1 === 0.5);
+	});
 
 	function onsubmit() {
 		console.debug('ON_SUBMIT');
@@ -41,16 +40,15 @@
 				playerId: player.playerId,
 				vp: Number(fulls[i]) + (halfs[i] ? 0.5 : 0),
 				tp: 0
-			})
+			});
 		}
 
 		// Now, figure out how many tps each player got
 		const playerPos = roundPlayers.map((p, idx) => ({ ...p, idx })).sort((a, b) => b.vp - a.vp);
-		
 
 		// Start the tp array based on number of players
 		let tps: number[] = [];
-		const tableSize = roundPlayers.length;		
+		const tableSize = roundPlayers.length;
 		if (tableSize === 4) tps = [60, 48, 24, 12];
 		if (tableSize === 5) tps = [60, 48, 36, 24, 12];
 
@@ -87,26 +85,40 @@
 		});
 
 		// Figure out if there was a winner
-		if (roundPlayers[playerPos[0].idx].tp === tps[0]) {
-			winnerId = playerPos[0].playerId
+		if (table.roundNum === 100) {
+			// If it's the finals, you need to take in consideration player rankings
+
+			// Get the first position group,
+			const initial = stTournament.getStandingByPlayerId(positionGroups[0].players[0]);
+			const winner = positionGroups[0].players.reduce((winner, cur) => {
+				const player = stTournament.getStandingByPlayerId(cur);
+				if (player.placement < winner.placement) return player;
+				return winner;
+			}, initial);
+
+			winnerId = winner.playerId;
+		} else {
+			// Else, just check if the first player got full tps, and 2 or more vps
+			if (roundPlayers[playerPos[0].idx].tp === tps[0] && roundPlayers[playerPos[0].idx].vp >= 2) {
+				winnerId = playerPos[0].playerId;
+			}
 		}
 
 		// Recompute vps based on fulls and halfs
 		stTournament.reportRoundTable(table.roundNum, table.tableNum, roundPlayers, winnerId);
 
 		open = false;
-
 	}
 
 	function onValueChange(value: string, idx: number) {
-		console.debug('ON_VALUE_CHANGE', value, idx)
+		console.debug('ON_VALUE_CHANGE', value, idx);
 		const numValue = Number(value);
 		if (isNaN(numValue)) return;
 		fulls[idx] = value;
 	}
 
-	$inspect(fulls)
-	$inspect(halfs)
+	$inspect(fulls);
+	$inspect(halfs);
 </script>
 
 {#if isDesktop.current}
@@ -159,13 +171,13 @@
 						{player?.fullName}
 					</span>
 					<Label for="{tablePlayer.playerId}-chk" class="ml-auto">+0.5</Label>
-					<Checkbox id="{tablePlayer.playerId}-chk" bind:checked={halfs[idx]}/>
+					<Checkbox id="{tablePlayer.playerId}-chk" bind:checked={halfs[idx]} />
 				</div>
 				<ToggleGroup.Root
 					type="single"
 					class="bg-muted flex h-11 w-full rounded-md p-1"
 					value={fulls[idx]}
-					onValueChange={(v) => onValueChange(v,idx)}
+					onValueChange={(v) => onValueChange(v, idx)}
 				>
 					{@render toggleItem('0')}
 					{@render toggleItem('1')}
@@ -173,13 +185,12 @@
 					{@render toggleItem('3')}
 					{@render toggleItem('4')}
 					{#if table.players.length === 5}
-						 {@render toggleItem('5')}
+						{@render toggleItem('5')}
 					{/if}
 				</ToggleGroup.Root>
-
 			</div>
 		{/each}
-		<Button type='submit' onclick={onsubmit}>{m.table_report_dialog_button_submit()}</Button>
+		<Button type="submit" onclick={onsubmit}>{m.table_report_dialog_button_submit()}</Button>
 	</form>
 {/snippet}
 
