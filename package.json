@@ -11,7 +11,9 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"gh-pages": "pnpm run build && pnpm run publish",
+		"publish": "pnpm dlx gh-pages -d build -t true --nojekyll"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
