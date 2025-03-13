@@ -9,7 +9,7 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			fallback: '200.html'
+			fallback: '404.html'
 		}),
 		paths: {
 		    base: process.env.NODE_ENV === "production" ? "/praetor" : "",
