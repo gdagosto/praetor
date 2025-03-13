@@ -39,7 +39,7 @@
 		if (stFinals.ties.length > 0) {
 			goto(`${base}/${stTournament.id}/rounds/finals/tiebreaker`);
 		} else {
-			goto(`${base}/${stTournament.id}/rounds/finals/seatings`);
+			goto(`${base}/${stTournament.id}/rounds/finals/placements`);
 		}
 	}
 
