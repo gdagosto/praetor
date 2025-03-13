@@ -10,6 +10,7 @@
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { stTournament } from '$lib/stores/tournament.svelte';
+	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
 
 	interface Props {
 		open: boolean;
@@ -123,7 +124,7 @@
 
 {#if isDesktop.current}
 	<Dialog.Root bind:open>
-		<Dialog.Content class="sm:max-w-[425px]">
+		<Dialog.Content class="sm:max-w-[425px] flex flex-col max-h-[96%]">
 			<Dialog.Header>
 				<Dialog.Title>{@render title()}</Dialog.Title>
 				<Dialog.Description>
@@ -131,11 +132,12 @@
 				</Dialog.Description>
 			</Dialog.Header>
 			{@render content()}
+			{@render footer()}
 		</Dialog.Content>
 	</Dialog.Root>
 {:else}
-	<Drawer.Root bind:open>
-		<Drawer.Content>
+	<Drawer.Root bind:open  >
+		<Drawer.Content class='flex flex-col fixed bottom-0 left-0 right-0 max-h-[96%]'>
 			<Drawer.Header class="text-left">
 				<Drawer.Title>{@render title()}</Drawer.Title>
 				<Drawer.Description>
@@ -145,6 +147,7 @@
 
 			{@render content(true)}
 			<Drawer.Footer class="pt-4">
+				{@render footer(true)}
 				<Drawer.Close class={buttonVariants({ variant: 'secondary' })}
 					>{m.drawer_cancel()}</Drawer.Close
 				>
@@ -162,36 +165,44 @@
 {/snippet}
 
 {#snippet content(drawer = false)}
-	<form class={cn('grid items-start gap-8', drawer && 'px-4')}>
-		{#each table.players as tablePlayer, idx}
-			{@const player = stPlayers.getById(tablePlayer.playerId)}
-			<div class="flex flex-col items-stretch gap-2">
-				<div class="flex w-full items-center justify-start gap-2 px-2">
-					<span class="grow-0 font-medium">
-						{player?.fullName}
-					</span>
-					<Label for="{tablePlayer.playerId}-chk" class="ml-auto">+0.5</Label>
-					<Checkbox id="{tablePlayer.playerId}-chk" bind:checked={halfs[idx]} />
-				</div>
-				<ToggleGroup.Root
-					type="single"
-					class="bg-muted flex h-11 w-full rounded-md p-1"
-					value={fulls[idx]}
-					onValueChange={(v) => onValueChange(v, idx)}
-				>
-					{@render toggleItem('0')}
-					{@render toggleItem('1')}
-					{@render toggleItem('2')}
-					{@render toggleItem('3')}
-					{@render toggleItem('4')}
-					{#if table.players.length === 5}
-						{@render toggleItem('5')}
-					{/if}
-				</ToggleGroup.Root>
+	<form class={cn(drawer && 'px-4', 'max-w-md w-full mx-auto flex flex-col overflow-auto p-4')}>
+		<!-- <ScrollArea class='relative flex-1'> -->
+			<div class="grid items-start gap-8">
+				{#each table.players as tablePlayer, idx}
+					{@const player = stPlayers.getById(tablePlayer.playerId)}
+					<div class="flex flex-col items-stretch gap-2">
+						<div class="flex w-full items-center justify-start gap-2 px-2">
+							<span class="grow-0 font-medium">
+								{player?.fullName}
+							</span>
+							<Label for="{tablePlayer.playerId}-chk" class="ml-auto">+0.5</Label>
+							<Checkbox id="{tablePlayer.playerId}-chk" bind:checked={halfs[idx]} />
+						</div>
+						<ToggleGroup.Root
+							type="single"
+							class="bg-muted flex h-11 w-full rounded-md p-1"
+							value={fulls[idx]}
+							onValueChange={(v) => onValueChange(v, idx)}
+						>
+							{@render toggleItem('0')}
+							{@render toggleItem('1')}
+							{@render toggleItem('2')}
+							{@render toggleItem('3')}
+							{@render toggleItem('4')}
+							{#if table.players.length === 5}
+								{@render toggleItem('5')}
+							{/if}
+						</ToggleGroup.Root>
+					</div>
+				{/each}
 			</div>
-		{/each}
-		<Button type="submit" onclick={onsubmit}>{m.table_report_dialog_button_submit()}</Button>
+		<!-- </ScrollArea> -->
+		
 	</form>
+{/snippet}
+
+{#snippet footer(drawer = false)}
+<Button type="submit" onclick={onsubmit} class={drawer ? '' : 'mx-4' }>{m.table_report_dialog_button_submit()}</Button>
 {/snippet}
 
 {#snippet toggleItem(value = '0')}
