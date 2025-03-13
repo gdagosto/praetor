@@ -8,6 +8,16 @@
 	$inspect('STANDINGS', stTournament.standings.current);
 	$inspect('PLAYER_IDS', stPlayers.ids);
 	$inspect('PLAYERS', stPlayers.players.current);
+
+	const organizedStandings = $derived(stTournament.standings.current.toSorted((a,b) => {
+		if (a.status === 'winner') return -1;
+		if (b.status === 'winner') return 1;
+		if (a.status === 'finalist') return -1;
+		if (b.status === 'finalist') return 1;
+		if (a.status !== '') return 1;
+		if (b.status !== '') return -1;
+		return b.vp - a.vp;
+	}));
 </script>
 
 <ScrollArea class="relative h-full flex-1">
@@ -19,7 +29,7 @@
 		<div class="sticky top-2 z-10 text-center font-semibold">{m.standings_table_vp_header()}</div>
 		<div class="sticky top-2 z-10 text-center font-semibold">{m.standings_table_tp_header()}</div>
 		<div class="sticky top-10 z-10 col-span-5 mx-[-20px] my-2 border-b-1"></div>
-		{#each stTournament.standings.current as standing}
+		{#each organizedStandings as standing}
 			{@const player = stPlayers.players.current.find((p) => p.id === standing.playerId)}
 
 			<div class="text-muted-foreground w-2 text-xs font-medium uppercase">

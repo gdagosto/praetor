@@ -54,7 +54,7 @@
 		if (tableSize === 5) tps = [60, 48, 36, 24, 12];
 
 		// Group players into respective table results, so we can figure out
-		let lastVP = roundPlayers[0].vp;
+		let lastVP = playerPos[0].vp;
 		let lastTP = 0;
 		let positionGroups: Array<{ players: number[]; tp: number }> = [];
 		let lastPlayers: number[] = [];
@@ -89,10 +89,12 @@
 		if (table.roundNum === 100) {
 			// If it's the finals, you need to take in consideration player rankings
 
-			// Get the first position group,
-			const initial = stTournament.getStandingByPlayerId(positionGroups[0].players[0]);
-			const winner = positionGroups[0].players.reduce((winner, cur) => {
-				const player = stTournament.getStandingByPlayerId(cur);
+			const maxVp = playerPos[0].vp;
+			const bestVps = playerPos.filter((p) => p.vp === maxVp);
+
+			const initial = stTournament.getStandingByPlayerId(bestVps[0].playerId);
+			const winner = bestVps.reduce((winner, cur) => {
+				const player = stTournament.getStandingByPlayerId(cur.playerId);
 				if (player.placement < winner.placement) return player;
 				return winner;
 			}, initial);
@@ -113,7 +115,12 @@
 
 	function onValueChange(value: string, idx: number) {
 		console.debug('ON_VALUE_CHANGE', value, idx);
+		if (value === '') {
+			fulls[idx] = fulls[idx]
+			return;
+		};
 		const numValue = Number(value);
+		console.debug(numValue, typeof numValue)
 		if (isNaN(numValue)) return;
 		fulls[idx] = value;
 	}

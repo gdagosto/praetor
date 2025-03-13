@@ -62,12 +62,12 @@ class StFinals {
 					ties.push(tie);
 				}
 
-				if (player.placement > 5) break;
-
 				tie = {
 					placement: player.placement,
 					players: [player]
 				};
+
+				if (player.placement > 5) break;
 
 				continue;
 			}
@@ -75,6 +75,7 @@ class StFinals {
 			tie.players.push(player);
 		}
 
+		console.log('lastTie', tie);
 		if (tie.players.length > 1) ties.push(tie);
 
 		this.ties = ties;

@@ -158,6 +158,12 @@ class StTournament {
 		roundTables.forEach((roundTable) => {
 			// Check if it's the final table
 			if (roundTable.roundNum === 100) {
+				// Finalist on everyone at the table
+				roundTable.players.forEach((p) => {
+					playersById[p.playerId].status = 'finalist';
+				});
+
+				// Winner for whoever won
 				playersById[roundTable.winnerId].status = 'winner';
 				return;
 			}
@@ -221,7 +227,7 @@ class StTournament {
 				({
 					key: standingId,
 					changes: {
-						placement: idx + 1,
+						placement: idx < 5 ? idx + 1 : 6,
 						status: idx < 5 ? 'finalist' : ''
 					}
 				}) as const
