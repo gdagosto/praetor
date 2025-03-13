@@ -1,0 +1,1 @@
+import{a5 as h,a6 as k,o as M,M as S,a7 as T}from"./WFVbeKnh.js";function t(r,i){return r===i||(r==null?void 0:r[T])===i}function x(r={},i,a,c){return h(()=>{var f,s;return k(()=>{f=s,s=[],M(()=>{r!==a(...s)&&(i(r,...s),f&&t(a(...f),r)&&i(null,...f))})}),()=>{S(()=>{s&&t(a(...s),r)&&i(null,...s)})}}),r}export{x as b};

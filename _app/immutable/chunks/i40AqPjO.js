@@ -1,0 +1,1 @@
+import{a3 as e,u,j as t,a4 as c,o as a}from"./WFVbeKnh.js";function l(n){t===null&&e(),c&&t.l!==null?s(t).m.push(n):u(()=>{const o=a(n);if(typeof o=="function")return o})}function i(n){t===null&&e(),l(()=>()=>a(n))}function s(n){var o=n.l;return o.u??(o.u={a:[],b:[],m:[]})}export{i as a,l as o};
