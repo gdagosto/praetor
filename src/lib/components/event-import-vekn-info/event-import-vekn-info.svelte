@@ -9,6 +9,7 @@
     import * as Drawer from "$lib/components/ui/drawer/index.js";
     import { addTournament } from "$lib/db/db.svelte";
     import * as m from '$lib/paraglide/messages.js';
+	import { stPages } from "$lib/stores/sidebar.svelte";
     import type { ITournamentRawData } from '$lib/types';
     import { cn, isDesktop } from "$lib/utils";
 
@@ -25,6 +26,7 @@
         // Create a new database with the tournament data
         
         addTournament(data);
+        stPages.current = m.sidebar_information_tournament_info()
         goto(`${base}/${data.event_id}`)
     }
 

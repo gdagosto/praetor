@@ -12,8 +12,14 @@
 
 	let sidebar = useSidebar();
 
+	function navigate(title: string) {
+		stPages.current = title;
+		close();
+	}
+
 	function close() {
 		sidebar.setOpenMobile(false);
+
 	}
 
 	function tournamentURL(url: string) {
@@ -33,15 +39,16 @@
 			<Sidebar.Group>
 				<Sidebar.GroupLabel class='gap-2'>
 					<group.icon/>
-					<span>{group.title}</span>
+					<span>{group.title()}</span>
 					</Sidebar.GroupLabel>
 				<Sidebar.GroupContent>
 					<Sidebar.Menu>
-						{#each group.items as item (item.title)}
+						{#each group.items as item (item.url)}
+							{@const title = item.title()}
 							<Sidebar.MenuItem>
 								<Sidebar.MenuButton isActive={page.url.pathname === item.url}>
 									{#snippet child({ props })}
-										<a href={tournamentURL(item.url)} onclick={close} {...props}>{item.title}</a>
+										<a href={tournamentURL(item.url)} onclick={() => navigate(title)} {...props}>{title}</a>
 									{/snippet}
 								</Sidebar.MenuButton>
 							</Sidebar.MenuItem>

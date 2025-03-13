@@ -12,11 +12,13 @@
 	function onImportVekn() {
 		goto(`${base}/import/vekn`);
 	}
+
+	const triggerClass = cn(buttonVariants({ variant: 'ghost'}), 'font-normal px-2 h-8')
 </script>
 
 {#if isDesktop.current}
 	<Dialog.Root bind:open>
-		<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>
+		<Dialog.Trigger class={triggerClass}>
 			{@render title()}
 		</Dialog.Trigger>
 		<Dialog.Content class="sm:max-w-[425px]">
@@ -31,7 +33,7 @@
 	</Dialog.Root>
 {:else}
 	<Drawer.Root bind:open>
-		<Drawer.Trigger class={buttonVariants({ variant: 'outline' })}>{@render title()}</Drawer.Trigger
+		<Drawer.Trigger class={triggerClass}>{@render title()}...</Drawer.Trigger
 		>
 		<Drawer.Content>
 			<Drawer.Header class="text-left">

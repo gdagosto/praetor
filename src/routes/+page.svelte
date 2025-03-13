@@ -1,11 +1,18 @@
 <script lang="ts">
-	import EventList from "$lib/components/event-list/event-list.svelte";
-	import EventNew from "$lib/components/event-new/event-new.svelte";
+	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
+	import EventList from '$lib/components/event-list/event-list.svelte';
+	import EventNew from '$lib/components/event-new/event-new.svelte';
+	import { stTournaments } from '$lib/stores/tournament.svelte';
 
-
+	$effect(() => {
+		if (!stTournaments.current) return;
+		if (stTournaments.current.length === 0) {
+			goto(`${base}/import/vekn`);
+		} else {
+			goto(`${base}/${stTournaments.current[0].id}`)
+		}
+	});
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-<EventList items={[]}/>
-<EventNew/>
+Carregando...

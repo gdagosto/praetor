@@ -29,12 +29,12 @@
 			<Separator orientation="vertical" class="mr-2 h-4" />
 			<Breadcrumb.Root>
 				<Breadcrumb.List>
-					<Breadcrumb.Item class="hidden md:block">
+					<!-- <Breadcrumb.Item class="hidden md:block">
 						<Breadcrumb.Link href="#">Building Your Application</Breadcrumb.Link>
 					</Breadcrumb.Item>
-					<Breadcrumb.Separator class="hidden md:block" />
+					<Breadcrumb.Separator class="hidden md:block" /> -->
 					<Breadcrumb.Item>
-						<Breadcrumb.Page>Data Fetching</Breadcrumb.Page>
+						<Breadcrumb.Page>{stPages.current}</Breadcrumb.Page>
 					</Breadcrumb.Item>
 				</Breadcrumb.List>
 			</Breadcrumb.Root>
