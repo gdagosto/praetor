@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import RoundDeleteDialog from '$lib/components/round-delete-dialog/round-delete-dialog.svelte';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
@@ -11,9 +12,9 @@
 	import { stFinals } from '$lib/stores/finals.svelte';
 	import { stPlayers } from '$lib/stores/players.svelte';
 	import { stTournament } from '$lib/stores/tournament.svelte';
+	import { toast } from 'svelte-sonner';
 	import type { PageProps } from './$types';
 	import TableReport from './_components/table-report.svelte';
-	import { toast } from 'svelte-sonner';
 
 	let { data }: PageProps = $props();
 
@@ -36,9 +37,9 @@
 		await stFinals.generateTiebreakers();
 
 		if (stFinals.ties.length > 0) {
-			goto('finals/tiebreaker');
+			goto(`${base}/${stTournament.id}/rounds/finals/tiebreaker`);
 		} else {
-			goto('finals/seatings');
+			goto(`${base}/${stTournament.id}/rounds/finals/seatings`);
 		}
 	}
 

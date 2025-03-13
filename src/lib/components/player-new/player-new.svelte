@@ -1,21 +1,21 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+    import { base } from "$app/paths";
+    import {
+    	Button,
+    	buttonVariants
+    } from "$lib/components/ui/button/index.js";
     import * as Dialog from "$lib/components/ui/dialog/index.js";
     import * as Drawer from "$lib/components/ui/drawer/index.js";
-    import {
-     Button,
-     buttonVariants
-    } from "$lib/components/ui/button/index.js";
-    import * as m from '$lib/paraglide/messages.js'
-	import { cn, isDesktop } from "$lib/utils";
-	import { goto } from "$app/navigation";
-	import Input from "$lib/components/ui/input/input.svelte";
-	import Label from "$lib/components/ui/label/label.svelte";
-	import Autocomplete from "../autocomplete/autocomplete.svelte";
+    import Input from "$lib/components/ui/input/input.svelte";
+    import Label from "$lib/components/ui/label/label.svelte";
+    import * as m from '$lib/paraglide/messages.js';
+    import { cn, isDesktop } from "$lib/utils";
     
     let open = $state(false);
 
     function onImportVekn() {
-        goto('/import/vekn')
+        goto(`${base}/import/vekn`)
     }
    </script>
     

@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import { DragNDrop } from '$lib/components/drag-n-drop';
 	import Button, { buttonVariants } from '$lib/components/ui/button/button.svelte';
 	import type { IDbStanding } from '$lib/db/db.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { stFinals } from '$lib/stores/finals.svelte';
 	import { stPlayers } from '$lib/stores/players.svelte';
+	import { stTournament } from '$lib/stores/tournament.svelte';
 	import { cn } from '$lib/utils';
 	import { shuffle } from '$lib/utils/random.js';
 	import Check from 'lucide-svelte/icons/check';
@@ -44,12 +46,12 @@
 
 	function finish() {
 		stFinals.finalizeTiebreakers();
-		goto('placements');
+		goto(`${base}/${stTournament.id}/rounds/placements`);
 	}
 
 	if (stFinals.ties.length === 0) {
 		tick().then(() => {
-			goto('../finals');
+			goto(`${base}/${stTournament.id}/rounds/finals`);
 		});
 	}
 </script>

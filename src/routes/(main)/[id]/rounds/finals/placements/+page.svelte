@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import { DragNDrop } from '$lib/components/drag-n-drop/index.js';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import type { IDbStanding } from '$lib/db/db.svelte';
@@ -25,13 +26,13 @@
 				currentFinalists.map((s) => s.playerId)
 			)
 			.then(() => {
-				goto('../finals');
+				goto(`${base}/${stTournament.id}/rounds/finals`);
 			});
 	}
 
 	if (stFinals.finalists.current.length === 0) {
 		tick().then(() => {
-			goto('../finals');
+			goto(`${base}/${stTournament.id}/rounds/finals`);
 		});
 	}
 </script>

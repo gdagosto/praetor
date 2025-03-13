@@ -1,15 +1,16 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+    import { base } from "$app/paths";
+    import {
+    	Button,
+    	buttonVariants
+    } from "$lib/components/ui/button/index.js";
     import * as Dialog from "$lib/components/ui/dialog/index.js";
     import * as Drawer from "$lib/components/ui/drawer/index.js";
-    import {
-     Button,
-     buttonVariants
-    } from "$lib/components/ui/button/index.js";
-    import * as m from '$lib/paraglide/messages.js'
-	import { cn, isDesktop } from "$lib/utils";
-	import { goto } from "$app/navigation";
-	import { addTournament } from "$lib/db/db.svelte";
+    import { addTournament } from "$lib/db/db.svelte";
+    import * as m from '$lib/paraglide/messages.js';
     import type { ITournamentRawData } from '$lib/types';
+    import { cn, isDesktop } from "$lib/utils";
 
     interface Props {
         open: boolean;
@@ -24,7 +25,7 @@
         // Create a new database with the tournament data
         
         addTournament(data);
-        goto(`/${data.event_id}`)
+        goto(`${base}/${data.event_id}`)
     }
 
    </script>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { base } from "$app/paths";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
 	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
 	import { stTournament, stTournaments } from "$lib/stores/tournament.svelte";
@@ -11,7 +12,7 @@
 	
 	function onSelect(id: number) {
 		closeSidebar();
-		goto(`/${id}`);
+		goto(`${base}/${id}`);
 	}
 
 </script>
