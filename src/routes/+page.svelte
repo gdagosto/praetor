@@ -1,16 +1,19 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import EventList from '$lib/components/event-list/event-list.svelte';
-	import EventNew from '$lib/components/event-new/event-new.svelte';
-	import { stTournaments } from '$lib/stores/tournament.svelte';
+	import { stLocal } from '$lib/stores/local.svelte';
+	import { tick } from 'svelte';
 
 	$effect(() => {
-		if (!stTournaments.current) return;
-		if (stTournaments.current.length === 0) {
+		if (!stLocal.current) return;
+		const tournamentId = stLocal.current.tournamentId;
+
+		if (tournamentId === 0) {
 			goto(`${base}/import/vekn`);
 		} else {
-			goto(`${base}/${stTournaments.current[0].id}`)
+			tick().then(() => {
+				goto(`${base}/${tournamentId}`);
+			});
 		}
 	});
 </script>

@@ -1,20 +1,59 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
+	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
+	import { db, type IDbStanding, type IDbTable } from '$lib/db/db.svelte';
+
+	type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 	let value = $state('');
-	let fileInput: HTMLInputElement | undefined = $state();
+	let file: File | undefined = $state();
 
-	$inspect('value', value);
+	function onchange(e: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+		file = e.currentTarget.files?.[0];
+	}
 
-	function onChange(e: any) {
-		console.log('on_change', e.target.files);
+	function onsubmit() {
+		if (!file) return;
 		const reader = new FileReader();
 		reader.addEventListener('load', () => {
-			console.log(reader.result);
+			try {
+				const data = JSON.parse(reader.result as string);
+
+				const id = data.tournaments.id;
+
+				if (data.tournaments) {
+					db.tournaments.put(data.tournaments, id);
+				}
+
+				if (data.standings) {
+					db.standings.where('tournamentId').equals(id).delete();
+					data.standings.forEach((s: Optional<IDbStanding, 'id'>) => {
+						delete s['id'];
+						db.standings.add(s);
+					});
+				}
+
+				if (data.roundTables) {
+					db.roundTables.where('tournamentId').equals(id).delete();
+					data.roundTables.forEach((s: Optional<IDbTable, 'id'>) => {
+						delete s['id'];
+						db.roundTables.add(s);
+					});
+				}
+
+				goto(`${base}/${id}`);
+			} catch {
+				return;
+			}
 		});
 
-		reader.readAsText(e.target.files[0], 'utf-8');
+		reader.readAsText(file, 'utf-8');
 	}
 </script>
 
-<Input type="file" onchange={onChange} bind:value />
+<form {onsubmit}>
+	<Input type="file" {onchange} bind:value />
+	<Button type="submit">Submit</Button>
+</form>

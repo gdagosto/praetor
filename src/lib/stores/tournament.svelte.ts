@@ -1,6 +1,7 @@
 import { db, type IDbStanding, type IDbTable, type IDbTournament } from '$lib/db/db.svelte';
 import { stateQuery } from '$lib/utils/stateQuery.svelte';
 import { INACTIVE_STATUS } from '$lib/utils/status';
+import { stLocal } from './local.svelte';
 
 const INITIAL_TOURNAMENT = {
 	id: 0,
@@ -10,7 +11,19 @@ const INITIAL_TOURNAMENT = {
 };
 
 class StTournament {
-	id = $state<number>(0);
+	#id = $state<number>(0);
+
+	get id() {
+		return this.#id;
+	}
+
+	set id(id: number) {
+		this.#id = id;
+		setTimeout(() => {
+			stLocal.current.tournamentId = id;
+		}, 100);
+	}
+
 	info = stateQuery<IDbTournament>(
 		INITIAL_TOURNAMENT,
 		async () => {

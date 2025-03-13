@@ -13,6 +13,11 @@
 		goto(`${base}/import/vekn`);
 	}
 
+	function onImportFile() {
+		goto(`${base}/import/file`);
+
+	}
+
 	const triggerClass = cn(buttonVariants({ variant: 'ghost'}), 'font-normal px-2 h-8')
 </script>
 
@@ -64,6 +69,6 @@
 {#snippet content(drawer = false)}
 	<form class={cn('grid items-start gap-4', drawer && 'px-4')}>
 		<Button onclick={onImportVekn}>{m.add_event_button_import_vekn()}</Button>
-		<Button disabled>{m.add_event_button_import_praetor()}</Button>
+		<Button onclick={onImportFile}>{m.add_event_button_import_praetor()}</Button>
 	</form>
 {/snippet}

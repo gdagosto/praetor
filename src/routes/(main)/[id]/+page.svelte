@@ -2,14 +2,12 @@
 	import { Button } from '$lib/components/ui/button';
 	import '$lib/db/db.svelte';
 	import { db, type IDbStanding, type IDbTable } from '$lib/db/db.svelte';
-	import { stTournament, stTournaments } from '$lib/stores/tournament.svelte';
+	import { stTournament } from '$lib/stores/tournament.svelte';
 	import { veknReport } from '$lib/utils/report';
-	import { importInto } from 'dexie-export-import';
 	import { saveAs } from 'file-saver-es';
+	import * as m from '$lib/paraglide/messages.js';
 
 	type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
-
-	let dataBlob: Blob;
 
 	function finals() {
 		console.log(veknReport());
@@ -24,9 +22,6 @@
 		};
 
 		const blob = new Blob([JSON.stringify(obj)]);
-		dataBlob = blob;
-
-		return;
 
 		saveAs(blob, 'dexie-export.json');
 	}
@@ -63,8 +58,6 @@
 	}
 </script>
 
-Oi
-
-<Button onclick={finals}>Finals</Button>
-<Button onclick={exportData}>Export</Button>
-<Button onclick={() => importData(dataBlob)}>Import</Button>
+<div class="p-4">
+	<Button onclick={exportData}>{m.tournament_info_export_button()}</Button>
+</div>

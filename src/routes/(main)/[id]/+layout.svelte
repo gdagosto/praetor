@@ -7,6 +7,7 @@
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import { stTournament } from '$lib/stores/tournament.svelte';
 	import { stPages } from '$lib/stores/sidebar.svelte';
+	import { stLocal } from '$lib/stores/local.svelte';
 
 	let { children, data }: LayoutProps = $props();
 
