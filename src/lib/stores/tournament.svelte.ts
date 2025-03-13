@@ -110,6 +110,18 @@ class StTournament {
 		db.roundTables.update(table.id, { winnerId, players });
 
 		// Trigger a standings update
+
+		if (roundNum === 100) {
+			players.forEach((p) => {
+				// Find standing id
+				const standingId = stTournament.getStandingByPlayerId(p.playerId);
+				const status: IDbStanding['status'] = p.playerId === winnerId ? 'winner' : 'finalist';
+				if (p.playerId === winnerId) db.standings.update(standingId, { status });
+			});
+
+			return;
+		}
+
 		this.updateStandings();
 	};
 
@@ -123,7 +135,14 @@ class StTournament {
 		// TODO: There's probably a smarter way to do this, but for now we redo everything all the time
 
 		// Reset finalists
+		db.standings.where('status').equals('winner').modify({ status: '' });
 		db.standings.where('status').equals('finalist').modify({ status: '' });
+
+		// Delete final table
+		db.roundTables
+			.where(['tournamentId', 'roundNum', 'tableNum'])
+			.equals([this.id, 100, 1])
+			.delete();
 
 		// Recalculate standings, aggregating player GWs, VPs and TPs
 
@@ -156,18 +175,6 @@ class StTournament {
 		});
 
 		roundTables.forEach((roundTable) => {
-			// Check if it's the final table
-			if (roundTable.roundNum === 100) {
-				// Finalist on everyone at the table
-				roundTable.players.forEach((p) => {
-					playersById[p.playerId].status = 'finalist';
-				});
-
-				// Winner for whoever won
-				playersById[roundTable.winnerId].status = 'winner';
-				return;
-			}
-
 			if (roundTable.winnerId) {
 				playersById[roundTable.winnerId].gw += 1;
 			}

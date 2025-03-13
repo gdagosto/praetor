@@ -87,9 +87,15 @@ export function veknReport() {
 		const player = stPlayers.getById(standing.playerId);
 		if (!player) throw new Error(`Player not found - ${standing.playerId}`);
 
-		const finalrank = INACTIVE_STATUS.includes(standing.status)
-			? standing.status.toUpperCase()
-			: standing.placement;
+		let finalrank: number | string = standing.placement;
+		if (INACTIVE_STATUS.includes(standing.status)) {
+			finalrank = standing.status.toUpperCase();
+		} else if (standing.status === 'finalist') {
+			finalrank = 2;
+		} else if (standing.status === 'winner') {
+			finalrank = 1;
+		}
+
 		const final_vp = finalVps[player.id] ?? 0;
 
 		// <finalrank>§<firstname>§<lastname>§<city>§<vekn id>§<gw>§<vp>§<final vp>§<tablepoints>§<coinranking>§<ratingpoints>§
