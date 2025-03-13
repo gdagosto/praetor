@@ -41,7 +41,7 @@
 		</Dialog.Content>
 	</Dialog.Root>
 {:else}
-	<Drawer.Root bind:open>
+	<Drawer.Root bind:open autoFocus={false}>
 		<Drawer.Content>
 			<Drawer.Header class="text-left">
 				<Drawer.Title>{@render title()}</Drawer.Title>
@@ -71,7 +71,6 @@
 			id="login-dialog-username"
 			placeholder={m.login_dialog_username_placeholder()}
 			tabindex={1}
-			autofocus
 			bind:value={stVeknCredentials.current.username}
 		/>
 		<Label for="login-dialog-password">{m.login_dialog_password_label()}</Label>

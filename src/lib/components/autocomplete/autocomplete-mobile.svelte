@@ -6,6 +6,8 @@
 	import { stateQuery } from '$lib/utils/stateQuery.svelte';
 	import { db, type IDbPlayer } from '$lib/db/db.svelte';
 	import type { IPropsAutocomplete } from './types';
+	import { Button } from '../ui/button';
+	import { tick } from 'svelte';
 
 	let {
 		children,
@@ -21,10 +23,13 @@
 
 	let inputData: string = $state('');
 	let inputRef: HTMLInputElement | null = $state(null);
+	let buttonRef: HTMLButtonElement | null = $state(null);
 
-	function onOpen() {
+	async function onOpen() {
 		console.log('AUTOCOMPLETE_MOBILE_ON_OPEN');
 		open = true;
+		await tick();
+		inputRef?.focus();
 	}
 
 	function onClose() {
@@ -52,68 +57,47 @@
 
 	$inspect('data', baseClass, className);
 
-    function onSubmit(e: SubmitEvent) {
-        e.preventDefault();
-        const id = data.current[0]?.id;
-        if (!id) {
-            inputRef?.focus();
-            return;
-        }
-        return selectPlayer(data.current[0]?.id)
-    }
-
-    function selectPlayer(id: number) {
-        open = false;
-        console.debug('SELECT_PLAYER', open)
-		onsuccess(id);
+	function onSubmit(e: SubmitEvent) {
+		e.preventDefault();
+		const id = data.current[0]?.id;
+		if (!id) {
+			return;
+		}
+		return selectPlayer(data.current[0]?.id);
 	}
 
-    function onOpenChange(val: boolean) {
-        console.log('ON_OPEN_CHANGE', val)
-        open = val;
-        inputData = '';
-    }
+	function selectPlayer(id: number) {
+		open = false;
+		console.debug('SELECT_PLAYER', open);
+		onsuccess(id);
+		buttonRef?.focus();
+	}
 
-
-    $inspect('AUTOCOMPLETE_OPEN', open);
-
-
+	$inspect('AUTOCOMPLETE_OPEN', open);
 </script>
 
-{#if nested}
-	<Drawer.NestedRoot bind:open {onOpenChange} dismissible={false}>
-		{@render dialogContent()}
-	</Drawer.NestedRoot>
-{:else}
-	<Drawer.Root bind:open {onOpenChange} dismissible={false}>
-		{@render dialogContent()}
-	</Drawer.Root>
-{/if}
 
-{#snippet dialogContent()}
-	<Drawer.Trigger onclick={onOpen} class={cn(baseClass, className)} {...restProps}>
-		{@render children()}
-	</Drawer.Trigger>
-	<Drawer.Content class="animation-none hideHandle h-full rounded-t-[0]">
-		<form
-			class="flex w-full items-center justify-between border-b-1 pl-4"
-			onsubmit={onSubmit}
-		>
+<Button bind:ref={buttonRef} onclick={onOpen}>{@render children()}</Button>
+
+{#if open}
+	<div class="fixed top-0 left-0 w-full h-full rounded-t-[0] bg-background z-10">
+		<form class="flex w-full items-center justify-between border-b-1 pl-4" onsubmit={onSubmit}>
 			<Input
 				{placeholder}
-                tabindex={1}
+				tabindex={1}
 				class="rounded-none border-none pl-0 focus-visible:ring-0"
 				bind:value={inputData}
 				bind:ref={inputRef}
+				autofocus={true}
 			/>
 
 			<input type="submit" hidden />
 
 			<button
 				onclick={onClose}
-                tabindex={2}
-                type='button'
-				class="ring-offset-background focus:ring-ring rounded-sm p-2 m-1 opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none"
+				tabindex={2}
+				type="button"
+				class="ring-offset-background focus:ring-ring m-1 rounded-sm p-2 opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none"
 			>
 				<X class="size-5" />
 				<span class="sr-only">Close</span>
@@ -131,8 +115,8 @@
 				</button>
 			{/each}
 		</div>
-	</Drawer.Content>
-{/snippet}
+	</div>
+{/if}
 
 <style>
 	:global(.animation-none) {
