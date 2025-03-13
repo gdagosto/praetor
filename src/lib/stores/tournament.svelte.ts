@@ -202,7 +202,6 @@ class StTournament {
 		}
 
 		Object.values(playersById).forEach((standing) => {
-			console.log('oi', standing);
 			db.standings.update(standing.id, standing);
 		});
 	};

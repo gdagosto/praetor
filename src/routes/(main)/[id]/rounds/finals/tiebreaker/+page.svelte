@@ -46,7 +46,7 @@
 
 	function finish() {
 		stFinals.finalizeTiebreakers();
-		goto(`${base}/${stTournament.id}/rounds/placements`);
+		goto(`${base}/${stTournament.id}/rounds/finals/placements`);
 	}
 
 	if (stFinals.ties.length === 0) {

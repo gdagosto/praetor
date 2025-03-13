@@ -40,11 +40,14 @@ class StFinals {
 	};
 
 	generateTiebreakers = async () => {
+		console.debug('GENERATE_TIEBREAKERS');
 		// Don't trust liveQueries, as they might is probably stale when this is called
 		const standings = await db.standings
 			.where('tournamentId')
 			.equals(stTournament.id)
 			.sortBy('placement');
+
+		console.debug('standings', standings);
 
 		const ties: ITie[] = [];
 		let tie: ITie = {
@@ -53,6 +56,7 @@ class StFinals {
 		};
 		for (let i = 1, iMax = standings.length; i < iMax; i++) {
 			const player = standings[i];
+			console.log('a', player, tie.placement);
 			if (player.placement !== tie.placement) {
 				if (tie.players.length > 1) {
 					ties.push(tie);
@@ -70,6 +74,8 @@ class StFinals {
 
 			tie.players.push(player);
 		}
+
+		if (tie.players.length > 1) ties.push(tie);
 
 		this.ties = ties;
 	};
