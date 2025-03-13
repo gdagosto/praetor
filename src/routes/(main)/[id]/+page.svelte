@@ -23,7 +23,7 @@
 
 		const blob = new Blob([JSON.stringify(obj)]);
 
-		saveAs(blob, 'dexie-export.json');
+		saveAs(blob, `praetor-${stTournament.info.current.id}.json`);
 	}
 
 	function convertBlobToJSON(blob: Blob) {
