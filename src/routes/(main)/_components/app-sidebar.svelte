@@ -6,6 +6,7 @@
 	import { stPages } from "$lib/stores/sidebar.svelte";
 	import { stTournament } from "$lib/stores/tournament.svelte";
 	import TournamentSwitcher from "./tournament-switcher.svelte";
+	import { base } from "$app/paths";
 
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 
@@ -16,7 +17,7 @@
 	}
 
 	function tournamentURL(url: string) {
-		return `/${stTournament.id}/${url}`;
+		return `${base}/${stTournament.id}/${url}`;
 	}
 </script>
 
