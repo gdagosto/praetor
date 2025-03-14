@@ -7,7 +7,7 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import Ellipsis from 'lucide-svelte/icons/ellipsis';
+	import Ellipsis from '@lucide/svelte/icons/ellipsis';
 	import { PlayerEditDialog } from '$lib/components/player-edit-dialog';
 
 	$inspect('STANDINGS', stTournament.standings.current);
@@ -38,7 +38,8 @@
 		<div class="sticky top-2 z-10 text-center font-semibold"></div>
 		<div class="sticky top-10 z-10 col-span-4 mx-[-20px] mt-1 mb-2 border-b-1"></div>
 		{#each stPlayers.players.current as player}
-			{@const status = stTournament.standings.current.find((s) => s.playerId === player.id)?.status ?? ''}
+			{@const status =
+				stTournament.standings.current.find((s) => s.playerId === player.id)?.status ?? ''}
 
 			<div class="text-muted-foreground w-2 text-xs font-medium uppercase">
 				{status.length > 2 ? status.slice(0, 1) : status}

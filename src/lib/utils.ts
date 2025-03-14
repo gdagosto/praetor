@@ -3,6 +3,8 @@ import { MediaQuery } from 'svelte/reactivity';
 import { twMerge } from 'tailwind-merge';
 import { stVeknCredentials } from './stores/vekn.svelte';
 import { ForbiddenError, HttpError } from './error/http';
+import { toast } from 'svelte-sonner';
+import { tick } from 'svelte';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -50,9 +52,16 @@ export async function veknLogin() {
 		const data = await veknFetch('login', { method: 'POST', body: loginData });
 		stVeknCredentials.current.token = data.auth;
 		stVeknCredentials.current.isLoggedIn = true;
+		stVeknCredentials.current.id = data.id;
+		stVeknCredentials.current.avatarId = data.id;
 	} catch (err) {
 		console.error(err);
-		if (err instanceof ForbiddenError) stVeknCredentials.current.isLoggedIn = false;
+		if (err instanceof ForbiddenError) {
+			stVeknCredentials.current.isLoggedIn = false;
+			toast.error('Usuário ou senha incorretos.');
+		} else {
+			toast.error(`Erro desconhecido., ${err}`);
+		}
 	}
 }
 

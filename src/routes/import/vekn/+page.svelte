@@ -1,5 +1,5 @@
 <script lang="ts">
-	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
+	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import EventImportVeknInfo from '$lib/components/event-import-vekn-info/event-import-vekn-info.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import { Button } from '$lib/components/ui/button';
@@ -26,7 +26,6 @@
 		confirmationData = data.events[0];
 		isConfirmationOpen = true;
 	}
-
 </script>
 
 <header class="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -48,7 +47,7 @@
 	/>
 	<Button type="submit" onclick={onSubmit} disabled={isButtonSubmitting}>
 		{#if isButtonSubmitting}
-			<LoaderCircle class='animate-spin'/>
+			<LoaderCircle class="animate-spin" />
 			{m.please_wait()}
 		{:else}
 			{m.add_event_vekn_input_id_button_import()}

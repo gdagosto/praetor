@@ -2,7 +2,7 @@
 	import { Input, inputClasses } from '$lib/components/ui/input/index.js';
 	import { cn } from '$lib/utils';
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
-	import X from 'lucide-svelte/icons/x';
+	import X from '@lucide/svelte/icons/x';
 	import { stateQuery } from '$lib/utils/stateQuery.svelte';
 	import { db, type IDbPlayer } from '$lib/db/db.svelte';
 	import type { IPropsAutocomplete } from './types';
@@ -76,11 +76,10 @@
 	$inspect('AUTOCOMPLETE_OPEN', open);
 </script>
 
-
 <Button bind:ref={buttonRef} onclick={onOpen}>{@render children()}</Button>
 
 {#if open}
-	<div class="fixed top-0 left-0 w-full h-full rounded-t-[0] bg-background z-10">
+	<div class="bg-background fixed top-0 left-0 z-10 h-full w-full rounded-t-[0]">
 		<form class="flex w-full items-center justify-between border-b-1 pl-4" onsubmit={onSubmit}>
 			<Input
 				{placeholder}

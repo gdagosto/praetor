@@ -3,6 +3,7 @@
 	import { i18n } from '$lib/i18n';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import { LoginDialog } from '$lib/components/login-dialog/index.js';
+	import { Toaster } from 'svelte-sonner';
 	let { children } = $props();
 </script>
 
@@ -10,4 +11,6 @@
 	{@render children()}
 
 	<LoginDialog />
+
+	<Toaster richColors />
 </ParaglideJS>

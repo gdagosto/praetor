@@ -1,5 +1,5 @@
-import Swords from 'lucide-svelte/icons/swords';
-import Trophy from 'lucide-svelte/icons/trophy';
+import Swords from '@lucide/svelte/icons/swords';
+import Trophy from '@lucide/svelte/icons/trophy';
 import * as m from '$lib/paraglide/messages.js';
 
 class StPages {

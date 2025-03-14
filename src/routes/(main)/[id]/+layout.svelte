@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Toaster } from '$lib/components/ui/sonner/index.js';
 	import type { LayoutProps } from './$types';
 	import { AppSidebar } from '../_components/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
@@ -7,7 +6,6 @@
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import { stTournament } from '$lib/stores/tournament.svelte';
 	import { stPages } from '$lib/stores/sidebar.svelte';
-	import { stLocal } from '$lib/stores/local.svelte';
 
 	let { children, data }: LayoutProps = $props();
 
@@ -19,8 +17,6 @@
 		stPages.setRounds(stTournament.info.current.rounds, stTournament.info.current.hasFinals);
 	});
 </script>
-
-<Toaster />
 
 <Sidebar.Provider>
 	<AppSidebar />

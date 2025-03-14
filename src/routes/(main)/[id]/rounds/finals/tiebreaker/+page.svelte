@@ -10,9 +10,9 @@
 	import { stTournament } from '$lib/stores/tournament.svelte';
 	import { cn } from '$lib/utils';
 	import { shuffle } from '$lib/utils/random.js';
-	import Check from 'lucide-svelte/icons/check';
-	import ChevronLeft from 'lucide-svelte/icons/chevron-left';
-	import ChevronRight from 'lucide-svelte/icons/chevron-right';
+	import Check from '@lucide/svelte/icons/check';
+	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
+	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import { tick } from 'svelte';
 
 	let page = $state(0);

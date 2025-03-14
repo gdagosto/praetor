@@ -1,26 +1,25 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
-	import { base } from "$app/paths";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import { stTournament, stTournaments } from "$lib/stores/tournament.svelte";
-	import Check from "lucide-svelte/icons/check";
-	import ChevronsUpDown from "lucide-svelte/icons/chevrons-up-down";
-	import GalleryVerticalEnd from "lucide-svelte/icons/gallery-vertical-end";
-    import * as m from '$lib/paraglide/messages.js';
-	import { EventNew } from "$lib/components/event-new";
+	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import { stTournament, stTournaments } from '$lib/stores/tournament.svelte';
+	import Check from '@lucide/svelte/icons/check';
+	import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
+	import GalleryVerticalEnd from '@lucide/svelte/icons/gallery-vertical-end';
+	import * as m from '$lib/paraglide/messages.js';
+	import { EventNew } from '$lib/components/event-new';
 
-	let {closeSidebar}: {closeSidebar: CallableFunction} = $props();
-	
+	let { closeSidebar }: { closeSidebar: CallableFunction } = $props();
+
 	function onSelect(id: number) {
 		closeSidebar();
 		goto(`${base}/${id}`);
 	}
 
 	function onNewEvent() {
-		console.debug('ON_NEW_EVENT')
+		console.debug('ON_NEW_EVENT');
 	}
-
 </script>
 
 <Sidebar.Menu>
@@ -54,10 +53,8 @@
 						{/if}
 					</DropdownMenu.Item>
 				{/each}
-				<EventNew/>
+				<EventNew />
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
 	</Sidebar.MenuItem>
 </Sidebar.Menu>
-
-
