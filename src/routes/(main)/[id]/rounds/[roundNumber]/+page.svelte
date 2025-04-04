@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import RoundDeleteDialog from '$lib/components/round-delete-dialog/round-delete-dialog.svelte';
+	import RoundDeleteDialog from './_components/round-delete-dialog.svelte';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
+	import { copyText } from 'svelte-copy';
 	import '$lib/db/db.svelte';
 	import type { IDbTable } from '$lib/db/db.svelte';
 	import { generateRound } from '$lib/seatings/seatingsController';
@@ -15,6 +16,8 @@
 	import { toast } from 'svelte-sonner';
 	import type { PageProps } from './$types';
 	import TableReport from './_components/table-report.svelte';
+	import DropdownEditRound from './_components/dropdown-edit-round.svelte';
+	import * as m from '$lib/paraglide/messages.js';
 
 	let { data }: PageProps = $props();
 
@@ -22,9 +25,41 @@
 	let roundDeleteOpen = $state(false);
 	let tableReportTable: IDbTable | undefined = $state();
 
-	function onDeleteRound() {
+	function oneditRound() {
+		console.debug('ON_EDIT_ROUND', data.roundNumber);
+		goto(`${base}/${stTournament.id}/rounds/${data.roundNumber}/edit`);
+	}
+
+	function ondeleteRound() {
 		console.debug('ON_DELETE_ROUND', data.roundNumber);
 		roundDeleteOpen = true;
+	}
+
+	function onexportRound(results = false) {
+		console.debug('ON_EXPORT_ROUND', data.roundNumber, results, typeof results);
+
+		let exportedText = `${m.round_name({n: data.roundNumber})}`
+
+		// We build a message to be sent via text chat so that players can figure out their tables, or round results
+		roundTables.forEach((table) => {
+			exportedText += `\n\n${m.round_table_name({n: table.tableNum})}`
+
+			table.players.forEach((player) => {
+				exportedText += `\n${stPlayers.getById(player.playerId)?.fullName}`
+				if (results) {
+					exportedText += `- ${player.vp}VP`
+					if (player.playerId === table.winnerId) exportedText += ' 1GW'
+				}
+			})
+		});
+
+		copyText(exportedText)
+			.then(() => {
+				toast.success(m.round_export_success_message());
+			})
+			.catch((err) => {
+				toast.error(`${m.round_export_error_message()} - ${err.message}`);
+			});
 	}
 
 	$inspect(stTournament.currentRound.current);
@@ -61,11 +96,9 @@
 		generateRound(data.roundNumber);
 	}
 
-	let roundTables: IDbTable[] = $state([]);
-
-	$effect(() => {
-		roundTables = stTournament.tables.current.filter((t) => t.roundNum === data.roundNumber);
-	});
+	const roundTables = $derived(
+		stTournament.tables.current.filter((t) => t.roundNum === data.roundNumber)
+	);
 
 	function onclickTable(table: IDbTable) {
 		console.debug('ON_CLICK_TABLE', $state.snapshot(table));
@@ -75,12 +108,12 @@
 </script>
 
 <ScrollArea>
-	<div class="flex flex-col gap-4 p-4">
+	<div class="flex flex-col gap-4 p-2 pb-20">
 		{#each roundTables as table}
 			<Card.Root onclick={() => onclickTable(table)}>
 				<Card.Header>
 					<Card.Title class="text-xl leading-none">
-						Mesa {table.tableNum}
+						{m.round_table_name({ n: table.tableNum })}
 					</Card.Title>
 				</Card.Header>
 				<Card.Content class="flex flex-col p-4">
@@ -99,16 +132,13 @@
 	</div>
 </ScrollArea>
 
-{#if stTournament.currentRound.current >= data.roundNumber}
-	<Button
-		variant="destructive"
-		class="m-2 mt-auto"
-		onclick={onDeleteRound}
-		disabled={stTournament.currentRound.current > data.roundNumber}>Deletar rodada</Button
-	>
-{:else}
-	<Button class="m-2 mt-auto" onclick={onGenerateRound}>Gerar rodada</Button>
-{/if}
+<footer class="fixed right-0 bottom-0 mt-auto flex justify-end p-4">
+	{#if stTournament.currentRound.current >= data.roundNumber}
+		<DropdownEditRound ondelete={ondeleteRound} onedit={oneditRound} onexport={onexportRound} />
+	{:else}
+		<Button onclick={onGenerateRound}>Gerar rodada</Button>
+	{/if}
+</footer>
 
 {#if tableReportTable}
 	<TableReport bind:open={tableReportOpen} table={tableReportTable} />

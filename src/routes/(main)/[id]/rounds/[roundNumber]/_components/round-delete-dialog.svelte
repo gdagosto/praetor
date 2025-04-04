@@ -4,6 +4,9 @@
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as m from '$lib/paraglide/messages.js';
 	import { cn, isDesktop } from '$lib/utils';
+	import { Tween } from 'svelte/motion';
+
+	const tween = new Tween(3, { delay: 0, duration: 3000 });
 
 	interface Props {
 		open: boolean;
@@ -15,6 +18,17 @@
 	function onDelete() {
 		open = false;
 		onDeleteCallback();
+	}
+
+	$effect(() => {
+		console.log('effect', open);
+		if (open) dialogOpened();
+	});
+
+	function dialogOpened() {
+		console.log('dialogOpened');
+		tween.set(3, { duration: 0 });
+		tween.set(0, { duration: 3000 });
 	}
 </script>
 
@@ -60,8 +74,11 @@
 
 {#snippet content(drawer = false)}
 	<form class={cn('grid items-start gap-4', drawer && 'px-4')}>
-		<Button type="button" variant="destructive" onclick={onDelete}>
+		<Button type="button" variant="destructive" onclick={onDelete} disabled={tween.current > 0}>
 			{m.round_delete_dialog_button()}
+			{#if tween.current > 0}
+				{`(${Math.ceil(tween.current)}s)`}
+			{/if}
 		</Button>
 	</form>
 {/snippet}

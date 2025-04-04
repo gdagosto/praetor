@@ -115,6 +115,7 @@ class StTournament {
 		players: IDbTable['players'],
 		winnerId: IDbTable['winnerId']
 	) => {
+		console.log('REPORT_ROUND_TABLE', this.id, roundNum, tableNum);
 		const table = await db.roundTables.get({ tournamentId: this.id, roundNum, tableNum });
 		if (!table) return;
 
@@ -129,7 +130,7 @@ class StTournament {
 				// Find standing id
 				const standingId = stTournament.getStandingByPlayerId(p.playerId);
 				const status: IDbStanding['status'] = p.playerId === winnerId ? 'winner' : 'finalist';
-				if (p.playerId === winnerId) db.standings.update(standingId, { status });
+				db.standings.update(standingId, { status });
 			});
 
 			return;
