@@ -14,6 +14,7 @@
 		placeholderInput?: string;
 		notFound?: string;
 		value?: string;
+		onchange?: (value: string) => void;
 	}
 
 	let {
@@ -21,13 +22,19 @@
 		value = $bindable(''),
 		placeholderValue = m.combobox_default_placeholder_value(),
 		placeholderInput = m.combobox_default_placeholder_input(),
-		notFound = m.combobox_default_not_found()
+		notFound = m.combobox_default_not_found(),
+		onchange = undefined,
 	}: IProps = $props();
 
 	let open = $state(false);
 	let triggerRef = $state<HTMLButtonElement>(null!);
 
 	const selectedValue = $derived(options.find((f) => f.value === value));
+
+	$effect(() => {
+		if (!selectedValue) return;
+		onchange?.(selectedValue.value);
+	})
 
 	// We want to refocus the trigger button when the user selects
 	// an item from the list so users can continue navigating the

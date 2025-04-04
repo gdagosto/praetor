@@ -25,6 +25,10 @@
 	let roundDeleteOpen = $state(false);
 	let tableReportTable: IDbTable | undefined = $state();
 
+	const roundTables = $derived(
+		stTournament.tables.current.filter((t) => t.roundNum === data.roundNumber)
+	);
+
 	function oneditRound() {
 		console.debug('ON_EDIT_ROUND', data.roundNumber);
 		goto(`${base}/${stTournament.id}/rounds/${data.roundNumber}/edit`);
@@ -96,9 +100,7 @@
 		generateRound(data.roundNumber);
 	}
 
-	const roundTables = $derived(
-		stTournament.tables.current.filter((t) => t.roundNum === data.roundNumber)
-	);
+
 
 	function onclickTable(table: IDbTable) {
 		console.debug('ON_CLICK_TABLE', $state.snapshot(table));

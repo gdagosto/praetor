@@ -115,7 +115,7 @@ class StTournament {
 		players: IDbTable['players'],
 		winnerId: IDbTable['winnerId']
 	) => {
-		console.log('REPORT_ROUND_TABLE', this.id, roundNum, tableNum);
+		console.log('REPORT_ROUND_TABLE', this.id, roundNum, tableNum, players, winnerId);
 		const table = await db.roundTables.get({ tournamentId: this.id, roundNum, tableNum });
 		if (!table) return;
 
