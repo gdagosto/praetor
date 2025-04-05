@@ -32,6 +32,7 @@
 	"add_event_vekn_confirm_dialog_event_rounds": "Rodadas",
 	"add_event_vekn_confirm_dialog_event_confirm": "Confirmar",
 	"tournament_info_export_button": "Exportar dados do torneio",
+	"tournament_info_submit_vekn_button": "Enviar dados para a VEKN",
 	"add_player_title": "Adicionar Jogador",
 	"add_player_description": "Insira aqui os dados do jogador para adicioná-lo ao torneio",
 	"add_player_input_name_label": "Nome",

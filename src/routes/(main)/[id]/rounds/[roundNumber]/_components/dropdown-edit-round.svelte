@@ -1,13 +1,12 @@
 <script lang="ts">
-	import Trash2 from '@lucide/svelte/icons/trash-2';
-	import Pencil from '@lucide/svelte/icons/pencil';
-	import MessageCircle from '@lucide/svelte/icons/message-circle';
-	import Settings from '@lucide/svelte/icons/settings';
-	import * as m from '$lib/paraglide/messages.js';
-
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { buttonVariants } from '$lib/components/ui/button/index.js';
-	import { cn } from '$lib/utils';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import * as m from '$lib/paraglide/messages.js';
+	import { cn } from '$lib/utils/index.js';
+	import MessageCircle from '@lucide/svelte/icons/message-circle';
+	import Pencil from '@lucide/svelte/icons/pencil';
+	import Settings from '@lucide/svelte/icons/settings';
+	import Trash2 from '@lucide/svelte/icons/trash-2';
 
 	interface IProps {
 		ondelete: () => void;

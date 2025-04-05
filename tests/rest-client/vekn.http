@@ -7,16 +7,24 @@
 POST {{apiUrl}}/login
 Content-Type: application/x-www-form-urlencoded
 
-username=Schwarzenegger
-&password=keening123BR
+username={{veknLogin}}
+&password={{veknPassword}}
 
 ###
 # @name events
 @eventId = {{events.response.body.data.events[0].event_id}}
-GET {{apiUrl}}/event?date=2024-10-27
+GET {{apiUrl}}/event?date=2025-04-03
 Authorization: Bearer {{token}}
 
 ###
 # @name event_id
 GET {{apiUrl}}/event/{{eventId}}
 Authorization: Bearer {{token}}
+
+###
+# @name archon
+POST {{apiUrl}}/archon/{{eventId}}
+Content-Type: text/plain
+Authorization: Bearer {{token}}
+
+3\u00a42\u00a7Guilherme\u00a7Machado\u00a7\u00a76130009\u00a72\u00a76\u00a70\u00a7120\u00a70\u00a70\u00a72\u00a7Gabriel\u00a7dAgosto\u00a7\u00a76130073\u00a71\u00a75\u00a70\u00a7102\u00a70\u00a70\u00a72\u00a7Leonardo\u00a7Zimmern\u00a7\u00a76130070\u00a71\u00a75\u00a70\u00a788\u00a70\u00a70\u00a71\u00a7Leonardo\u00a7Villela\u00a7\u00a76130006\u00a71\u00a75\u00a74\u00a778\u00a70\u00a70\u00a72\u00a7Luciano\u00a7Vilella\u00a7\u00a76130016\u00a71\u00a74\u00a71\u00a778\u00a70\u00a70\u00a76\u00a7Daniel\u00a7Motta\u00a7\u00a76130008\u00a71\u00a73\u00a70\u00a790\u00a70\u00a70\u00a77\u00a7Marcos\u00a7Vinícius\u00a7\u00a76130080\u00a71\u00a73\u00a70\u00a778\u00a70\u00a70\u00a78\u00a7Danilo\u00a7Fernandes\u00a7\u00a71002955\u00a70\u00a73\u00a70\u00a796\u00a70\u00a70\u00a79\u00a7Laís\u00a7Valle\u00a7\u00a75120001\u00a70\u00a72\u00a70\u00a790\u00a70\u00a70\u00a710\u00a7Diogo\u00a7Fagundes Barros\u00a7\u00a76130082\u00a70\u00a71\u00a70\u00a766\u00a70\u00a70\u00a711\u00a7Claudinei\u00a7Cardoso\u00a7\u00a76130014\u00a70\u00a71\u00a70\u00a760\u00a70\u00a70\u00a712\u00a7Paulo\u00a7Fontainha\u00a7\u00a76130020\u00a70\u00a70\u00a70\u00a760\u00a70\u00a70\u00a713\u00a7Fabrício\u00a7Magrão\u00a7\u00a76130029\u00a70\u00a70\u00a70\u00a754\u00a70\u00a70\u00a713\u00a7Flávio\u00a7de Sousa Barreto\u00a7\u00a77240011\u00a70\u00a70\u00a70\u00a754\u00a70\u00a70\u00a713\u00a7Vinícius\u00a7Bolotari\u00a7\u00a76130069\u00a70\u00a70\u00a70\u00a754\u00a70\u00a70\u00a713\u00a7Vítor\u00a7Bolotari\u00a7\u00a76130028\u00a70\u00a70\u00a70\u00a754\u00a70\u00a70\u00a717\u00a7Maicon\u00a7Santos\u00a7\u00a76130090\u00a70\u00a70\u00a70\u00a752\u00a70\u00a70\u00a718\u00a7Rafael\u00a7Jacques\u00a7\u00a76130037\u00a70\u00a70\u00a70\u00a748\u00a70\u00a70\u00a719\u00a7Kleber\u00a7Bertazzo\u00a7\u00a71003065\u00a70\u00a70\u00a70\u00a746\u00a70\u00a70\u00a7

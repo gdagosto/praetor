@@ -1,12 +1,12 @@
 <script lang="ts">
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
-	import * as m from '$lib/paraglide/messages.js';
-	import { cn, isDesktop } from '$lib/utils';
 	import type { IDbPlayer } from '$lib/db/db.svelte';
-	import { stTournament } from '$lib/stores/tournament.svelte';
+	import * as m from '$lib/paraglide/messages.js';
 	import { stPlayers } from '$lib/stores/players.svelte';
+	import { stTournament } from '$lib/stores/tournament.svelte';
+	import { cn, isDesktop } from '$lib/utils/index.js';
 
 	interface Props {
 		open: boolean;

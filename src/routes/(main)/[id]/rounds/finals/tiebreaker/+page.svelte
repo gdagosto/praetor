@@ -8,7 +8,7 @@
 	import { stFinals } from '$lib/stores/finals.svelte';
 	import { stPlayers } from '$lib/stores/players.svelte';
 	import { stTournament } from '$lib/stores/tournament.svelte';
-	import { cn } from '$lib/utils';
+	import { cn } from '$lib/utils/index.js';
 	import { shuffle } from '$lib/utils/random.js';
 	import Check from '@lucide/svelte/icons/check';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';

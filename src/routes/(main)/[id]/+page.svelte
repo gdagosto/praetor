@@ -2,15 +2,22 @@
 	import { Button } from '$lib/components/ui/button';
 	import '$lib/db/db.svelte';
 	import { db, type IDbStanding, type IDbTable } from '$lib/db/db.svelte';
+	import * as m from '$lib/paraglide/messages.js';
 	import { stTournament } from '$lib/stores/tournament.svelte';
 	import { veknReport } from '$lib/utils/report';
+	import { veknApi } from '$lib/utils/vekn.js';
 	import { saveAs } from 'file-saver-es';
-	import * as m from '$lib/paraglide/messages.js';
 
 	type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 	function finals() {
-		console.log(veknReport());
+		const headers = new Headers();
+		headers.append('Content-Type', 'text/plain');
+		veknApi(`archon/${stTournament.id}`, {
+			method: 'POST',
+			body: veknReport(),
+			headers
+		});
 	}
 
 	async function exportData() {
@@ -58,6 +65,7 @@
 	}
 </script>
 
-<div class="p-4">
+<div class="flex flex-col gap-4 p-4">
 	<Button onclick={exportData}>{m.tournament_info_export_button()}</Button>
+	<Button onclick={finals}>{m.tournament_info_submit_vekn_button()}</Button>
 </div>

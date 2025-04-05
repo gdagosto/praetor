@@ -1,16 +1,15 @@
 <script lang="ts">
+	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { Checkbox } from '$lib/components/ui/checkbox';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
-	import * as m from '$lib/paraglide/messages.js';
-	import { cn, isDesktop } from '$lib/utils';
-	import type { IDbTable } from '$lib/db/db.svelte';
-	import { stPlayers } from '$lib/stores/players.svelte';
-	import * as ToggleGroup from '$lib/components/ui/toggle-group/index.js';
 	import { Label } from '$lib/components/ui/label';
-	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import * as ToggleGroup from '$lib/components/ui/toggle-group/index.js';
+	import type { IDbTable } from '$lib/db/db.svelte';
+	import * as m from '$lib/paraglide/messages.js';
+	import { stPlayers } from '$lib/stores/players.svelte';
 	import { stTournament } from '$lib/stores/tournament.svelte';
-	import ScrollArea from '$lib/components/ui/scroll-area/scroll-area.svelte';
+	import { cn, isDesktop } from '$lib/utils/index.js';
 
 	interface Props {
 		open: boolean;

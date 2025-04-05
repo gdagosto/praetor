@@ -106,6 +106,6 @@ export function veknReport() {
 		arch_players += arch_player;
 	}
 
-	const arch_archondata = `${arch_R}¤${arch_players}¤${arch_tables}`;
+	const arch_archondata = `${arch_R}¤${arch_players}`;
 	return arch_archondata;
 }

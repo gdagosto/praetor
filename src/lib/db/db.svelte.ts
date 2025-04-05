@@ -1,6 +1,6 @@
 // db.ts
 import type { ITournamentRawData } from '$lib/types';
-import { veknApi } from '$lib/utils';
+import { veknApi } from '$lib/utils/vekn.js';
 import Dexie, { type EntityTable } from 'dexie';
 
 export type IDatabase = Dexie & {

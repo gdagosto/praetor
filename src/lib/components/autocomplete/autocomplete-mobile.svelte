@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { Input, inputClasses } from '$lib/components/ui/input/index.js';
-	import { cn } from '$lib/utils';
-	import * as Drawer from '$lib/components/ui/drawer/index.js';
-	import X from '@lucide/svelte/icons/x';
-	import { stateQuery } from '$lib/utils/stateQuery.svelte';
 	import { db, type IDbPlayer } from '$lib/db/db.svelte';
-	import type { IPropsAutocomplete } from './types';
-	import { Button } from '../ui/button';
+	import { cn } from '$lib/utils/index.js';
+	import { stateQuery } from '$lib/utils/stateQuery.svelte';
+	import X from '@lucide/svelte/icons/x';
 	import { tick } from 'svelte';
+	import { Button } from '../ui/button';
+	import type { IPropsAutocomplete } from './types';
 
 	let {
 		children,

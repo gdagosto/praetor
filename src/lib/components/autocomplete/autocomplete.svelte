@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { isDesktop } from '$lib/utils';
+	import { isDesktop } from '$lib/utils/index.js';
 	import AutocompleteMobile from './autocomplete-mobile.svelte';
 	import type { IPropsAutocomplete } from './types';
 

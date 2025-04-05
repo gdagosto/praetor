@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
-	import * as m from '$lib/paraglide/messages.js';
-	import { cn, isDesktop, veknApi, veknLogin } from '$lib/utils';
-	import { stVeknCredentials } from '$lib/stores/vekn.svelte';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
+	import * as m from '$lib/paraglide/messages.js';
+	import { stVeknCredentials } from '$lib/stores/vekn.svelte';
+	import { cn, isDesktop } from '$lib/utils/index.js';
+	import { veknLogin } from '$lib/utils/vekn.js';
 
 	let open = $state(!stVeknCredentials.current.isLoggedIn);
 	let openBefore = !stVeknCredentials.current.isLoggedIn;
@@ -82,7 +83,7 @@
 			bind:value={stVeknCredentials.current.password}
 		/>
 
-		<Button onclick={onLogin} type='submit'>{m.login_dialog_confirm()}</Button>
+		<Button onclick={onLogin} type="submit">{m.login_dialog_confirm()}</Button>
 		{#if drawer}
 			<Drawer.Close class={buttonVariants({ variant: 'secondary' })}
 				>{m.drawer_cancel()}</Drawer.Close

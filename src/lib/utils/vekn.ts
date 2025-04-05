@@ -1,16 +1,7 @@
-import { type ClassValue, clsx } from 'clsx';
-import { MediaQuery } from 'svelte/reactivity';
-import { twMerge } from 'tailwind-merge';
-import { stVeknCredentials } from './stores/vekn.svelte';
-import { ForbiddenError, HttpError } from './error/http';
+import { stVeknCredentials } from '$lib/stores/vekn.svelte';
+import { ForbiddenError, HttpError } from '$lib/error/http';
 import { toast } from 'svelte-sonner';
 import { tick } from 'svelte';
-
-export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs));
-}
-
-export const isDesktop = new MediaQuery('(min-width: 768px)');
 
 export function corsProxy(url: string) {
 	return 'https://redirect.rayssinhagamer.workers.dev/?' + encodeURIComponent(url);

@@ -5,7 +5,7 @@
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Drawer from '$lib/components/ui/drawer/index.js';
 	import * as m from '$lib/paraglide/messages.js';
-	import { cn, isDesktop } from '$lib/utils';
+	import { cn, isDesktop } from '$lib/utils/index.js';
 
 	let open = false;
 

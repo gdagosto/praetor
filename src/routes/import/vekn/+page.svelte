@@ -1,12 +1,12 @@
 <script lang="ts">
-	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import EventImportVeknInfo from '$lib/components/event-import-vekn-info/event-import-vekn-info.svelte';
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb/index.js';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as m from '$lib/paraglide/messages.js';
-	import { veknApi } from '$lib/utils';
 	import type { ITournamentRawData } from '$lib/types';
+	import { veknApi } from '$lib/utils/vekn.js';
+	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 
 	let inputVeknId: number | undefined = $state(undefined);
 
