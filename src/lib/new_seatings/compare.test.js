@@ -16,8 +16,8 @@ import { generateRound } from '$lib/seatings/worker/class.js';
 describe('compare', () => {
 	describe('score', () => {
 		test('compare score - 1', () => {
-			const r1 = generateRound(0, [], [0, 1, 2, 3, 4], 5, 2);
-			const r2 = generateRound(1, [r1.round], [0, 1, 2, 3, 4], 5, 2);
+			const r1 = generateRound(0, [], [0, 1, 2, 3, 4, 5, 6, 7], 8, 2);
+			const r2 = generateRound(1, [r1.round], [0, 1, 2, 3, 4, 5, 6, 7], 8, 2);
 
 			// Get score from geminiOne
 			const geminiScore = new Score([
