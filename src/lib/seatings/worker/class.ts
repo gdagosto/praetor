@@ -8,7 +8,8 @@ import {
 	sum3D,
 	getRoundGlobalIndexes,
 	getRandomInt,
-	shuffle
+	shuffle,
+	playerMapping
 } from './utils';
 
 type IGeneratorCallback = (
@@ -84,7 +85,13 @@ export function generateRound(
 	// For the first round, there's no need to do anything crazy. Just randomly shuffle the players
 	if (roundNumber === 0) {
 		const round = shuffle(playersTables);
-		return { round, score: Score.total(measure(round, playerCount), totalRounds) };
+
+		console.log('FIRST_ROUND | measure', measure(round, playerCount));
+		console.log('FIRST_ROUND | totalRounds', totalRounds);
+
+		const finalScore = new Score([round], playerMapping([round]));
+
+		return { round, score: finalScore.total };
 	}
 
 	// If it's not the first round, need to optimise based on the constraints.
@@ -100,6 +107,7 @@ function optimise(
 	const TEMPERATURE_MIN = 0.001;
 	const TEMPERATURE_MAX = RULES[0][2];
 	const TEMPERATURE_FACTOR = -Math.log(TEMPERATURE_MAX / TEMPERATURE_MIN);
+	const pm = playerMapping(rounds);
 
 	const onePercent = Math.floor(ITERATIONS / 100) || 1;
 
@@ -107,7 +115,7 @@ function optimise(
 	const roundIdx = rounds.length - 1;
 	const measures = rounds.map((round) => measure(round, playerCount));
 
-	let score = Score.fastTotal(sumMeasures(measures), totalRounds);
+	let score = new Score(rounds, pm).total;
 	let previousScore = score;
 	let bestScore = score;
 	let bestState = structuredClone(rounds[roundIdx]);
@@ -133,7 +141,7 @@ function optimise(
 		// Only recompute the changed round, other rounds have not varied
 		const previousMeasure = measures[roundIdx - 1];
 		measures[roundIdx] = measure(round, playerCount, previousMeasure, [i1, j1]);
-		score = Score.fastTotal(sumMeasures(measures), totalRounds);
+		score = new Score(rounds, pm).total;
 		const scoreDiff = score - previousScore;
 		trials++;
 
@@ -177,7 +185,12 @@ function optimise(
 		}
 	}
 
-	return { round: bestState, score: Score.total(sumMeasures(measures), totalRounds) };
+	console.log('OPTIMISE | measures', measures);
+	console.log('OPTIMISE | totalRounds', totalRounds);
+
+	const finalScore = new Score(rounds, playerMapping(rounds));
+
+	return { round: bestState, score: finalScore.total };
 }
 
 function measure(

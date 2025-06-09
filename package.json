@@ -13,7 +13,8 @@
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"gh-pages": "pnpm run build && pnpm run gh-publish",
-		"gh-publish": "gh-pages -d build -t --nojekyll"
+		"gh-publish": "gh-pages -d build -t --nojekyll",
+		"test": "vitest"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.7",
@@ -45,7 +46,8 @@
 		"typescript": "^5.8.2",
 		"typescript-eslint": "^8.26.1",
 		"vaul-svelte": "1.0.0-next.6",
-		"vite": "^6.2.2"
+		"vite": "^6.2.2",
+		"vitest": "^3.2.3"
 	},
 	"dependencies": {
 		"@inlang/paraglide-sveltekit": "^0.16.1",

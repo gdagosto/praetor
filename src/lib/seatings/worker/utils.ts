@@ -69,3 +69,23 @@ export const shuffle = <T extends unknown[]>(v: T, r = [...v]) =>
 export function getRandomInt(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
+
+type Player = number;
+type Round = Player[][];
+type PlayerMapping = Map<number, number>;
+
+export function playerMapping(rounds: Round[]): PlayerMapping {
+	const mapping = new Map<number, number>();
+	let number = 0;
+	for (const round of rounds) {
+		for (const table of round) {
+			for (const player of table) {
+				if (!mapping.has(player)) {
+					mapping.set(player, number);
+					number++;
+				}
+			}
+		}
+	}
+	return mapping;
+}
