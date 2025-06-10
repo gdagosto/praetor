@@ -70,7 +70,7 @@ export function generateRound(
 	playerCount: number,
 	totalRounds: number,
 	cb: IGeneratorCallback = exampleGeneratorCb
-) {
+): { round: number[][]; score: Score } {
 	console.debug('GENERATE_ROUND | roundNumber', roundNumber);
 	console.debug('GENERATE_ROUND | previousRounds', previousRounds);
 	console.debug('GENERATE_ROUND | activePlayers', activePlayers);
@@ -86,12 +86,9 @@ export function generateRound(
 	if (roundNumber === 0) {
 		const round = shuffle(playersTables);
 
-		console.log('FIRST_ROUND | measure', measure(round, playerCount));
-		console.log('FIRST_ROUND | totalRounds', totalRounds);
-
 		const finalScore = new Score([round], playerMapping([round]));
 
-		return { round, score: finalScore.total };
+		return { round, score: finalScore };
 	}
 
 	// If it's not the first round, need to optimise based on the constraints.
@@ -185,12 +182,9 @@ function optimise(
 		}
 	}
 
-	console.log('OPTIMISE | measures', measures);
-	console.log('OPTIMISE | totalRounds', totalRounds);
-
 	const finalScore = new Score(rounds, playerMapping(rounds));
 
-	return { round: bestState, score: finalScore.total };
+	return { round: bestState, score: finalScore };
 }
 
 function measure(
