@@ -41,6 +41,36 @@ const POSITIONS_MATRICES = {
 	]
 };
 
+/** RULES
+ * R1 No pair of players repeat their predator-prey relationship. This is mandatory.
+ * R2 No pair of players share a table through all three rounds, when possible.
+ * R3 Available VPs are equitably distributed.
+ * R4 No pair of players share a table more often than necessary.
+ * R5 A player doesn't sit in the fifth seat more than once.
+ * R6 No pair of players repeat the same relative position[*], when possible.
+ * R7 A player doesn't play in the same seat position, if possible.
+ * R8 Starting transfers are equitably distributed.
+ * R9 No pair of players repeat the same relative position group[^], when possible.
+ *
+ * [*] "relative position" relationship values:
+ * 1) prey
+ * 2) predator
+ * 3) grand-prey at a 5
+ * 4) grand-predator at a 5
+ * 5) cross-table at a 4-player
+ * Note that repeating 1 and repeating 2 is already handled (prohibited) by R1.
+ *
+ * [^] "relative position group" values:
+ * 1) Adjacent (prey or predator)
+ * 2) Not adjacent
+ *
+ * The matching attributes of the instance provide a list of violations for each rule,
+ * except for rules R3 and R8, simply indicating the standard deviation of the value.
+ * For those rules, player by player violations (too far away from mean) are listed
+ * in the `vps` and `transfers` attributes and the mean values in `mean_vps` and
+ * `mean_tranfers`.
+ */
+
 export const RULES = [
 	{ code: 'R1', label: 'predator-prey', weight: 10 ** 10 },
 	{ code: 'R2', label: 'opponent thrice', weight: 10 ** 9 },
