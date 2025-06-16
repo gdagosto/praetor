@@ -51,6 +51,8 @@ export const RULES = [
 export class Score {
 	rounds: number[][][];
 	activePlayers: number[];
+	DEBUG: boolean; 
+	
 	r1: Set<string>;
 	r2: PairMap;
 	r3: number;
@@ -71,9 +73,10 @@ export class Score {
 
 	score: number;
 
-	constructor(rounds: number[][][], activePlayers: number[]) {
+	constructor(rounds: number[][][], activePlayers: number[], debug: boolean = false) {
 		this.rounds = rounds;
 		this.activePlayers = activePlayers;
+		this.DEBUG = debug;
 
 		this.score = 0;
 
@@ -103,6 +106,10 @@ export class Score {
 		this.pairAdjacent[p2][p1] += val;
 
 		if (this.pairAdjacent[p1][p2] === 4) {
+			if (this.DEBUG) {
+				this.R9 +=
+
+			}
 			this.score += RULES[8].weight;
 		}
 	}

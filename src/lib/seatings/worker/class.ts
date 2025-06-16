@@ -1,16 +1,6 @@
-import { RULES, OPPONENTS, POSITIONS, type IMeasure, ITERATIONS } from './constants';
+import { ITERATIONS, RULES } from './constants';
 import { Score } from './score';
-import {
-	fast2DMatrix,
-	fast3DMatrix,
-	range,
-	sum2D,
-	sum3D,
-	getRoundGlobalIndexes,
-	getRandomInt,
-	shuffle,
-	playerMapping
-} from './utils';
+import { getRandomInt, getRoundGlobalIndexes, shuffle } from './utils';
 
 type IGeneratorCallback = (
 	iter: number,
@@ -69,12 +59,13 @@ export function generateRound(
 	activePlayers: number[],
 	playerCount: number,
 	totalRounds: number,
-	cb: IGeneratorCallback = exampleGeneratorCb
+	cb: IGeneratorCallback | null = exampleGeneratorCb
 ): { round: number[][]; score: Score } {
 	console.debug('GENERATE_ROUND | roundNumber', roundNumber);
 	console.debug('GENERATE_ROUND | previousRounds', previousRounds);
 	console.debug('GENERATE_ROUND | activePlayers', activePlayers);
 	console.debug('GENERATE_ROUND | playerCount', playerCount);
+	console.debug('GENERATE_ROUND | cb', cb);
 
 	if (previousRounds.length !== roundNumber)
 		throw new Error('Round number is different from previous rounds');
@@ -86,7 +77,7 @@ export function generateRound(
 	if (roundNumber === 0) {
 		const round = shuffle(playersTables);
 
-		const finalScore = new Score([round], playerMapping([round]));
+		const finalScore = new Score([round], playerCount);
 
 		return { round, score: finalScore };
 	}
@@ -99,20 +90,18 @@ function optimise(
 	rounds: number[][][],
 	playerCount: number,
 	totalRounds: number,
-	cb: CallableFunction | undefined = undefined
+	cb: CallableFunction | null = null
 ) {
 	const TEMPERATURE_MIN = 0.001;
 	const TEMPERATURE_MAX = RULES[0][2];
 	const TEMPERATURE_FACTOR = -Math.log(TEMPERATURE_MAX / TEMPERATURE_MIN);
-	const pm = playerMapping(rounds);
 
 	const onePercent = Math.floor(ITERATIONS / 100) || 1;
 
 	let temperature = TEMPERATURE_MAX;
 	const roundIdx = rounds.length - 1;
-	const measures = rounds.map((round) => measure(round, playerCount));
 
-	let score = new Score(rounds, pm).total;
+	let score = new Score(rounds, playerCount).total;
 	let previousScore = score;
 	let bestScore = score;
 	let bestState = structuredClone(rounds[roundIdx]);
@@ -135,10 +124,7 @@ function optimise(
 		round[j1][j2] = round[i1][i2];
 		round[i1][i2] = aux;
 
-		// Only recompute the changed round, other rounds have not varied
-		const previousMeasure = measures[roundIdx - 1];
-		measures[roundIdx] = measure(round, playerCount, previousMeasure, [i1, j1]);
-		score = new Score(rounds, pm).total;
+		score = new Score(rounds, playerCount).total;
 		const scoreDiff = score - previousScore;
 		trials++;
 
@@ -151,7 +137,6 @@ function optimise(
 			round[i1][i2] = aux;
 
 			score = previousScore;
-			measures[roundIdx] = previousMeasure;
 		} else {
 			// Accepts the new iteration
 			accepts++;
@@ -177,74 +162,11 @@ function optimise(
 			improves = 0;
 
 			rounds[roundIdx] = structuredClone(bestState);
-			measures[roundIdx] = measure(rounds[roundIdx], playerCount);
 			previousScore = bestScore;
 		}
 	}
 
-	const finalScore = new Score(rounds, playerMapping(rounds));
+	const finalScore = new Score(rounds, playerCount, true);
 
 	return { round: bestState, score: finalScore };
-}
-
-function measure(
-	round: number[][],
-	playerCount: number,
-	previous: IMeasure | undefined = undefined,
-	hints: Array<number> | undefined = undefined
-): IMeasure {
-	let posMatrix: number[][];
-	let oppMatrix: number[][][];
-
-	if (previous) {
-		posMatrix = structuredClone(previous.posMatrix);
-		oppMatrix = structuredClone(previous.oppMatrix);
-	} else {
-		posMatrix = fast2DMatrix([playerCount, 8], 0);
-		oppMatrix = fast3DMatrix([playerCount, playerCount, 8], 0);
-	}
-
-	for (let i = 0, iMax = round.length; i < iMax; i++) {
-		const table = round[i];
-		const tableSize = table.length as 4 | 5;
-
-		if (hints && !hints.includes(i)) continue;
-
-		const seats = range(tableSize);
-		for (let seat = 0, seatMax = table.length; seat < seatMax; seat++) {
-			const player = table[seat];
-			posMatrix[player] = POSITIONS[tableSize][seat];
-
-			if (hints) {
-				oppMatrix[player] = fast2DMatrix([playerCount, 8], 0);
-			}
-
-			let relation = 0;
-			const adjOppMatrix = (seatNum: number) => {
-				oppMatrix[player][table[seatNum]] = OPPONENTS[tableSize][relation];
-				relation++;
-			};
-
-			seats.slice(seat + 1).forEach(adjOppMatrix);
-			seats.slice(0, seat).forEach(adjOppMatrix);
-		}
-	}
-
-	return { posMatrix, oppMatrix };
-}
-
-function sumMeasures(measures: IMeasure[]) {
-	/** At least 2 measures */
-	let sumPos = sum2D(measures[0].posMatrix, measures[1].posMatrix);
-	let sumOpp = sum3D(measures[0].oppMatrix, measures[1].oppMatrix);
-
-	for (let i = 2, iMax = measures.length; i < iMax; i++) {
-		sumPos = sum2D(sumPos, measures[i].posMatrix);
-		sumOpp = sum3D(sumOpp, measures[i].oppMatrix);
-	}
-
-	return {
-		posMatrix: sumPos,
-		oppMatrix: sumOpp
-	};
 }
