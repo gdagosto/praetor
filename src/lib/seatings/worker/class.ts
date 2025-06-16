@@ -101,6 +101,8 @@ function optimise(
 	let temperature = TEMPERATURE_MAX;
 	const roundIdx = rounds.length - 1;
 
+	const previousRoundScore = new Score(rounds.slice(0, rounds.length - 1), playerCount);
+
 	let score = new Score(rounds, playerCount).total;
 	let previousScore = score;
 	let bestScore = score;
@@ -124,7 +126,7 @@ function optimise(
 		round[j1][j2] = round[i1][i2];
 		round[i1][i2] = aux;
 
-		score = new Score(rounds, playerCount).total;
+		score = previousRoundScore.nextRound(round, playerCount).total;
 		const scoreDiff = score - previousScore;
 		trials++;
 

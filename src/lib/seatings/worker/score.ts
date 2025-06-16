@@ -3,8 +3,10 @@ import { PairMap } from './pairMap.js';
 const stdDevInt = (arr: Uint8Array, avg: number) =>
 	Math.sqrt(arr.reduce((sum: number, val: number) => sum + (val - avg) ** 2, 0) / arr.length);
 
-const stdDevFloat = (arr: Float64Array, avg: number) =>
-	Math.sqrt(arr.reduce((sum: number, val: number) => sum + (val - avg) ** 2, 0) / arr.length);
+const stdDevTransfers = (arr: Uint8Array, avg: number, numRounds: number) =>
+	Math.sqrt(
+		arr.reduce((sum: number, val: number) => sum + (val / numRounds - avg) ** 2, 0) / arr.length
+	);
 
 /** RULES
  * R1 No pair of players repeat their predator-prey relationship. This is mandatory.
@@ -48,12 +50,24 @@ export const RULES = [
 	{ code: 'R9', label: 'position group', weight: 1 }
 ] as const;
 
+type IRule1 = [number, number][];
+type IRule2 = [number, number][];
+type IRule3 = number;
+type IRule4 = [number, number][];
+type IRule5 = [number, number][];
+type IRule6 = [number, number][];
+type IRule7 = [number, number][];
+type IRule8 = number;
+type IRule9 = [number, number, number][];
+
+type IRules = [IRule1, IRule2, IRule3, IRule4, IRule5, IRule6, IRule7, IRule8, IRule9];
+
 export class Score {
 	rounds: number[][][];
 	playerCount: number;
 	DEBUG: boolean;
 
-	rules: Float64Array;
+	rules: IRules;
 
 	pairOpponents: PairMap;
 	pairPrey: PairMap;
@@ -65,17 +79,19 @@ export class Score {
 	pairNotAdjacent: PairMap;
 
 	playerSeat: PairMap;
-	transfers: Map<number, number>;
+
+	availableVps: Uint8Array;
+	transfers: Uint8Array;
 
 	total: number;
 
-	constructor(rounds: number[][][], playerCount: number, debug: boolean = false) {
+	constructor(rounds: number[][][], playerCount: number, debug: boolean = false, calculate = true) {
 		this.rounds = rounds;
 		this.playerCount = playerCount;
 		this.DEBUG = debug;
 
 		this.total = 0;
-		this.rules = new Float64Array(playerCount);
+		this.rules = [[], [], 0, [], [], [], [], 0, []];
 
 		this.pairOpponents = new PairMap();
 		this.pairPrey = new PairMap();
@@ -88,9 +104,10 @@ export class Score {
 
 		this.playerSeat = new PairMap();
 
-		this.transfers = new Map();
+		this.availableVps = new Uint8Array(this.playerCount);
+		this.transfers = new Uint8Array(this.playerCount);
 
-		this.prepare();
+		if (calculate) this.prepare();
 	}
 
 	addPairAdjacent(p1: number, p2: number, val: number = 1) {
@@ -99,7 +116,7 @@ export class Score {
 		this.pairAdjacent[p2][p1] += val;
 
 		if (this.pairAdjacent[p1][p2] === 4) {
-			if (this.DEBUG) this.rules[8] += 1;
+			if (this.DEBUG) this.rules[8].push([p1, p2, 1]);
 			this.total += RULES[8].weight;
 		}
 	}
@@ -110,7 +127,7 @@ export class Score {
 		this.pairNotAdjacent[p2][p1] += val;
 
 		if (this.pairNotAdjacent[p1][p2] === 4) {
-			if (this.DEBUG) this.rules[8] += 1;
+			if (this.DEBUG) this.rules[8].push([p1, p2, 2]);
 			this.total += RULES[8].weight;
 		}
 	}
@@ -120,10 +137,10 @@ export class Score {
 		this.pairOpponents[p2][p1] += val;
 
 		if (this.pairOpponents[p1][p2] === 4) {
-			if (this.DEBUG) this.rules[3] += 1;
+			if (this.DEBUG) this.rules[3].push([p1, p2]);
 			this.total += RULES[3].weight;
 		} else if (this.pairOpponents[p1][p2] === 6) {
-			if (this.DEBUG) this.rules[1] += 1;
+			if (this.DEBUG) this.rules[1].push([p1, p2]);
 			this.total += RULES[1].weight;
 		}
 	}
@@ -135,7 +152,7 @@ export class Score {
 		this.pairPrey[p1][p2] += 1;
 
 		if (this.pairPrey[p1][p2] === 2) {
-			if (this.DEBUG) this.rules[0] += 1;
+			if (this.DEBUG) this.rules[0].push([p1, p2]);
 			this.total += RULES[0].weight;
 		}
 
@@ -148,7 +165,7 @@ export class Score {
 
 		this.pairGrandprey[p1][p2] += 1;
 		if (this.pairGrandprey[p1][p2] === 2) {
-			if (this.DEBUG) this.rules[5] += 1;
+			if (this.DEBUG) this.rules[5].push([p1, p2]);
 			this.total += RULES[5].weight;
 		}
 
@@ -161,7 +178,7 @@ export class Score {
 
 		this.pairGrandpred[p1][p2] += 1;
 		if (this.pairGrandpred[p1][p2] === 2) {
-			if (this.DEBUG) this.rules[5] += 1;
+			if (this.DEBUG) this.rules[5].push([p1, p2]);
 			this.total += RULES[5].weight;
 		}
 
@@ -175,7 +192,7 @@ export class Score {
 		this.pairCrosstable[p1][p2] += 1;
 		this.pairCrosstable[p2][p1] += 1;
 		if (this.pairCrosstable[p1][p2] === 2) {
-			if (this.DEBUG) this.rules[5] += 1;
+			if (this.DEBUG) this.rules[5].push([p1, p2]);
 			this.total += RULES[5].weight;
 		}
 
@@ -187,82 +204,80 @@ export class Score {
 
 		if (this.playerSeat[p][seating] === 2) {
 			if (seating === 5) {
-				if (this.DEBUG) this.rules[4] += 1;
+				if (this.DEBUG) this.rules[4].push([p, seating]);
 				this.total += RULES[4].weight;
 			} else {
-				if (this.DEBUG) this.rules[6] += 1;
+				if (this.DEBUG) this.rules[6].push([p, seating]);
 				this.total += RULES[6].weight;
 			}
 		}
 	}
 
+	calculateRound(round: number[][]) {
+		for (let j = 0, jMax = round.length; j < jMax; j++) {
+			const table = round[j];
+			const tableLen = table.length;
+
+			// Add the preyPred relationships
+			if (tableLen === 5) {
+				// TABLE LENGTH = 5
+				this.addPairPrey(table[0], table[1]);
+				this.addPairPrey(table[1], table[2]);
+				this.addPairPrey(table[2], table[3]);
+				this.addPairPrey(table[3], table[4]);
+				this.addPairPrey(table[4], table[0]);
+
+				this.addPairGrandprey(table[0], table[2]);
+				this.addPairGrandprey(table[1], table[3]);
+				this.addPairGrandprey(table[2], table[4]);
+				this.addPairGrandprey(table[3], table[0]);
+				this.addPairGrandprey(table[4], table[1]);
+
+				this.addPairGrandpred(table[0], table[3]);
+				this.addPairGrandpred(table[1], table[4]);
+				this.addPairGrandpred(table[2], table[0]);
+				this.addPairGrandpred(table[3], table[1]);
+				this.addPairGrandpred(table[4], table[2]);
+			} else {
+				// TABLE LENGTH = 4
+				this.addPairPrey(table[0], table[1]);
+				this.addPairPrey(table[1], table[2]);
+				this.addPairPrey(table[2], table[3]);
+				this.addPairPrey(table[3], table[0]);
+
+				this.addPairCrosstable(table[0], table[2]);
+				this.addPairCrosstable(table[1], table[3]);
+				this.addPairCrosstable(table[2], table[0]);
+				this.addPairCrosstable(table[3], table[1]);
+			}
+
+			for (let k = 0, kMax = tableLen; k < kMax; k++) {
+				const player = table[k];
+				this.availableVps[player] += tableLen;
+				if (k === 4) {
+					this.transfers[player] += k;
+				} else {
+					this.transfers[player] += k + 1;
+				}
+				this.addPlayerSeating(player, k + 1);
+			}
+		}
+	}
+
 	prepare() {
-		const availableVps = new Uint8Array(this.playerCount);
-		const transfers = new Float64Array(this.playerCount);
-
-		// We only optimise for players currently in the round. Players who dropped out are not considering for scoring
-
 		const numRounds = this.rounds.length;
 
-		for (let i = 0, iMax = numRounds; i < iMax; i++) {
-			const round = this.rounds[i];
-
-			for (let j = 0, jMax = round.length; j < jMax; j++) {
-				const table = round[j];
-				const tableLen = table.length;
-
-				// Add the preyPred relationships
-				if (tableLen === 5) {
-					// TABLE LENGTH = 5
-					this.addPairPrey(table[0], table[1]);
-					this.addPairPrey(table[1], table[2]);
-					this.addPairPrey(table[2], table[3]);
-					this.addPairPrey(table[3], table[4]);
-					this.addPairPrey(table[4], table[0]);
-
-					this.addPairGrandprey(table[0], table[2]);
-					this.addPairGrandprey(table[1], table[3]);
-					this.addPairGrandprey(table[2], table[4]);
-					this.addPairGrandprey(table[3], table[0]);
-					this.addPairGrandprey(table[4], table[1]);
-
-					this.addPairGrandpred(table[0], table[3]);
-					this.addPairGrandpred(table[1], table[4]);
-					this.addPairGrandpred(table[2], table[0]);
-					this.addPairGrandpred(table[3], table[1]);
-					this.addPairGrandpred(table[4], table[2]);
-				} else {
-					// TABLE LENGTH = 4
-					this.addPairPrey(table[0], table[1]);
-					this.addPairPrey(table[1], table[2]);
-					this.addPairPrey(table[2], table[3]);
-					this.addPairPrey(table[3], table[0]);
-
-					this.addPairCrosstable(table[0], table[2]);
-					this.addPairCrosstable(table[1], table[3]);
-					this.addPairCrosstable(table[2], table[0]);
-					this.addPairCrosstable(table[3], table[1]);
-				}
-
-				for (let k = 0, kMax = tableLen; k < kMax; k++) {
-					const player = table[k];
-					availableVps[player] += tableLen;
-					if (k === 4) {
-						transfers[player] += k / numRounds;
-					} else {
-						transfers[player] += (k + 1) / numRounds;
-					}
-					this.addPlayerSeating(player, k + 1);
-				}
-			}
+		for (let i = 0, iMax = this.rounds.length; i < iMax; i++) {
+			this.calculateRound(this.rounds[i]);
 		}
 
 		// R3 - Available VPs are equitably distributed
-		const meanVps = availableVps.reduce((total, cur) => total + cur, 0) / this.playerCount;
-		const meanTransfers = transfers.reduce((total, cur) => total + cur, 0) / this.playerCount;
+		const meanVps = this.availableVps.reduce((total, cur) => total + cur, 0) / this.playerCount;
+		const meanTransfers =
+			this.transfers.reduce((total, cur) => total + cur / numRounds, 0) / this.playerCount;
 
-		const R3 = stdDevInt(availableVps, meanVps);
-		const R8 = stdDevFloat(transfers, meanTransfers);
+		const R3 = stdDevInt(this.availableVps, meanVps);
+		const R8 = stdDevTransfers(this.transfers, meanTransfers, numRounds);
 
 		if (this.DEBUG) {
 			this.rules[2] += R3;
@@ -270,5 +285,26 @@ export class Score {
 		}
 		this.total += RULES[2].weight * R3;
 		this.total += RULES[7].weight * R8;
+	}
+
+	nextRound(round: number[][], playerCount: number) {
+		// Given that a score is already calculated, return a new score instance, with the previous rounds already calculated
+		const nextRoundScore = new Score([...this.rounds, round], playerCount, this.DEBUG, false);
+		nextRoundScore.rules = this.rules;
+		nextRoundScore.total = this.total;
+		nextRoundScore.pairAdjacent = this.pairAdjacent;
+		nextRoundScore.pairCrosstable = this.pairCrosstable;
+		nextRoundScore.pairGrandpred = this.pairGrandpred;
+		nextRoundScore.pairGrandprey = this.pairGrandprey;
+		nextRoundScore.pairNotAdjacent = this.pairNotAdjacent;
+		nextRoundScore.pairOpponents = this.pairOpponents;
+		nextRoundScore.pairPrey = this.pairPrey;
+		nextRoundScore.playerSeat = this.playerSeat;
+		nextRoundScore.transfers = this.transfers;
+		nextRoundScore.availableVps = this.availableVps;
+		nextRoundScore.playerCount = playerCount;
+		nextRoundScore.calculateRound(round);
+
+		return nextRoundScore;
 	}
 }
